@@ -28,6 +28,7 @@
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     closedModal(data){
         if ( data === true || data.success === true ) {
             alert();
@@ -75,6 +76,8 @@
         return $container.prop("outerHTML"); 
     }
         
+=======
+>>>>>>> 1babe3d (kl)
     useFetch(options) {
 
         // Valores predeterminados
