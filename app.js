@@ -2,6 +2,7 @@
 // Variables
 let app;
 
+
 // Init components
 $(function () {
     app = new App('', '');
