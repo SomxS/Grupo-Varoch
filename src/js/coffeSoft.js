@@ -5,6 +5,7 @@ class Complements {
         this._div_modulo = div_modulo;
     }
 
+    
 
     ObjectMerge(target, source) {
         // Iterar sobre todas las claves del objeto fuente
@@ -28,6 +29,13 @@ class Complements {
         return target;
     }
 
+    closedModal(data){
+        if ( data === true || data.success === true ) {
+            alert();
+            $('.bootbox-close-button').click();
+        }
+    }
+        
 
     useFetch(options) {
 
