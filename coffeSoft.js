@@ -71,6 +71,7 @@ class Complements {
 }
 
 class Components extends Complements {
+
     constructor(link, div_modulo) {
         super(link, div_modulo);
     }
@@ -149,6 +150,350 @@ class Components extends Complements {
 
     }
 
+    createTable(options) {
+        
+        var defaults = {
+
+            extends: false,
+            parent: this.div_modulo,
+            idFilterBar: '',
+
+            parent: 'lsTable',
+
+            conf: {
+                datatable: true,
+                fn_datatable: 'simple_data_table',
+                beforeSend: true,
+                pag: 15,
+            },
+
+            methods: {
+                send: (data) => { }
+            }
+
+
+        };
+
+        // configurations.
+        const dataConfig = Object.assign(defaults.conf, options.conf);
+
+
+        let opts = Object.assign(defaults, options);
+        const idFilter = options.idFilterBar ? options.idFilterBar : '';
+
+
+
+        if (idFilter) { // se activo la validacion por filtro 
+
+            const sendData = { tipo: 'text', opc: 'ls', ...options.data };
+            var extendsAjax = null; // extender la funcion ajax 
+
+
+            $(`#${idFilter}`).validar_contenedor(sendData, (datos) => {
+
+                // console.log('opts', dataConfig);
+
+                let beforeSend = (dataConfig.beforeSend) ? '#' + options.parent : '';
+
+                extendsAjax = fn_ajax(datos, this._link, beforeSend);
+
+
+                if (!options.extends) { // si la variable extends no esta definida se ejectuta de forma normal
+
+
+                    extendsAjax.then((data) => {
+
+                        let attr_table_filter = {
+                            data: data,
+                            f_size: '14',
+                            id: 'tbSearch'
+                        };
+
+                        attr_table_filter = Object.assign(attr_table_filter, opts.attr);
+
+                        opts.methods.send(data);
+
+                        if(opts.success)
+                            opts.success(data);
+
+
+
+                        $('#' + options.parent).rpt_json_table2(attr_table_filter);
+
+
+                        if (dataConfig.datatable) {
+                            window[dataConfig.fn_datatable]('#' + attr_table_filter.id, dataConfig.pag);
+                        }
+
+                    });
+
+
+                }
+
+
+            });
+
+            if (opts.extends) {
+                return extendsAjax;
+            }
+
+
+
+
+
+
+
+        } else {
+
+            let sendData = {
+                opc: 'ls',
+                ...opts.data
+            };
+
+
+
+            extendsAjax = fn_ajax(sendData, this._link, '#' + opts.parent);
+
+
+            if (!opts.extends) { // si la variable extends no esta definida se ejectuta de forma normal
+
+
+                extendsAjax.then((data) => {
+
+                    opts.methods.send(data);
+
+                    this.processData(data, opts, dataConfig);
+
+
+                });
+
+
+            }
+
+
+
+        }
+
+
+
+
+
+    }
+
+    createForm(options) {
+        // Conf:
+        let defaults = {
+            
+            parent           : 'formsContent',
+            id               : 'idForm',
+            plugin           : 'content_json_form',
+            plugin_validation: 'validation_form',
+            extends          : false,
+            type             : 'div',
+            class            : 'row',
+            methods: {
+                send: (data = '') => { }
+            },
+        };
+
+        let formulario = [
+            {
+                opc: "input",
+                lbl: "Producto",
+                class: 'col-12'
+            },
+
+            {
+                opc: "btn-submit",
+                id: "btnEnviar",
+                text: 'Guardar',
+                class: 'col-12'
+            },
+
+
+        ];
+
+
+
+        // Reemplazar formulario:
+        const jsonForm = options.json || formulario;
+        // Fusionar opciones con valores por defecto
+        const opts = Object.assign(defaults, options);
+        opts.methods = Object.assign({}, defaults.methods, options.methods);  // Asegurar que los métodos personalizados se fusionen correctamente
+
+        $('#' + opts.parent)[opts.plugin]({ data: jsonForm, class: opts.class, type: 'default', id: opts.id, Element: opts.type });
+
+        let dataForm = {
+            tipo: 'text',
+            opc: 'set',
+            ...options.data
+        };
+
+        var extends_ajax;
+
+
+
+        $("#" + opts.parent).validation_form(dataForm, (datos) => {
+
+            if (options.beforeSend)
+                options.beforeSend();
+
+
+
+            extends_ajax = fn_ajax(datos, this._link, '');
+
+            if (!opts.extends) {
+
+                extends_ajax.then((data) => {
+
+                    // $("#" + opts.parent)[0].reset();
+                    if (opts.success)
+                        opts.success(data);
+
+                    opts.methods.send(data);
+
+                });
+
+            }
+
+
+        });
+        // return extends_ajax;
+        // if(opts.extends){
+        //     return extends_ajax;
+        // }
+
+
+
+    }
+
+    createModalForm(options) {
+
+        const idFormulario = options.id ? options.id : 'frmModal';
+
+        const components = options.components
+
+            ? options.components
+            : $("<form>", { novalidate: true, id: idFormulario, class: "" });
+
+
+
+        let defaults = {
+            id: idFormulario,
+
+            bootbox: {
+                title: 'Modal example',
+                closeButton: true,
+                message: components,
+            },
+
+            json: [
+                {
+                    opc: 'input-group',
+                    class: 'col-12',
+                    label: 'Nombre'
+                },
+                {
+                    opc: 'btn-submit',
+                    text: 'Guardar',
+                    class: 'col-12'
+                }
+            ],
+
+
+            autovalidation: false,
+
+            data: { opc: 'sendForm' }
+
+        };
+
+        const conf = this.ObjectMerge(defaults, options);
+        let modal = bootbox.dialog(conf.bootbox);
+
+
+        $('#' + conf.id).content_json_form({ data: conf.json, type: '' });
+
+        if (options.beforeSend)
+            options.beforeSend();
+
+
+        if (conf.autovalidation) {
+
+            let options_validation = {
+                tipo: "text",
+                opc: "save-frm",
+            };
+
+            options_validation = Object.assign(options_validation, conf.data);
+
+
+            $("#" + conf.id).validation_form(options_validation, (datos) => {
+
+                fn_ajax(datos, this._link, '').then((data) => {
+
+                    
+
+                    if (conf.success)
+                        conf.success(data);
+            
+
+                    modal.modal('hide');
+
+                });
+
+
+
+            });
+
+
+        } else {
+            return modal;
+        }
+
+
+        // return modal;
+
+
+
+
+    }
+    
+
+    createModal(options) {
+
+        let components = $('<div>');
+
+
+        let defaults = {
+            id: '',
+            bootbox: {
+                title: 'Modal example',
+                closeButton: true,
+                message: ' ',
+            },
+
+            extends: false,
+
+            data: { opc: 'lsModal' }
+        };
+
+        const opts = this.ObjectMerge(defaults, options);
+
+
+
+        fn_ajax(opts.data, this._link, '').then((data) => {
+            let modal = bootbox.dialog(opts.bootbox);
+
+
+            if (opts.success)
+                options.success(data);
+
+            // modal.modal('hide');
+
+
+        });
+
+    }
 
     createfilterBar(options) {
 
