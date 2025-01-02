@@ -53,10 +53,14 @@ class App extends Templates {
     // Creates the main grid with its respective layouts.
     showGrid() {
         this.createLayaout({
+            
             parent: 'root',
+           
+         
             data: {
-                id: "layouts",
+                id: "singleLayout",
                 class: "flex grid grid-cols-3 gap-2",
+
                 contenedor: [
                     { type: 'div', id: 'splitLayout', class: 'h-52 w-100' },
                     { type: 'div', id: 'verticalLinearLayout', class: 'h-52 w-100 border' },
