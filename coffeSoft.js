@@ -457,7 +457,7 @@ class Components extends Complements {
 
 
     }
-    
+
 
     createModal(options) {
 
@@ -929,6 +929,8 @@ class Templates extends Components {
                 class: 'w-full h-1/4  line',
             },
         };
+
+        
 
         // Combina los valores predeterminados con las opciones proporcionadas
         const opts = this.ObjectMerge(defaults, options);
