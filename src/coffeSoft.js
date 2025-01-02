@@ -27,12 +27,16 @@
         return target;
     }
 
+<<<<<<< HEAD
     closedModal(data){
         if ( data === true || data.success === true ) {
             alert();
             $('.bootbox-close-button').click();
         } else console.error(data);
     }
+=======
+    
+>>>>>>> 870e3d3 (cambio)
 
   dropdown(options) {
         let defaults = [
