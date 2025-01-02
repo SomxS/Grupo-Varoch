@@ -1,4 +1,4 @@
-class Complements {
+ class Complements {
 
     constructor(link, div_modulo) {
         this._link = link;
@@ -33,7 +33,7 @@ class Complements {
         if ( data === true || data.success === true ) {
             alert();
             $('.bootbox-close-button').click();
-        }
+        } else console.error(data);
     }
         
 
