@@ -77,9 +77,7 @@ class Components extends Complements {
 
     swalQuestion(options = {}) {
 
-
         /*--  plantilla --*/
-
         let objSwal = {
             title: "",
             text: " ",
