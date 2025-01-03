@@ -1,4 +1,4 @@
-class Complements {
+ class Complements {
 
     constructor(link, div_modulo) {
         this._link = link;
@@ -31,7 +31,44 @@ class Complements {
         if ( data === true || data.success === true ) {
             alert();
             $('.bootbox-close-button').click();
-        }
+        } else console.error(data);
+    }
+
+  dropdown(options) {
+        let defaults = [
+            { icon: "icon-pencil", text: "Editar", onClick: "alert('Editar')" },
+            { icon: "icon-trash", text: "Eliminar", onClick: "alert('Eliminar')" },
+        ];
+
+        let opts = options != undefined ? options : defaults;
+   
+        const $ul = $("<ul>", { class: "dropdown-menu", "aria-labelledby": "dropdownMenu" });
+        //Hago una iteración sobre el array de etiquetas li
+        opts.forEach((m) => {
+            let html = m.icon != "" ? `<i class="text-info ${m.icon}"></i>` : "<i class='icon-minus'></i>";
+            html += m.text != "" ? m.text : "";
+
+            const $a = $("<a>", { ...m, class: "pt-1 pb-1 pointer dropdown-item", onclick: m.onClick, html });
+            const $li = $("<li>").append($a);
+            $ul.append($li);
+        });
+
+        
+        //Creo el boton principal ...
+        const $button = $("<button>", {
+            class: "btn btn-aliceblue btn-sm",
+            id: "dropdownMenu",
+            type: "button",
+            "data-bs-toggle": "dropdown",
+            "aria-expanded": "false",
+            html: '<i class="icon-dot-3 text-info"></i>',
+        });
+    
+        //Se puede hacer un return aquí y retorna el objeto jQuery
+        const $container = $("<div>", { class: "dropdown" });
+        $container.append($button, $ul);
+        //Yo hago el return aquí porque convierto el objeto a un string.
+        return $container.prop("outerHTML"); 
     }
         
     useFetch(options) {
