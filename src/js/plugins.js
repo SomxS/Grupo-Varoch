@@ -641,6 +641,239 @@ $.fn.content_json_form = function (options) {
 
 };
 
+$.fn.validation_form = function (options, callback) {
+    // MANIPULAR LA CLASE IS-INVALID SI EL CAMPO ESTA VACIO
+    $(this)
+      .find("[required]")
+      .on("change, input", function () {
+        // Validacion de campos requeridos
+        if ($(this).val().trim() === "") {
+          isValid = false;
+          $(this)
+            .addClass("is-invalid")
+            .siblings("span.text-danger")
+            .removeClass("hide")
+            .html('<i class="icon-attention"></i> El campo es requerido');
+  
+          if ($(this).parent().hasClass("input-group"))
+            $(this)
+              .parent()
+              .next("span")
+              .removeClass("hide")
+              .html('<i class="icon-attention"></i> El campo es requerido');
+        } else {
+          $(this)
+            .removeClass("is-invalid")
+            .siblings("span.text-danger")
+            .addClass("hide");
+  
+          if ($(this).parent().hasClass("input-group"))
+            $(this).parent().next("span").addClass("hide");
+        }
+  
+        if ($(this).is("[maxlength]")) {
+          let limit = parseInt($(this).attr("maxlength"));
+          $(this).val($(this).val().slice(0, limit));
+        }
+      });
+  
+    //Permitido "texto", si existe validar máximo de caracteres
+    $(this)
+      .find('[tipo="texto"]')
+      .on("input", function () {
+        isValid = false;
+        if ($(this).val().charAt(0) === " ") $(this).val($(this).val().trim());
+  
+        if (!/^[a-zA-ZÀ-ÖØ-öø-ÿ\s]+$/.test($(this).val()))
+          $(this).val(
+            $(this)
+              .val()
+              .replace(/[^a-zA-ZÀ-ÖØ-öø-ÿ\s]+/g, "")
+          );
+  
+        if ($(this).is("[maxlength]")) {
+          let limit = parseInt($(this).attr("maxlength"));
+          $(this).val($(this).val().slice(0, limit));
+        }
+      });
+  
+    //Permitido "texto y números", si existe validar máximo de caracteres
+    $(this)
+      .find('[tipo="textoNum"],[tipo="alfanumerico"]')
+      .on("input", function () {
+        isValid = false;
+        if ($(this).val().charAt(0) === " ") $(this).val($(this).val().trim());
+  
+        if (!/^[a-zA-Z0-9 ]*$/.test($(this).val()))
+          $(this).val(
+            $(this)
+              .val()
+              .replace(/[^a-zA-Z0-9 ]+/g, "")
+          );
+        if ($(this).is("[maxlength]")) {
+          let limit = parseInt($(this).attr("maxlength"));
+          $(this).val($(this).val().slice(0, limit));
+        }
+      });
+  
+    // Permitido "solo números enteros", si existe validar máximo de caracteres.
+    $(this)
+      .find('[tipo="numero"]')
+      .on("input", function () {
+        if (!/^\d+$/.test($(this).val()))
+          $(this).val(
+            $(this)
+              .val()
+              .replace(/[^0-9]/g, "")
+          );
+        if ($(this).is("[maxlength]")) {
+          let limit = parseInt($(this).attr("maxlength"));
+          $(this).val($(this).val().slice(0, limit));
+        }
+      });
+  
+    // Permitido "números enteros, decimales y negativos" con keyup, si existe, validar máximo de caracteres.
+    $(this)
+      .find('[tipo="cifra"]')
+      .on("input", function () {
+        if (!/^-?\d+(\.\d+)?$/.test($(this).val())) {
+          $(this).val($(this).val().replace("--", "-"));
+          $(this).val($(this).val().replace("..", "."));
+          $(this).val($(this).val().replace(".-", "."));
+          $(this).val($(this).val().replace("-.", "-0."));
+          $(this).val($(this).val().replace(/^\./, "0."));
+          $(this).val(
+            $(this)
+              .val()
+              .replace(/[^0-9\.\-]/g, "")
+          );
+          $(this).val(
+            $(this)
+              .val()
+              .replace(/(\.[^.]+)\./g, "$1")
+          );
+          $(this).val(
+            $(this)
+              .val()
+              .replace(/(\d)\-/g, "$1")
+          );
+        }
+      });
+  
+    // Validar estructura de email
+    $(this)
+      .find('[type="email"], [tipo="correo"], [tipo="email"]')
+      .on("input", function () {
+        let expReg = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+        $(this).removeClass("is-invalid");
+        if (!expReg.test($(this).val()) && $(this).val().trim() != "")
+          $(this)
+            .addClass("is-invalid")
+            .next("span")
+            .removeClass("hide")
+            .html('<i class="icon-attention"></i> Ingrese un correo válido');
+        else $(this).removeClass("is-invalid").next("span").addClass("hide");
+  
+        $(this).val().toLowerCase();
+      });
+  
+    // Validar con trim que no haya espacios al principio o al final
+    $(this)
+      .find("input,textarea")
+      .on("blur", function () {
+        $(this).val($(this).val().trim());
+  
+        if ($(this).hasClass("text-uppercase"))
+          $(this).val($(this).val().toUpperCase());
+  
+        if ($(this).hasClass("text-lowercase"))
+          $(this).val($(this).val().toLowerCase());
+      });
+  
+    // SUBMIT
+    let form = this;
+    form.on("submit", function (e) {
+      e.preventDefault();
+      let isValid = true;
+      $(this)
+        .find("[required]")
+        .each(function () {
+          if (
+            $(this).val() === "" ||
+            $(this).val() == "0" ||
+            $(this).val().length === 0 ||
+            $(this).val() == null
+          ) {
+            isValid = false;
+            let span = $("<span>", {
+              class: "col-12 text-danger form-text hide",
+              html: '<i class="icon-attention"></i> El campo es requerido',
+            });
+  
+            if ($(this).parent().hasClass("input-group") === true) {
+              if ($(this).parent().next("span.text-danger").length === 0) {
+                $(this).parent().parent().append(span);
+              }
+            } else if (
+              $(this).parent().hasClass("input-group") === false &&
+              $(this).siblings("span.text-danger").length === 0
+            ) {
+              $(this).parent().append(span);
+            }
+  
+            $(this).focus();
+            $(this).addClass("is-invalid");
+  
+            $(this)
+              .siblings("span.text-danger")
+              .removeClass("hide")
+              .html('<i class="icon-attention"></i> El campo es requerido');
+            if ($(this).parent().hasClass("input-group"))
+              $(this)
+                .parent()
+                .next("span")
+                .removeClass("hide")
+                .html('<i class="icon-attention"></i> El campo es requerido');
+          } else {
+            $(this).removeClass("is-invalid");
+            $(this).siblings("span.text-danger").addClass("hide");
+            if ($(this).parent().hasClass("input-group"))
+              $(this).parent().next("span").addClass("hide");
+          }
+        });
+  
+      if (isValid) {
+        let defaults = { tipo: "json" };
+        // Comvina opciones y defaults
+        let opts = $.extend(defaults, options);
+  
+        let formData = new FormData(form[0]);
+  
+        for (const key in opts) {
+          if (key !== "tipo") {
+            formData.append(key, opts[key]);
+          }
+        }
+  
+        if (opts.tipo === "text") {
+          let valores = "";
+          formData.forEach(function (valor, clave) {
+            valores += clave + "=" + valor + "&";
+          });
+          if (typeof callback === "function") {
+            // form.find(':submit').prop('disabled', true);
+            callback(valores.slice(0, -1));
+          }
+        } else if (opts.tipo === "json") {
+          if (typeof callback === "function") {
+            // form.find(':submit').prop('disabled', true);
+            callback(formData);
+          }
+        }
+      }
+    });
+};
+
 
 // funciones auxiliares.
 function dataPicker(options) {
