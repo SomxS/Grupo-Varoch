@@ -4,7 +4,7 @@
         this._link = link;
         this._div_modulo = div_modulo;
     }
-
+//lll
     ObjectMerge(target, source) {
         // Iterar sobre todas las claves del objeto fuente
         for (const key in source) {
