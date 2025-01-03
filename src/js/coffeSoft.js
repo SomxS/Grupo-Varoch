@@ -5,8 +5,6 @@ class Complements {
         this._div_modulo = div_modulo;
     }
 
-    
-
     ObjectMerge(target, source) {
         // Iterar sobre todas las claves del objeto fuente
         for (const key in source) {
@@ -36,7 +34,6 @@ class Complements {
         }
     }
         
-
     useFetch(options) {
 
         // Valores predeterminados

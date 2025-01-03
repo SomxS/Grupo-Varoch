@@ -1,9 +1,8 @@
 
-// Variables
+// Variables.
 let app;
 
-
-// Init components
+// Init components.
 $(function () {
     app = new App('', '');
     app.init();
@@ -11,6 +10,7 @@ $(function () {
 
 // The 'App' class organizes and manages all elements available to other application classes.
 class App extends Templates {
+    
     constructor(link, div_modulo) {
         super(link, div_modulo);
     }
