@@ -4,7 +4,11 @@
         this._link = link;
         this._div_modulo = div_modulo;
     }
+<<<<<<< HEAD
 //lll
+=======
+
+>>>>>>> 569ee1b (funciones auxiliares en plugins)
     ObjectMerge(target, source) {
         // Iterar sobre todas las claves del objeto fuente
         for (const key in source) {

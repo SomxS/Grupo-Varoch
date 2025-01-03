@@ -640,3 +640,127 @@ $.fn.content_json_form = function (options) {
     $(this).append(div);
 
 };
+
+
+// funciones auxiliares.
+function dataPicker(options) {
+
+    let defaults = {
+        parent: 'iptCalendar',
+
+        type: 'all',
+
+        rangepicker: {
+
+            startDate    : moment().startOf("month"),
+            endDate      : moment().endOf("month"),
+            showDropdowns: true,
+            "autoApply"  : true,
+
+            ranges: {
+
+                Ayer          : [moment().subtract(1, "days"), moment().subtract(1, "days")],
+                Antier        : [moment().subtract(2, "days"), moment().subtract(2, "days")],
+
+                "Mes actual"  : [moment().startOf("month"), moment()],
+                "Mes anterior": [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")],
+
+            },
+
+            function (start,end){
+
+                onDateRange(start,end);
+
+            }
+
+        },
+
+        rangeDefault: {
+            singleDatePicker: true,
+            showDropdowns: true,
+            "autoApply": true,
+
+            locale: {
+                format: "YYYY-MM-DD",
+            }
+
+        },
+
+        onSelect: (start, end) => {
+            console.log(`Seleccionado: ${start.format("YYYY-MM-DD")} - ${end.format("YYYY-MM-DD")}`);
+
+        }
+
+    };
+
+
+    let onDateRange = (start, end) => {
+
+        console.log(start,end);
+
+    }
+
+
+    const settings = { ...defaults, ...options };
+    // Configurar el comportamiento según el tipo
+    if (settings.type === 'all') {
+        $("#" + settings.parent).daterangepicker(
+            settings.rangepicker,
+            function (start, end) {
+
+                settings.onSelect(start, end);
+            }
+        );
+    } else if (settings.type === 'simple') {
+        $("#" + settings.parent).daterangepicker(
+            settings.rangeDefault,
+            function (start, end) {
+                // Llamar a la función personalizada al seleccionar una fecha
+                settings.onSelect(start, end);
+            }
+        );
+    }
+
+    // if (settings.type == 'all') {
+    //     $("#" + settings.parent).daterangepicker(settings.rangepicker);
+
+    // } else if (settings.type == 'simple') {
+
+    //     $("#" + settings.parent).daterangepicker(settings.rangeDefault);
+    // }
+
+
+
+
+}
+
+function getDataRangePicker(idInput) {
+    const fi = $("#" + idInput).data("daterangepicker").startDate.format("YYYY-MM-DD");
+    const ff = $("#" + idInput).data("daterangepicker").endDate.format("YYYY-MM-DD");
+
+    return { fi, ff };
+}
+
+function simple_data_table(table, no) {
+    $(table).DataTable({
+        pageLength: no,
+        destroy: true,
+        searching: true,
+        bLengthChange: false,
+        bFilter: false,
+        order: [],
+        bInfo: true,
+        "oLanguage": {
+            "sSearch": "Buscar:",
+            "sInfo": "Mostrando del (_START_ al _END_) de un total de _TOTAL_ registros",
+            "sInfoEmpty": "Mostrando del 0 al 0 de un total de 0 registros",
+            "sLoadingRecords": "Por favor espere - cargando...",
+            "oPaginate": {
+                "sFirst": "Primero",
+                "sLast": "'Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            }
+        }
+    });
+}
