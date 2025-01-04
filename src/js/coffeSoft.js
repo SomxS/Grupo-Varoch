@@ -1,10 +1,10 @@
- class Complements {
+class Complements {
 
     constructor(link, div_modulo) {
         this._link = link;
         this._div_modulo = div_modulo;
     }
-//lll
+
     ObjectMerge(target, source) {
         // Iterar sobre todas las claves del objeto fuente
         for (const key in source) {
@@ -27,21 +27,21 @@
         return target;
     }
 
-    closedModal(data){
-        if ( data === true || data.success === true ) {
+    closedModal(data) {
+        if (data === true || data.success === true) {
             alert();
             $('.bootbox-close-button').click();
         } else console.error(data);
     }
 
-  dropdown(options) {
+    dropdown(options) {
         let defaults = [
             { icon: "icon-pencil", text: "Editar", onClick: "alert('Editar')" },
             { icon: "icon-trash", text: "Eliminar", onClick: "alert('Eliminar')" },
         ];
 
         let opts = options != undefined ? options : defaults;
-   
+
         const $ul = $("<ul>", { class: "dropdown-menu", "aria-labelledby": "dropdownMenu" });
         //Hago una iteración sobre el array de etiquetas li
         opts.forEach((m) => {
@@ -53,7 +53,7 @@
             $ul.append($li);
         });
 
-        
+
         //Creo el boton principal ...
         const $button = $("<button>", {
             class: "btn btn-aliceblue btn-sm",
@@ -63,14 +63,14 @@
             "aria-expanded": "false",
             html: '<i class="icon-dot-3 text-info"></i>',
         });
-    
+
         //Se puede hacer un return aquí y retorna el objeto jQuery
         const $container = $("<div>", { class: "dropdown" });
         $container.append($button, $ul);
         //Yo hago el return aquí porque convierto el objeto a un string.
-        return $container.prop("outerHTML"); 
+        return $container.prop("outerHTML");
     }
-        
+
     useFetch(options) {
 
         // Valores predeterminados
@@ -193,7 +193,7 @@ class Components extends Complements {
     }
 
     createTable(options) {
-        
+
         var defaults = {
 
             extends: false,
@@ -255,7 +255,7 @@ class Components extends Complements {
 
                         opts.methods.send(data);
 
-                        if(opts.success)
+                        if (opts.success)
                             opts.success(data);
 
 
@@ -325,14 +325,14 @@ class Components extends Complements {
     createForm(options) {
         // Conf:
         let defaults = {
-            
-            parent           : 'formsContent',
-            id               : 'idForm',
-            plugin           : 'content_json_form',
+
+            parent: 'formsContent',
+            id: 'idForm',
+            plugin: 'content_json_form',
             plugin_validation: 'validation_form',
-            extends          : false,
-            type             : 'div',
-            class            : 'row',
+            extends: false,
+            type: 'div',
+            class: 'row',
             methods: {
                 send: (data = '') => { }
             },
@@ -473,11 +473,11 @@ class Components extends Complements {
 
                 fn_ajax(datos, this._link, '').then((data) => {
 
-                    
+
 
                     if (conf.success)
                         conf.success(data);
-            
+
 
                     modal.modal('hide');
 
@@ -820,7 +820,7 @@ class Components extends Complements {
     }
 
 
-    
+
 
 }
 
@@ -972,7 +972,7 @@ class Templates extends Components {
             },
         };
 
-        
+
 
         // Combina los valores predeterminados con las opciones proporcionadas
         const opts = this.ObjectMerge(defaults, options);
@@ -1019,8 +1019,8 @@ class Templates extends Components {
             card: {
                 name: "singleLayout",
                 class: "col-12",
-                filterBar: { class: 'w-full line', id: 'filterBar' + name},
-                container: { class: 'w-full my-2 line', id: 'container' +name}
+                filterBar: { class: 'w-full line', id: 'filterBar' + name },
+                container: { class: 'w-full my-2 line', id: 'container' + name }
             }
         };
 
@@ -1090,21 +1090,23 @@ class Templates extends Components {
     }
 
     secondaryLayout(components) {
+        let name = components.id ? components.id : 'secondaryLayout';
+
+
         let nameComponent = {
-            name: 'container',
+            name: name,
             parent: this._div_modulo,
             className: 'flex p-2 ',
             cardtable: {
-                className: 'col-4 line',
-                id: 'containertable',
+                className: 'col-7 line',
+                id: 'containerTable'+name,
                 filterBar: { id: 'filterTable', className: 'col-12 mb-2 line' },
                 container: { id: 'listTable', className: 'col-12 line' },
             },
             cardform: {
-                className: 'col-8 line',
-                id: 'containertable',
-                filterBar: { id: 'filterTicket', className: 'col-12 mb-2 line' },
-                container: { id: 'containerTicket', className: 'col-12 line' },
+                className: 'col-5 line',
+                id: 'containerForm'+name,
+               
             },
         };
 
@@ -1115,15 +1117,14 @@ class Templates extends Components {
             class: ui.className,
 
             contenedor: [
+
                 {
                     type: 'div',
                     id: ui.cardform.id,
                     class: ui.cardform.className,
-                    children: [
-                        { class: ui.cardform.filterBar.className, id: ui.cardform.filterBar.id },
-                        { class: ui.cardform.container.className, id: ui.cardform.container.id },
-                    ],
+                   
                 },
+               
                 {
                     type: "div",
                     id: ui.cardtable.id,
@@ -1133,6 +1134,8 @@ class Templates extends Components {
                         { class: ui.cardtable.container.className, id: ui.cardtable.container.id },
                     ]
                 },
+
+               
             ],
         };
 
