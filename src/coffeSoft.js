@@ -225,7 +225,7 @@ class Components extends Complements {
         const idFilter = options.idFilterBar ? options.idFilterBar : '';
 
 
-
+        console.log(opts.url)
         if (idFilter) { // se activo la validacion por filtro 
 
             const sendData = { tipo: 'text', opc: 'ls', ...options.data };
