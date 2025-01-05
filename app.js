@@ -78,7 +78,7 @@ class App extends Templates {
         data: { opc: 'lsPedidos', fi: rangePicker.fi, ff: rangePicker.ff },
         conf: { datatable: false, },
         attr: {
-            color_th: 'bg-primary',
+            color_th: 'bg-default',
             class_table: 'table table-bordered ',
             f_size:12
            
