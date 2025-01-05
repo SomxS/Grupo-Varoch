@@ -874,6 +874,452 @@ $.fn.validation_form = function (options, callback) {
     });
 };
 
+$.fn.rpt_json_table2 = function (options) {
+  return new Promise((resolve, reject) => {
+      var defaults = {
+          data: [],
+          id: "simple-table",
+          right: [],
+          center: [],
+
+          /* input */
+          ipt: [],
+          select: [],
+          /* Colores en la tabla */
+          color_col: [],
+          color_th: "bg-default",
+          color_group: "bg-default",
+          color: "bg-warning-1",
+          /* Reportes & configuracion */
+          frm_head: "",
+          frm_foot: "",
+          title_th: "",
+          f_size: 14,
+          font_size: 12,
+          parametric: false,
+          class: "table table-bordered table-sm mt-2",
+          folding: false,
+          extends: false
+      };
+
+      var opts = $.fn.extend(defaults, options);
+
+      tabla = $("<table>", {
+          class: opts.class,
+          id: opts.id,
+      });
+
+      /* Imprimir titulo de tabla */
+      arreglo_th = opts.data.thead;
+
+      title = opts.title_th;
+      thead = $("<thead>");
+
+      if (title) {
+          th = $("<tr>");
+          col_size = arreglo_th.length;
+          th.append(`<th colspan="${col_size}" > ${title}  </th>`);
+          thead.append(th);
+      }
+
+      // Imprime las columnas de la tabla
+
+      if (opts.data.thead) {
+          // si la variable th recibe datos crea las columnas
+          if (opts.extends) {
+              
+              const ths = opts.data.thead;
+
+              if (Array.isArray(ths)){
+
+                 
+
+                  var thClean  = null;
+                  var rowtr  = null;
+                  var colth    = null;
+                 
+
+                  
+                  var headerRow = $('<tr>');
+                  var headerCell = null;
+
+
+                  ths.forEach(element => {
+
+
+                  if(typeof element === 'string'){
+
+                      headerCell = $('<th>', { text: element, class: `text-center ${opts.color_th}` });
+                      headerRow.append(headerCell);
+
+                  }else{
+                      
+                      rowtr = $('<tr>');
+                      Object.keys(element).forEach(key => {
+
+
+                          var cell = $('<th>', { text: element[key], class: `text-center ${opts.color_th}` });
+                          
+                          if (typeof element[key] === 'object') {
+                              cell = $('<th>', element[key]);
+                          } 
+                          
+                          rowtr.append(cell);
+                      });
+                      thead.append(rowtr);
+                  }
+                      
+
+
+                      
+                  }); // end row
+
+                  thead.append(headerRow);
+                  
+                  
+               
+                
+              }else {
+
+                                         
+                  ths.forEach(element => {
+                      th = $("<tr>");
+                      var col_th;
+                      Object.keys(element).forEach(key => {
+                          if (typeof element[key] === 'object') {
+                              col_th = $('<th>', element[key]);
+                          }else {
+                              col_th = $('<th>', {'text': key});
+                          }
+                          th.append(col_th);
+                      });
+                      thead.append(th);
+                  });
+
+              }
+
+
+          } else {
+
+              let newTh = $('<tr>');
+             
+
+
+              for (const k of arreglo_th) {
+                  newTh.append(`<th class="text-center ${opts.color_th}"> ${k}  </th>`);
+              }
+
+
+              thead.append(newTh);
+
+          }
+
+
+
+
+
+
+      } else {
+          th = $("<tr>");
+
+          for (var clave in opts.data.row[0]) {
+              clave = (clave == 'btn' || clave == 'btn_personalizado' || clave == 'a') ? '' : clave;
+              if (clave != "opc" && clave != "id")
+                  th.append(
+                      $("<th>", {
+                          class: `${opts.color_th}`,
+                          style: `font-size:${opts.f_size}px;`
+                      }).html(clave)
+                  );
+          }
+
+          thead.append(th);
+      }
+
+
+
+      // Variables de posicionamiento & color
+
+      var r = opts.right;
+      var c = opts.color_col;
+      var ct = opts.center;
+      var iptx = opts.ipt;
+      var select = opts.select;
+
+      /*-- Imprime las filas de la tabla y el cuerpo --*/
+      tbody = $("<tbody>");
+
+      for (const x of opts.data.row) {
+          idRow = x.id;
+          const obj = Object.values(x);
+          // console.log(obj);
+          let dimension = obj.length;
+
+          let cols_conf = 1;
+          if (x.btn != null)
+              cols_conf = 2;
+
+          let last = dimension - cols_conf;
+          td = $("<tr>");
+
+          // Recorrido por columnas
+
+          for (let col = 1; col < dimension - 1; col++) {
+              // Variables de posicionamiento & color
+              right = "";
+              color = "";
+              center = "";
+
+              bg_grupo = "";
+
+              if (!x.colgroup) {
+
+                  if (x.opc) {
+                      if (x.opc == 1) {
+                          bg_grupo = opts.color_group + " fw-bold ";
+                      } else if (x.opc == 2) {
+                          bg_grupo = opts.color_group + " text-primary fw-bold ";
+                      }
+
+
+                  }
+
+                  for (let $i = 0; $i < r.length; $i++) {
+                      if (r[$i] == col) {
+                          right = "text-right text-end";
+                      }
+                  }
+
+                  for (let j = 0; j < ct.length; j++) {
+                      if (ct[j] == col) {
+                          center = "text-center";
+                      }
+                  }
+
+                  let indices = Object.keys(x);
+
+                  // Determina si esta habilitada el grupo
+                  if (x.opc != 1 && x.opc != 2) {
+                      for (let k = 0; k < c.length; k++) {
+                          if (c[k] == col) {
+                              bg_grupo = opts.color;
+                          }
+                      }
+                  }
+
+                  let tdText = obj[col];
+
+                  /* --  --*/
+
+                  for (let a = 0; a < iptx.length; a++) {
+                      if (iptx[a] == col) {
+                          let data_ipt = obj[col];
+
+                          ipt_type = "text";
+
+                          if (typeof data_ipt === "string") {
+                              tdText = `<input disabled type="${ipt_type}" class="form-control input-sm cellx text-end" value="${data_ipt}" />`;
+
+                          } else {
+                              for (const z of data_ipt) {
+                                  let disabled = '';
+
+                                  if (z.disabled) {
+                                      disabled = `disabled = ${z.disabled}`;
+                                  }
+
+                                  let onChangeipt = z.fn ? z.fn : '';
+
+                                  tdText = `<input 
+                                  type   ="${ipt_type}"
+                                  value  = "${z.value}"  
+                                  id     = "${z.id}"
+                                  name   = "${z.name}"
+                                  onkeyUp = "${onChangeipt}"
+                                  ${disabled}
+                                  class=" form-control input-sm text-primary cellx fw-bold text-end" />`;
+                              }
+                          }
+                      } //end recorrido input
+                  }
+
+                  /*ESTE SELECT ES POR CULPA DE ROSA */
+
+                  for (let b = 0; b < select.length; b++) {
+                      if (select[b] == col) {
+                          let data_select = obj[col];
+
+                          if (typeof data_select === "string") {
+                              tdText = `<input class="form-control " value="${data_select}" />`;
+                          } else {
+                              for (const z of data_select) {
+                                  tdText = `<select class="form-control input-sm">`;
+                                  tdText += `<option id="" value="0" hidden selected > - Seleccionar - </option>`;
+
+                                  $.each(z.data, function (index, item) {
+                                      tdText += `<option value="${item.id}" >  ${item.valor}</option>`;
+                                  });
+
+                                  tdText += `</select>`;
+                              }
+                          }
+                      } //end recorrido input
+                  }
+                  //
+
+                  if (obj[col] != "btn") {
+
+
+                      let attr_td = {
+                          id: indices[col] + '_' + x.id,
+                          style: 'font-size:' + opts.f_size + 'px',
+                          class: `${right} ${center} ${bg_grupo}`,
+                          html: tdText
+                      };
+
+
+
+                      if (opts.extends) {
+
+                          if (typeof obj[col] === 'object') {
+                              attr_td = Object.assign(attr_td, obj[col]);
+                          }
+
+
+                      }
+
+                      td.append($('<td>', attr_td));
+
+
+                      //   td.append(`<td id="${indices[col]}_${x.id}"
+                      //   style="" 
+                      //   class=""> 
+                      //   ${tdText}  </td>`);
+                  }
+
+
+              }//end agrupar 
+              else {
+
+                  td.append($('<td>', {
+                      class: opts.color_group,
+                      colspan: arreglo_th.length,
+                      html: obj[col]
+                  }));
+              }
+
+
+          } //endfor
+
+          /* Agregar botón  */
+
+          if (x.btn != null) {
+              td_btn = $("<td> ", {
+                  class: `text-center ${bg_grupo} `,
+              });
+
+
+              for (const y of x.btn) {
+                  let text = '';
+                  if (y.text) {
+                      text = y.text;
+                  }
+
+                  btn_col = $(" <button>", {
+                      class: `btn btn-outline-${y.color} btn-sm me-1`,
+                      onclick: `${y.fn}(${x.id})`,
+                      html: `<i class="${y.icon}"></i>  ${text} `,
+                  });
+
+                  td_btn.append(btn_col);
+              }
+
+              td.append(td_btn);
+          }
+
+          //crear boton personalizado   
+
+          if (x.a != null) {
+
+              td_btn = $("<td> ", {
+                  class: `text-center ${bg_grupo}`,
+              });
+
+              for (const p of x.a) {
+
+                  let btn_col = $(" <a>", p);
+
+
+                  td_btn.append(btn_col);
+
+              }
+
+              td.append(td_btn);
+
+          }
+
+          /* Agregar botón personalizado  */
+          if (x.btn_personalizado != null) {
+              td_btn = $("<td> ", {
+                  class: `text-center ${bg_grupo}`,
+              });
+
+              for (const p of x.btn_personalizado) {
+                  p.text ? (text = p.text) : (text = "");
+
+                  btn_col = $(" <button>", {
+                      class: `btn btn-outline-${p.color} btn-sm me-1`,
+                      id: (p.id_btn) ? p.id_btn : p.id,
+                      estado: p.estado,
+                      onclick: `${p.fn}`,
+                      html: `<i class="${p.icon}"></i>  ${text}`,
+                  });
+
+                  td_btn.append(btn_col);
+              }
+
+              td.append(td_btn);
+          }
+
+          tbody.append(td);
+      }
+
+      // opts.data.row.forEach((row) => {
+      //   console.log(row);
+      //   for (const key in row) {
+      //     if (key != 'btn') console.error(key);
+      //   }
+      // });
+
+      tabla.append(thead);
+      tabla.append(tbody);
+
+      div_table = $("<div>", {
+          class: "table-responsive",
+      });
+
+      div_table.append(tabla);
+
+      /* --  Contenedor para Reporte  -- */
+
+      div = $("<div>");
+
+      const header = opts.data.head ? createDocsHead(opts.data.head) : '';
+
+
+      div.append(opts.data.frm_head);
+      div.append(header);
+      div.append(div_table);
+      div.append(opts.data.frm_foot);
+
+      $(this).html(div);
+
+      //   return this;
+      resolve();
+  });
+};
+
+
 
 // funciones auxiliares.
 function dataPicker(options) {
