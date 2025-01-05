@@ -641,6 +641,176 @@ $.fn.content_json_form = function (options) {
 
 };
 
+$.fn.validar_contenedor = function (options, callback) {
+  let opc = {
+    texto: /^[a-zA-ZÀ-ÖØ-öø-ÿ\s]+$/,
+    texto_replace: /[^a-zA-ZÀ-ÖØ-öø-ÿ\s]+/g,
+    numero: /^\d+$/,
+    numero_replace: /[^0-9]/g,
+    txtnum: /^[a-zA-Z0-9]*$/,
+    txtnum_replace: /[^a-zA-Z0-9]+/g,
+    cifra: /^-?\d+(\.\d+)?$/,
+    email: /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/,
+  };
+
+  const elemento = $(this);
+
+  //Caso contrario es un contenedor
+  let isValid = true;
+
+  $(this)
+    .find("input, textarea")
+    .on("input", function () {
+      const IPT = $(this);
+      let iptval = IPT.val().trim();
+
+      if (IPT.is('[tipo="texto"]'))
+        if (!opc.texto.test(iptval))
+          IPT.val(iptval.replace(opc.texto_replace, ""));
+
+      if (IPT.is('[tipo="numero"]'))
+        if (!opc.numero.test(iptval))
+          IPT.val(iptval.replace(opc.numero_replace, ""));
+
+      if (IPT.is('[tipo="textoNum"],[tipo="alfanumerico"]'))
+        if (!opc.txtnum.test(iptval))
+          IPT.val(iptval.replace(opc.txtnum_replace, ""));
+
+      if (IPT.is('[tipo="cifra"]'))
+        if (!opc.cifra.test(iptval)) {
+          IPT.val(
+            iptval
+              .replace("--", "-")
+              .replace("..", ".")
+              .replace(".-", ".")
+              .replace("-.", "-0.")
+              .replace(/^\./, "0.")
+              .replace(/[^0-9\.\-]/g, "")
+              .replace(/(\.[^.]+)\./g, "$1")
+              .replace(/(\d)\-/g, "$1")
+          );
+        }
+
+      if (IPT.is('[tipo="correo"],[tipo="email"],[type="email"]')) {
+        if (!opc.email.test(iptval)) {
+          IPT.addClass("form-control is-invalid");
+          if (IPT.parent().hasClass("input-group")) {
+            IPT.parent().next("span.text-danger").remove();
+            IPT.parent().after(
+              '<span class="text-danger form-text"><i class="icon-attention"></i> Ingrese un correo válido.</span>'
+            );
+          } else {
+            IPT.next("span.text-danger").remove();
+            IPT.after(
+              '<span class="text-danger form-text"><i class="icon-attention"></i> Ingrese un correo válido.</span>'
+            );
+          }
+        } else {
+          IPT.removeClass("form-control is-invalid");
+          if (IPT.parent().hasClass("input-group"))
+            IPT.parent().next("span").remove();
+          else IPT.next("span").remove();
+        }
+      }
+
+      if (IPT.hasClass("text-uppercase")) IPT.val(IPT.val().toUpperCase());
+      if (IPT.hasClass("text-lowercase")) IPT.val(IPT.val().toLowerCase());
+
+      if (IPT.is("[maxlength]")) {
+        let limit = parseInt(IPT.attr("maxlength"));
+        IPT.val(IPT.val().slice(0, limit));
+      }
+
+      if (IPT.val().trim() !== "") {
+        isValid = true;
+        IPT.removeClass("is-invalid");
+        IPT.siblings("span.text-danger").addClass("hide");
+        if (IPT.parent().hasClass("input-group"))
+          IPT.parent().next("span").addClass("hide");
+      }
+    });
+
+  $(this)
+    .find("select")
+    .on("change", function () {
+      const SELECT = $(this);
+      let value = SELECT.val();
+
+      if (value !== "" || value != "0") {
+        isValid = true;
+        SELECT.removeClass("is-invalid");
+        SELECT.siblings("span.text-danger").addClass("hide");
+        if (SELECT.parent().hasClass("input-group"))
+          SELECT.parent().next("span").addClass("hide");
+      }
+    });
+
+  $(this)
+    .find("[required]")
+    .each(function () {
+      if (
+        $(this).val() === "" ||
+        $(this).val() == "0" ||
+        $(this).val().length == 0 ||
+        $(this).val() == null
+      ) {
+        isValid = false;
+        $(this).focus();
+        $(this).addClass("is-invalid");
+        $(this)
+          .siblings("span.text-danger")
+          .removeClass("hide")
+          .html('<i class="icon-attention"></i> El campo es requerido');
+        if ($(this).parent().hasClass("input-group"))
+          $(this)
+            .parent()
+            .next("span")
+            .removeClass("hide")
+            .html('<i class="icon-attention"></i> El campo es requerido');
+      } else {
+        $(this).removeClass("is-invalid");
+        $(this).siblings("span.text-danger").addClass("hide");
+        if ($(this).parent().hasClass("input-group"))
+          $(this).parent().next("span").addClass("hide");
+      }
+    });
+
+  if (isValid) {
+    let defaults = {
+      tipo: "json",
+    };
+    // Comvina opciones y defaults
+    let opts = $.extend(defaults, options);
+
+    let formData = new FormData();
+
+    for (const key in opts) {
+      if (key !== "tipo") {
+        formData.append(key, opts[key]);
+      }
+    }
+
+    elemento.find("*").each(function () {
+      if ($(this).is(":input") && !$(this).is("button")) {
+        let name = $(this).attr("name");
+        let value = $(this).val();
+        formData.append(name, value);
+      }
+    });
+
+    if (opts.tipo === "text") {
+      let valores = "";
+      formData.forEach((value, name) => {
+        valores += name + "=" + value + "&";
+      });
+
+      if (typeof callback === "function") callback(valores.slice(0, -1));
+    } else if (opts.tipo === "json") {
+      if (typeof callback === "function") callback(formData);
+    }
+  }
+};
+
 $.fn.validation_form = function (options, callback) {
     // MANIPULAR LA CLASE IS-INVALID SI EL CAMPO ESTA VACIO
     $(this)
@@ -1237,7 +1407,60 @@ $.fn.rpt_json_table2 = function (options) {
               td.append(td_btn);
           }
 
-          //crear boton personalizado   
+          //crear boton personalizado
+          
+          if(x.dropdown != null){
+
+
+            td_btn = $("<td> ", {
+              class: `text-center ${bg_grupo}`,
+            });
+
+            var $button = $("<button>", {
+              class: "btn btn-outline-primary btn-sm w-100",
+              id: "dropdownMenu",
+              type: "button",
+              "data-bs-toggle": "dropdown",
+              "aria-expanded": "false",
+              html: `<i class="icon-dot-3 text-info"></i>`,
+
+          });
+
+          var $ul = $("<ul>", { class: "dropdown-menu" });
+
+          x.dropdown.forEach((dropdownItem) => {
+            const $li = $("<li>");
+
+              // Construir el contenido dinámico con íconos y texto
+              let html = dropdownItem.icon && dropdownItem.icon !== "" 
+              ? `<i class="text-info ${dropdownItem.icon}"></i>` 
+              : "<i class='icon-minus'></i>";
+              
+              html += dropdownItem.text && dropdownItem.text !== "" 
+              ? ` ${dropdownItem.text}` 
+              : "";
+
+              const $a = $("<a>", {
+                class: "dropdown-item",
+                id: dropdownItem.id,
+                href: dropdownItem.href || "#",
+                html: html, 
+                onclick:dropdownItem.onclick
+              });
+
+              $li.append($a);
+
+            $ul.append($li);
+          }); 
+
+
+
+
+
+          td_btn.append($button,$ul);
+          
+          td.append(td_btn);
+          }
 
           if (x.a != null) {
 
@@ -1317,6 +1540,41 @@ $.fn.rpt_json_table2 = function (options) {
       //   return this;
       resolve();
   });
+};
+
+$.fn.Loading = function (options) {
+  var defaults = {
+    tipo: "simple",
+    texto: "Cargando datos ...",
+  };
+
+  var opts = $.fn.extend(defaults, options);
+
+  var load = "";
+  var opc = opts.tipo;
+
+  switch (opc) {
+    case "simple":
+      load = `<div class="d-flex align-items-center justify-content-center" style="min-height:300px;">
+                    <h3 class="text-success">
+                        <i class="icon-spin5 animate-spin"></i>
+                      
+                       CARGANDO...
+                    </h3>
+                </div>`;
+      break;
+
+    case "edit":
+      load = `<div class="d-flex align-items-center justify-content-center" style="min-height:300px;">
+                    <h3 class="text-success">
+                        <i class="icon-spin3 animate-spin"></i>
+                        ${opts.texto}
+                    </h3>
+                </div>`;
+      break;
+  }
+
+  $(this).html("" + load);
 };
 
 
@@ -1442,4 +1700,25 @@ function simple_data_table(table, no) {
             }
         }
     });
+}
+
+function fn_ajax(datos, url, div = '') {
+  return new Promise(function (resolve, reject) {
+    $.ajax({
+      type: "POST",
+      url: url,
+      data: datos,
+      dataType: "json",
+      beforeSend: () => {
+        $(div).Loading();
+      },
+
+      success: (data) => {
+        resolve(data);
+      },
+      error: function (xhr, status, error) {
+        swal_error(xhr, status, error);
+      },
+    });
+  });
 }

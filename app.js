@@ -1,6 +1,6 @@
 // Variables.
 let app;
-
+const link = 'https://erp-varoch.com/ERP24/produccion/control-fogaza/ctrl/ctrl-pedidos-list.php';
 // Init components.
 $(function () {
   app = new App("", "");
@@ -19,6 +19,7 @@ class App extends Templates {
 
   render() {
     this.layout();
+    this.ls();
   }
 
   // Configures the main layout of the application.
@@ -32,7 +33,8 @@ class App extends Templates {
       parent: "containerFormSecondary",
       json: [
         {
-          element: "input",
+          element: "input-calendar",
+          id:'calendar',
           lbl: "Titulo:",
         },
         {
@@ -55,7 +57,36 @@ class App extends Templates {
         },
       ],
     });
+
+    
+    dataPicker({ parent: "calendar" });
+
   }
+
+  ls(options) {
+    let rangePicker = getDataRangePicker('calendar'); 
+    this._link = link;
+
+  
+
+    this.createTable({
+        parent: 'listTable',
+        idFilterBar: 'filterBarSecondary',
+        url: link,
+        data: { opc: 'lsPedidos', fi: rangePicker.fi, ff: rangePicker.ff },
+        conf: { datatable: false, },
+        attr: {
+            color_th: 'bg-primary',
+            class_table: 'table table-bordered ',
+            f_size:12
+           
+        },
+        extends: false
+    });
+
+
+}
+
 
   form(options) {
     var defaults = {
