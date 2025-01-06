@@ -1417,8 +1417,8 @@ $.fn.rpt_json_table2 = function (options) {
             });
 
             var $button = $("<button>", {
-              class: "btn btn-outline-primary btn-sm w-100",
-              id: "dropdownMenu",
+              class: "btn btn-outline-primary btn-sm ",
+              id: "dropdownMenu" + x.id,
               type: "button",
               "data-bs-toggle": "dropdown",
               "aria-expanded": "false",

@@ -22,6 +22,7 @@ class App extends Templates {
   render() {
     this.layout();
     this.ls();
+    this.filterBar();
   }
 
   // Configures the main layout of the application.
@@ -54,9 +55,9 @@ class App extends Templates {
           id: "observaciones",
           lbl: "Observaciones:",
         },
-        {
-          opc: "dropdown",
-        },
+        // {
+        //   opc: "dropdown",
+        // },
       ],
     });
 
@@ -87,7 +88,14 @@ class App extends Templates {
     });
 
 
-}
+  }
+
+  
+  filterBar(){
+
+
+  }
+
 
 
   form(options) {
@@ -117,6 +125,7 @@ class App extends Templates {
     var div = $("<div>", { class: opts.class, id: opts.id });
 
     opts.json.map((item, index) => {
+      
       const propierties = { ...item }; // Crear una copia del objeto para evitar modificar el original
       delete propierties.class;
       delete propierties.classElement;
@@ -204,12 +213,12 @@ class App extends Templates {
           let opts = Object.assign(defaults, item.data);
 
             var $button = $("<button>", {
-                class: "btn btn-outline-primary btn-sm w-100",
+                class: "btn btn-outline-primary btn-sm ",
                 id: item.id || "dropdownMenu",
                 type: "button",
                 "data-bs-toggle": "dropdown",
                 "aria-expanded": "false",
-                html: `<i class="${item.iconClass || 'icon-dot-3 text-info'}">...</i>`,
+                html: `<i class="${item.iconClass || 'icon-dot-3 text-info'}"></i>`,
             });
 
          
