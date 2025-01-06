@@ -112,6 +112,7 @@ class Complements {
 
 }
 
+// add component
 class Components extends Complements {
 
     constructor(link, div_modulo) {
