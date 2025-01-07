@@ -1193,7 +1193,7 @@ $.fn.rpt_json_table2 = function (options) {
           th = $("<tr>");
 
           for (var clave in opts.data.row[0]) {
-              clave = (clave == 'btn' || clave == 'btn_personalizado' || clave == 'a') ? '' : clave;
+            clave = (clave == 'btn' || clave == 'btn_personalizado' || clave == 'a' || clave == 'dropdown') ? '' : clave;
               if (clave != "opc" && clave != "id")
                   th.append(
                       $("<th>", {
