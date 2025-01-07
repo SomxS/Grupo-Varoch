@@ -1092,6 +1092,7 @@ $.fn.rpt_json_table2 = function (options) {
           thead.append(th);
       }
 
+      
       // Imprime las columnas de la tabla
 
       if (opts.data.thead) {

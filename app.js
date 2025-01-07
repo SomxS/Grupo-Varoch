@@ -7,7 +7,7 @@ $(function () {
   app.init();
 });
 
-// Nuevo comentario
+// Nuevo comentario 2
 
 // The 'App' class organizes and manages all elements available to other application classes.
 class App extends Templates {
