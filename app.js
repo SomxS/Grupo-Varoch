@@ -8,7 +8,7 @@ $(function () {
 });
 
 // Nuevo comentario 2
-// sdasd
+
 // The 'App' class organizes and manages all elements available to other application classes.
 class App extends Templates {
   constructor(link, div_modulo) {
