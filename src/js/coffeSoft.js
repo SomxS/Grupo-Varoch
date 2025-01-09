@@ -469,7 +469,7 @@ class Components extends Complements {
 
             options_validation = Object.assign(options_validation, conf.data);
 
-
+            console.log(conf.data);
             $("#" + conf.id).validation_form(options_validation, (datos) => {
 
                 fn_ajax(datos, this._link, '').then((data) => {
