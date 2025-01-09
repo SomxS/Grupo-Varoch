@@ -1796,6 +1796,25 @@ function simple_data_table(table, no) {
             }
         }
     });
+    getPageDataTable(table)
+}
+
+function getPageDataTable(tableId) {
+    const tablePage = tableId.replace('#','');
+    const storageKey = `${tablePage}_page`;
+    const table = $(`${tableId}`).DataTable();
+
+    // Restaurar la página guardada
+    const savedPage = sessionStorage.getItem(storageKey);
+    if (savedPage) {
+        table.page(parseInt(savedPage, 10)).draw(false); // Cambiar a la página guardada
+    }
+
+    // Guardar la página actual cuando el usuario cambie de página
+    table.off("page").on("page", function () {
+        const currentPage = table.page.info().page; // Obtener la página actual
+        sessionStorage.setItem(storageKey, currentPage); // Guardar en sessionStorage
+    });
 }
 
 function fn_ajax(datos, url, div = '') {

@@ -475,6 +475,7 @@ class Components extends Complements {
                 const datos = {};
                 formData.forEach((value, key) => datos[key] = value);
 
+            console.log(2,conf.data);
                 fn_ajax(datos, this._link, '').then((data) => {
 
 
