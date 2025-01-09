@@ -1713,7 +1713,7 @@ function simple_data_table(table, no) {
     getPageDataTable(table)
 }
 
-getPageDataTable(tableId) {
+function getPageDataTable(tableId) {
     const storageKey = `${tableId}_page`;
     const table = $(`#${tableId}`).DataTable();
 
