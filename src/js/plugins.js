@@ -1714,8 +1714,9 @@ function simple_data_table(table, no) {
 }
 
 function getPageDataTable(tableId) {
-    const storageKey = `${tableId}_page`;
-    const table = $(`#${tableId}`).DataTable();
+    const tablePage = tableId.replace('#','');
+    const storageKey = `${tablePage}_page`;
+    const table = $(`${tableId}`).DataTable();
 
     // Restaurar la página guardada
     const savedPage = sessionStorage.getItem(storageKey);
