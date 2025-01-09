@@ -1039,7 +1039,7 @@ $.fn.validation_form = function (options, callback) {
             // form.find(':submit').prop('disabled', true);
               let valores = {};
               formData.forEach(function (valor, clave) {
-                valores.clave = valor;
+                valores[clave] = valor;
               });
             callback(valores);
           }
