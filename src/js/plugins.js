@@ -1592,8 +1592,13 @@ function dataPicker(options) {
 
             startDate    : moment().startOf("month"),
             endDate      : moment().endOf("month"),
+
             showDropdowns: true,
             "autoApply"  : true,
+            
+            locale: {
+              format: "DD-MM-YYYY",
+            },
 
             ranges: {
 
@@ -1602,7 +1607,6 @@ function dataPicker(options) {
 
                 "Mes actual"  : [moment().startOf("month"), moment()],
                 "Mes anterior": [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")],
-
             },
 
             function (start,end){
@@ -1619,7 +1623,7 @@ function dataPicker(options) {
             "autoApply": true,
 
             locale: {
-                format: "YYYY-MM-DD",
+              format: "DD-MM-YYYY",
             }
 
         },
