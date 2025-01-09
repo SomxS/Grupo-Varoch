@@ -472,7 +472,7 @@ class Components extends Complements {
 
             $("#" + conf.id).validation_form(options_validation, (datos) => {
 
-                fn_ajax(datos, this._link, '').then((data) => {
+                send_ajax(datos, this._link, '').then((data) => {
 
 
 
