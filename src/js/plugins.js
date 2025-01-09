@@ -1727,7 +1727,6 @@ function getPageDataTable(tableId) {
     // Guardar la página actual cuando el usuario cambie de página
     table.off("page").on("page", function () {
         const currentPage = table.page.info().page; // Obtener la página actual
-        console.log("Página actual:", currentPage);
         sessionStorage.setItem(storageKey, currentPage); // Guardar en sessionStorage
     });
 }
