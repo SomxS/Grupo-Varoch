@@ -1037,7 +1037,11 @@ $.fn.validation_form = function (options, callback) {
         } else if (opts.tipo === "json") {
           if (typeof callback === "function") {
             // form.find(':submit').prop('disabled', true);
-            callback(formData);
+              let valores = {};
+              formData.forEach(function (valor, clave) {
+                valores.clave = valor;
+              });
+            callback(valores);
           }
         }
       }
