@@ -463,7 +463,7 @@ class Components extends Complements {
         if (conf.autovalidation) {
 
             let options_validation = {
-                tipo: "text",
+                // tipo: "text",
                 opc: "save-frm",
             };
 
@@ -472,7 +472,7 @@ class Components extends Complements {
 
             $("#" + conf.id).validation_form(options_validation, (datos) => {
 
-                send_ajax(datos, this._link, '').then((data) => {
+                fn_ajax(datos, this._link, '').then((data) => {
 
 
 
