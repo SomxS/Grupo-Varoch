@@ -470,7 +470,10 @@ class Components extends Complements {
             options_validation = Object.assign(options_validation, conf.data);
 
 
-            $("#" + conf.id).validation_form(options_validation, (datos) => {
+            $("#" + conf.id).validation_form(options_validation, (formData) => {
+
+                const datos = {};
+                formData.forEach((value, key) => datos[key] = value);
 
                 fn_ajax(datos, this._link, '').then((data) => {
 
@@ -483,6 +486,15 @@ class Components extends Complements {
                     modal.modal('hide');
 
                 });
+
+                // fetch(this._link, {
+                //     method: 'POST', // Método HTTP
+                //     body: datos, // FormData como cuerpo de la solicitud
+
+                // }).then(response => { }).then(data => {
+
+                     
+                // })
 
 
 

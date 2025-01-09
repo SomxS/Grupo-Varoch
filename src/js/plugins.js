@@ -1037,17 +1037,103 @@ $.fn.validation_form = function (options, callback) {
         } else if (opts.tipo === "json") {
           if (typeof callback === "function") {
             // form.find(':submit').prop('disabled', true);
-              let valores = {};
-              formData.forEach(function (valor, clave) {
-                  console.table(clave,valor);
-                  valores[clave] = valor;
-              });
-            callback(valores);
+              console.log(formData);
+              for (const x of formData) console.log(x);
+            callback(formData);
           }
         }
       }
     });
 };
+
+
+// Llenar un select
+$.fn.option_select = function (options) {
+  const SELECT = this;
+
+  if (SELECT.hasClass("select2-hidden-accessible")) SELECT.select2("destroy");
+
+  let defaults = {
+    data: null,
+    list: null,
+    placeholder: "",
+    select2: false,
+    group: false,
+    father: false,
+    tags: false
+  };
+
+  // Carga opciones por defecto
+  let opts = $.extend(defaults, options);
+
+  if (opts.data == null) {
+    let optionsArray = [];
+    SELECT.find("option").each(function () {
+      if ($(this).val() == 0)
+        opts.placeholder = $(this).text();
+      else
+        optionsArray.push({ id: $(this).val(), valor: $(this).text() });
+    });
+    opts.data = optionsArray;
+  }
+
+
+  SELECT.html("");
+
+  if (opts.placeholder !== "") {
+    if (opts.select2) SELECT.html("<option></option>");
+
+    if (!opts.select2) SELECT.html(`<option value="0" hidden selected>${opts.placeholder}</option>`);
+  }
+
+
+  $.each(opts.data, function (index, item) {
+    SELECT.append(
+      $("<option>", {
+        value: item.id,
+        html: item.valor,
+      })
+    );
+  });
+
+  if (opts.list !== null) {
+    $.each(opts.list, function (index, item) {
+      SELECT.append(
+        $("<option>", {
+          value: item.valor,
+        })
+      );
+    });
+  }
+
+  if (opts.select2) {
+    if (!opts.group) {
+      SELECT.css("width", "100%");
+      $(window).on("resize", () => {
+        SELECT.next("span.select2").css("width", "100%");
+      });
+    }
+
+    if (!opts.father) {
+      SELECT.select2({
+        theme: "bootstrap-5",
+        placeholder: opts.placeholder,
+        tags: opts.tags,
+      });
+    } else {
+      let modalParent = $(".bootbox");
+      if (typeof opts.father === "string") modalParent = $(opts.father);
+
+      SELECT.select2({
+        theme: "bootstrap-5",
+        placeholder: opts.placeholder,
+        tags: opts.tags,
+        dropdownParent: modalParent,
+      });
+    }
+  }
+};
+
 
 $.fn.rpt_json_table2 = function (options) {
   return new Promise((resolve, reject) => {
@@ -1728,6 +1814,31 @@ function fn_ajax(datos, url, div = '') {
       },
       error: function (xhr, status, error) {
         swal_error(xhr, status, error);
+      },
+    });
+  });
+}
+function fn_ajax(datos, url, div = '') {
+  return new Promise(function (resolve, reject) {
+    $.ajax({
+      type: "POST",
+      url: url,
+      data: datos,
+      dataType: "json",
+      beforeSend: () => {
+        $(div).Loading();
+      },
+
+      success: (data) => {
+        resolve(data);
+      },
+      error: function (xhr, status, error) {
+        console.error("url: ", url);
+        console.error("status: ", status);
+        console.error("error: ", error);
+
+        if (xhr.responseText === "") console.error("No se obtuvo respuesta del servidor.");
+        else console.error(xhr);
       },
     });
   });

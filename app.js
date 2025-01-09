@@ -127,7 +127,7 @@ class App extends Templates {
         // { opc: 'select', class: 'col-3', id: 'udn', lbl: 'Seleccionar UDN: ', data: udn },
         // { opc: 'select', class: 'col-3', id: 'udn', lbl: 'Seleccionar estados: ', data: estados },
         // ...(opts.type === 'admin' ? [
-        //   { opc: 'button', class: 'col-3', id: 'btn', className: 'col-12', text: 'Nuevo evento', onClick: () => this.modalNewEvent() }] : [])
+          { opc: 'button', class: 'col-3', id: 'btn', className: 'col-12', text: 'Nuevo evento', onClick: () => this.modalNewEvent() }//] : [])
       ]
 
     });
@@ -343,7 +343,11 @@ class App extends Templates {
       initialized:()=>{
 
       },
-      success: (data) => { }
+      success: (data) => {
+
+
+
+       }
     });
 
 
@@ -373,5 +377,67 @@ class App extends Templates {
         ],
       },
     });
+  }
+
+  modalNewEvent() {
+    this.createModalForm({
+      id: "mdlNewEvent",
+      bootbox: { title: "Nuevo Evento ", id: "modalNuevoEvento", size: "large" },
+      json: [
+        { id: "title", opc: "input", lbl: "Titulo:", required: true, class: "col-12", required: true },
+        { id: "id_Season", opc: "select", lbl: "Temporada", data: temporadas, class: "col-12" },
+        { id: "id_Replay", opc: "select", lbl: "Repetir evento:", data: [{ id: 1, valor: "Anual" }], class: "col-12" },
+
+        { id: "date_init", opc: "input-calendar", class: "col-6", lbl: "Fecha inicial:" },
+        { id: "date_end", opc: "input-calendar", class: "col-6", lbl: "Fecha final:" },
+
+        { id: "id_UDN", opc: "select", lbl: "UDN:", data: udn, value: 8, class: "col-6", required: false, onchange: "calendarizacion.getListEmployed()" },
+        { id: "id_Employed", opc: "select", class: "col-6", lbl: "Responsable (s):", multiple: true },
+        { id: "activities", opc: "textarea", class: "col-12", lbl: "Actividades", rows: 5, required: true },
+        { opc: "btn-submit", text: "Enviar", class: "col-12" },
+      ],
+      autovalidation: true,
+      data: { opc: "addEvent", idEmploy: ($("#id_Employed").val() || []).join(',') },
+      success: (data) => {
+       
+       
+        let idEmployed = ($("#id_Employed").val() || []).join(',');
+
+        const form = document.getElementById('mdlNewEvent');
+        let formData = new FormData(form);
+        formData.append('idEmployed', idEmployed);
+
+        useFetch(
+          {
+            url: link,
+            data: formData
+          }
+        )
+      
+        
+        
+
+        // if (data.success === true) alert();
+        // temporadas = data.temporada;
+        // this.ls();
+      },
+    });
+
+    // initialized.
+    this.getListEmployed();
+    // datapicker
+    dataPicker({ parent: "date_init", type: "simple" });
+    dataPicker({ parent: "date_end", type: "simple" });
+    // select2
+    $("#id_Season").option_select({ select2: true, tags: true, father: true });
+  }
+  async getListEmployed() {
+    let data = await useFetch({
+      url: link,
+      data: { opc: "getListEmployed", udn: $("#id_UDN").val() },
+    });
+
+    $("#id_Employed").attr("multiple", true);
+    $("#id_Employed").option_select({ select2: true, father: true, data: data.employeds, multiple: true });
   }
 }
