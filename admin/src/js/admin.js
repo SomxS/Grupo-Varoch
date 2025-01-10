@@ -1,11 +1,13 @@
 let app;
 const ctrl = 'ctrl/ctrl-admin.php';
 
+let udn;
 
 /* Init components */
 $(function () {
     fn_ajax({ opc: 'init' }, ctrl).then((data) => {
 
+        udn = data.udn;
 
         // Instanciar.
         app = new App(ctrl, '');
@@ -28,13 +30,15 @@ class App extends Templates {
 
     render(){
         this.layout();
-        // this.filterBar();
+        this.filterBar();
     }
 
 
     layout(){
-        this.primaryLayout({ parent: 'layout' });
+        this.primaryLayout({ parent: 'root' ,id:'Admin'});
     }
+
+
 
 
 
@@ -42,9 +46,10 @@ class App extends Templates {
     filterBar() {
         const filter = [
             {
-                opc: "input-calendar",
-                lbl: "Fecha",
-                id: "iptCalendar",
+                opc: "select",
+                lbl: "Selecciona una udn",
+              
+                data: udn,
                 class: 'col-sm-4 col-12'
             },
 
@@ -59,7 +64,7 @@ class App extends Templates {
 
         ];
 
-        this.createfilterBar({ parent: 'filterBar', data: filter });
+        this.createfilterBar({ parent: 'filterBarAdmin', data: filter });
 
 
     }
