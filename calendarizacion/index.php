@@ -31,9 +31,19 @@
 </head>
 
 <body>
+
+    <?php require_once '../layout/navbar.php'; ?>
+
     <main>
 
         <div id="main__content">
+            <nav aria-label='breadcrumb'>
+                <ol class='breadcrumb'>
+                    <li class='breadcrumb-item text-uppercase text-muted'>Calendarización</li>
+
+                    <li class='breadcrumb-item fw-bold active'>Ejemplo</li>
+                </ol>
+            </nav>
             <div class="" id="root">
 
             </div>
