@@ -15,6 +15,10 @@ class ctrl extends mdl{
 
     }
 
+    function lsUsers(){
+        
+    }
+
 
 }
 
