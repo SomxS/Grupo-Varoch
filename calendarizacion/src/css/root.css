@@ -1,0 +1,11 @@
+main > #main__content > form, main > #main__content > div{
+    padding: 0 !important;
+}
+
+#root {
+    background-color: transparent !important;
+}
+
+#root > div {
+    background-color: var(--aliceblue) !important;
+}

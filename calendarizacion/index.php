@@ -54,9 +54,11 @@
 <script src="https://erp-varoch.com/DEV/src/plugin/daterangepicker/daterangepicker.js"></script>
 
 <!-- aux js -->
-<script src="src/js/coffeSoft.js?v=19"></script>
-<script src="src/js/plugins.js?v=2"></script>
+<script src="src/js/coffeSoft.js"></script>
+<script src="src/js/plugins.js"></script>
 
-<script src="app.js"></script>
+<!-- js -->
+<script src='src/js/app.js?t=<?php echo time(); ?>'></script>
+<script src='src/js/calendarizacion.js?t=<?php echo time(); ?>'></script>
 
 </html>
