@@ -35,9 +35,11 @@ class App extends Templates {
   }
 
   render() {
+    this.createNavBar();
     this.layout();
     this.filterBar();
     this.ls();
+    
   }
 
   layout(){

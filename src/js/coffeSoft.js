@@ -411,7 +411,7 @@ class Components extends Complements {
     }
 
     createModalForm(options) {
-//1234
+
         const idFormulario = options.id ? options.id : 'frmModal';
 
         const components = options.components
@@ -743,6 +743,99 @@ class Components extends Complements {
         } else {
             $("#" + opts.parent).html(div);
         }
+
+    }
+
+    createNavBar(options){
+        console.log('nav')
+
+        let defaults = {
+            logoSrc: 'https://erp-varoch.com/ERP2/src/img/logos/logo_icon_wh.png',
+            logoAlt: 'Grupo Varoch',
+            onLogoClick: 'location.reload()',
+            onMenuClick: '#',
+            themeClass: 'bg-dia',
+            menuItems: [
+                { icon: 'icon-sun-inv-1', visible: false },
+                { icon: 'icon-bell', visible: false },
+                {
+                    icon: 'icon-mail',
+                    visible: false,
+                    submenu: '<div id="mensage"><li>Hola</li></div>'
+                },
+                {
+                    id: 'li_user',
+                    visible: true,
+                    submenu: '<li onClick="redireccion(\'perfil/perfil.php\');"></li>'
+                }
+            ]
+        };
+
+        let opts = $.extend({}, defaults, options);
+
+
+
+
+
+        // Create header element
+        let $header = $('<header>', { class: opts.themeClass });
+
+
+        // Create section for logo and menu button
+        let $section = $('<section>')
+            .append(
+                $('<span>', {
+                    type: 'button',
+                    id: 'btnSidebar',
+                    html: $('<i>', { class: 'icon-menu' }),
+                    click: function () {
+                        if (opts.onMenuClick && typeof opts.onMenuClick === 'function') {
+                            opts.onMenuClick();
+                        }
+                    }
+                })
+            )
+            .append(
+                $('<img>', {
+                    class: 'd-block d-sm-none',
+                    src: opts.logoSrc,
+                    alt: opts.logoAlt,
+                    click: function () {
+                        if (opts.onLogoClick) {
+                            eval(opts.onLogoClick);
+                        }
+                    }
+                })
+            );
+
+        $header.append($section);
+
+        // Create nav element
+        let $nav = $('<nav>');
+        let $ul = $('<ul>', { class: 'theme', id: 'navbar' });
+
+        // Create menu items
+        opts.menuItems.forEach((item, index) => {
+            if (!item.visible) return; // Skip hidden items
+
+            let $li = $('<li>', { id: item.id || null })
+                .append($('<i>', { class: item.icon }));
+
+            if (item.submenu) {
+                let $submenu = $('<ul>').append(item.submenu);
+                $li.append($submenu);
+            }
+
+            $ul.append($li);
+        });
+
+        $nav.append($ul);
+        $header.append($nav);
+
+        // Append to body or specific parent
+        $(opts.parent || 'body').prepend($header);
+
+        
 
     }
 
