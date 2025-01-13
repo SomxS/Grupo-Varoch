@@ -1682,7 +1682,7 @@ function dataPicker(options) {
         rangepicker: {
 
             startDate    : moment().startOf("month"),
-            endDate      : moment().endOf("month"),
+            endDate      : moment(),
 
             showDropdowns: true,
             "autoApply"  : true,
@@ -1695,7 +1695,6 @@ function dataPicker(options) {
 
                 Ayer          : [moment().subtract(1, "days"), moment().subtract(1, "days")],
                 Antier        : [moment().subtract(2, "days"), moment().subtract(2, "days")],
-
                 "Mes actual"  : [moment().startOf("month"), moment()],
                 "Mes anterior": [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")],
             },
