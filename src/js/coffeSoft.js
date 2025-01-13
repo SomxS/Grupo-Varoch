@@ -699,6 +699,7 @@ class Components extends Complements {
                     tipo: "text",
                     opc: "save-frm",
                 };
+                
                 $("#" + conf.id).validar_contenedor({tipo:'text'}, (ok) => {
                     let formData = new FormData($('#' + conf.id)[0]);
                     const datos = {};
@@ -725,10 +726,9 @@ class Components extends Complements {
         
         let CancelForm = () => { modal.modal('hide'); }
           
-
         conf.json.push(
-            { opc: "button", className: "w-full", onClick: () => CancelForm(), text: "Cancelar", color_btn: "outline-danger", class: "col-6" },
             { opc: "button", className: "w-full", onClick: () => SuccessForm(), text: "Aceptar", class: "col-6" },
+            { opc: "button", className: "w-full", onClick: () => CancelForm(), text: "Cancelar", color_btn: "outline-danger", class: "col-6" },
         );
 
 

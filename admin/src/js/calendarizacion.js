@@ -10,26 +10,23 @@ class Calendarizacion extends App {
         this.layout();
         this.filterBar({ type: "admin" });
         this.ls();
+
+        $('#containerCalendarizacion').append('Hello world');
     }
 
     modalNewEvent() {
-        
 
         this.modalFormEvents({
             bootbox: { title: "Nuevo Evento ", id: "modalNuevoEvento", size: "large" },
             data: { opc: "addEvent" },
             success: (data) => {
-
                 if (data.success === true) {
                     alert({text:'Se ha creado un nuevo evento'});
-                  
                     this.ls();
                 }
             }
-            
         });
-
-
+        
     }
 
 

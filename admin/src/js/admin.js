@@ -10,15 +10,19 @@ const link = 'https://erp-varoch.com/DEV/calendarizacion/ctrl/app.php';
 
 $(async () => {
     await fn_ajax({ opc: "init" }, link).then((data) => {
+        
         // vars.
-        udn = data.udn;
-        udnForm = data.udnForm;
-        estados = data.estados;
+        udn        = data.udn;
+        udnForm    = data.udnForm;
+        estados    = data.estados;
         temporadas = data.temporada;
-
+        
+        // 
         calendarizacion = new Calendarizacion(link, "");
         calendarizacion.init();
+    
     });
+
 });
 
 class App extends Templates {
@@ -36,9 +40,12 @@ class App extends Templates {
             parent: "root",
             id: "Calendarizacion",
         });
+
     }
 
+
     filterBar(options) {
+
         let defaults = {
             type: "",
         };
@@ -70,9 +77,9 @@ class App extends Templates {
     }
 
     ls(options) {
+     
         let rangePicker = getDataRangePicker("calendar");
-        // this._link = link;
-
+     
         this.createTable({
             parent: "containerCalendarizacion",
             idFilterBar: "filterBarCalendarizacion",
@@ -80,12 +87,16 @@ class App extends Templates {
             data: { opc: "lsEvents", date_init: rangePicker.fi, date_end: rangePicker.ff },
             conf: { datatable: false, pag: 15 },
             attr: {
+               
                 class_table: "table table-bordered table-sm table-striped text-uppercase",
-                id: "lsTable",
-                center: [1, 2, 3, 6, 7],
-                extends: true,
+                id         : "lsTable",
+                center     : [1, 2, 3, 6, 7],
+                extends    : true,
+                
             },
-            extends: false,
         });
+
+        
+       
     }
 }

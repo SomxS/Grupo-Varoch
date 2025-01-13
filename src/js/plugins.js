@@ -1155,6 +1155,7 @@ $.fn.rpt_json_table2 = function (options) {
           frm_head: "",
           frm_foot: "",
           title_th: "",
+          // headerTable:'',
           f_size: 14,
           font_size: 12,
           parametric: false,
@@ -1621,6 +1622,18 @@ $.fn.rpt_json_table2 = function (options) {
 
       const header = opts.data.head ? createDocsHead(opts.data.head) : '';
 
+      console.log('header-table',opts); 
+
+    if (opts.header){
+
+        let header = $('<div>', {
+          class: opts.header.class ? opts.header.class : 'line',
+          id: opts.header.id ? opts.header.id: 'table-header'
+        });
+
+        div.append(header);
+
+    }
 
       div.append(opts.data.frm_head);
       div.append(header);
