@@ -1,0 +1,43 @@
+[ 2025-01-10 10:38:24 ]
+[ UNIX_USR ] :: nt authority\system
+[ WINDOWS_USR ] :: DESKTOP-89892E3$
+[ INFO ] ::  SELECT idReplay AS id,name_replay AS valor FROM rfwsmqex_gvsl_calendarizacion2.event_replay      
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1049 Unknown database 'rfwsmqex_gvsl_calendarizacion2'
+
+
+[ 2025-01-10 10:38:24 ]
+[ UNIX_USR ] :: nt authority\system
+[ WINDOWS_USR ] :: DESKTOP-89892E3$
+[ INFO ] ::  SELECT idSeason AS id,name_season AS valor FROM rfwsmqex_gvsl_calendarizacion2.event_seasons     ORDER BY name_season ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1049 Unknown database 'rfwsmqex_gvsl_calendarizacion2'
+
+
+[ 2025-01-10 10:38:23 ]
+[ UNIX_USR ] :: nt authority\system
+[ WINDOWS_USR ] :: DESKTOP-89892E3$
+[ INFO ] ::  SELECT idStatus AS id,name_status AS valor FROM rfwsmqex_gvsl_calendarizacion2.event_status      
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1049 Unknown database 'rfwsmqex_gvsl_calendarizacion2'
+
+
+[ 2025-01-10 10:34:25 ]
+[ UNIX_USR ] :: nt authority\system
+[ WINDOWS_USR ] :: DESKTOP-89892E3$
+[ INFO ] ::  SELECT idReplay AS id,name_replay AS valor FROM rfwsmqex_gvsl_calendarizacion2.event_replay      
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1049 Unknown database 'rfwsmqex_gvsl_calendarizacion2'
+
+
+[ 2025-01-10 10:34:25 ]
+[ UNIX_USR ] :: nt authority\system
+[ WINDOWS_USR ] :: DESKTOP-89892E3$
+[ INFO ] ::  SELECT idSeason AS id,name_season AS valor FROM rfwsmqex_gvsl_calendarizacion2.event_seasons     ORDER BY name_season ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1049 Unknown database 'rfwsmqex_gvsl_calendarizacion2'
+
+
+[ 2025-01-10 10:34:24 ]
+[ UNIX_USR ] :: nt authority\system
+[ WINDOWS_USR ] :: DESKTOP-89892E3$
+[ INFO ] ::  SELECT idStatus AS id,name_status AS valor FROM rfwsmqex_gvsl_calendarizacion2.event_status      
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1049 Unknown database 'rfwsmqex_gvsl_calendarizacion2'
+
+
+s
