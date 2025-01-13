@@ -4,18 +4,6 @@ class Calendarizacion extends App {
     constructor(link, div_modulo) {
         super(link, div_modulo);
 
-        form_elements = [
-            { id: "id_UDN", opc: "select", lbl: "UDN:", data: udnForm, value: 8, class: "col-12", required: false, onchange: "calendarizacion.getListEmployed()" },
-            { id: "title", opc: "input", lbl: "Titulo:", required: true, class: "col-12", required: true },
-            { id: "id_Season", opc: "select", lbl: "Temporada", data: temporadas, class: "col-12" },
-            { id: "id_Replay", opc: "select", lbl: "Repetir evento:", data: [{ id: 1, valor: "Anual" }], class: "col-12" },
-            { id: "date_init", opc: "input-calendar", class: "col-6", lbl: "Fecha inicial:" },
-            { id: "date_end", opc: "input-calendar", class: "col-6", lbl: "Fecha final:" },
-            { id: "activities", opc: "textarea", class: "col-12", lbl: "Actividades", rows: 5, required: true },
-            { id: "id_Employed", opc: "select", class: "col-12", lbl: "Responsable (s):", multiple: true },
-            // { opc: "button", className: "w-full", onClick: () => this.addEvent("addEvent"), text: "Aceptar", color_btn: 'success', class: "col-6" },
-            // { opc: "button", className: "w-full", onClick: () => this.addEvent("addEvent"), text: "Cancelar", color_btn:'info', class: "col-6" },
-        ];
     }
 
     render() {
@@ -26,34 +14,44 @@ class Calendarizacion extends App {
 
     modalNewEvent() {
         
-        this.createModalForm({
-            id: "mdlEvent",
+
+        this.modalFormEvents({
             bootbox: { title: "Nuevo Evento ", id: "modalNuevoEvento", size: "large" },
-            json: form_elements,
             data: { opc: "addEvent" },
+            success: (data) => {
+
+                if (data.success === true) {
+                    alert({text:'Se ha creado un nuevo evento'});
+                  
+                    this.ls();
+                }
+            }
+            
         });
 
 
-
-        // initialized.
-        this.getListEmployed();
-        // datapicker
-        dataPicker({ parent: "date_init", type: "simple" });
-        dataPicker({ parent: "date_end", type: "simple" });
-        // select2
-        $("#id_Season").option_select({ select2: true, tags: true, father: true });
     }
-
-   
 
 
     async editModal(id) {
         // get data.
         let data = await useFetch({ url:this._link, data: { opc:'editEvent',id:id}});
         // create component.
-        this.createModalForm({
-            id: "mdlEvent",
+
+        this.modalFormEvents({
+            bootbox: {title: "Editar Evento ", id: "modalNuevoEvento", size: "large"},
+            data: { opc: 'editEvent', id: id },
             autofill: data,
+        });
+     
+    }
+
+
+    modalFormEvents(options){
+
+        let defaults = {
+            id: "mdlEvent",
+            
             bootbox: { title: "editar Evento ", id: "modalNuevoEvento", size: "large" },
             json: [
                 { id: "id_UDN", opc: "select", lbl: "UDN:", data: udnForm, value: 8, class: "col-12", required: false, onchange: "calendarizacion.getListEmployed()" },
@@ -65,12 +63,13 @@ class Calendarizacion extends App {
                 { id: "activities", opc: "textarea", class: "col-12", lbl: "Actividades", rows: 5, required: true },
                 { id: "id_Employed", opc: "select", class: "col-12", lbl: "Responsable (s):", multiple: true },
             ],
+
             validation: true,
-            data: { opc: 'editEvent', id: id},
+         
             dynamicValues: {
-                id_Employed: "#id_Employed", 
+                id_Employed: "#id_Employed",
             },
-            success:(data)=>{
+            success: (data) => {
 
                 if (data.success === true) {
                     alert();
@@ -78,7 +77,13 @@ class Calendarizacion extends App {
                     this.ls();
                 }
             }
-        });
+        }; 
+
+
+        let opts = this.ObjectMerge(defaults,options)
+
+     
+        this.createModalForm(opts);
         // initialized.
         this.getListEmployed();
         // datapicker
@@ -86,13 +91,6 @@ class Calendarizacion extends App {
         dataPicker({ parent: "date_end", type: "simple" });
         // select2
         $("#id_Season").option_select({ select2: true, tags: true, father: true });
-    }
-
-
-    formEvents(options){
-
-     
-
     
 
 

@@ -727,6 +727,7 @@ class Components extends Complements {
             }
 
         }
+        
         let CancelForm = () => { modal.modal('hide'); }
           
 
@@ -734,7 +735,7 @@ class Components extends Complements {
             { opc: "button", className: "w-full", onClick: () => CancelForm(), text: "Cancelar", color_btn: "outline-danger", class: "col-6" },
             { opc: "button", className: "w-full", onClick: () => SuccessForm(), text: "Aceptar", class: "col-6" },
         );
-        
+
 
         // Components.
         let modal = bootbox.dialog(conf.bootbox);
