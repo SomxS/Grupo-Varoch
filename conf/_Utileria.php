@@ -1,5 +1,60 @@
 <?php
+date_default_timezone_set('America/Mexico_City');
+setlocale(LC_TIME, 'es_ES.UTF-8'); // Establecer el locale a español
 class Utileria{
+// Formatear fecha 00-XX-0000
+function letterDate($fecha){
+    $timestamp = strtotime($fecha);
+    $fecha_formateada = ucwords(strftime('%d-%b-%Y', $timestamp));
+    return $fecha_formateada;
+}
+function formatDate($fecha, $tipo = 'default') {
+    $timestamp = strtotime($fecha);
+    $date = new DateTime($fecha);
+
+    switch ($tipo) {
+        case 'letter':
+            $fecha_formateada = ucwords(strftime('%d-%b-%Y', $timestamp));
+            break;
+        case 'smMonth':
+            $fecha_formateada = ucwords(strftime('%d-%b-%Y', $timestamp));
+            break;
+        case 'lgMonth':
+            $fecha_formateada = ucwords(strftime('%d-%B-%Y', $timestamp));
+            break;
+        case 'week':
+            $fecha_formateada = strftime('%A', $date->getTimestamp());
+            break;
+        case 'thead':
+            $fecha_formateada = strftime('%d %b<br>%A', $date->getTimestamp());
+            break;
+        case 'thead': 
+            $fecha_formateada = strftime('%d %b<br>%a', $date->getTimestamp());
+            break;
+        case 'default':
+        default:
+            $fecha_formateada = strftime('%d-%m-%Y', $timestamp);
+            break;
+    }
+
+    return $fecha_formateada;
+}
+function lgMonth($num){
+    $array = ['','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+    return $array[$num];
+}
+function smMonth($num){
+    $array = ['','Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+    return $array[$num];
+}
+function lgWeek($num){
+    $array = ['','Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sábado'];
+    return $array[$num];
+}
+function smWeek($num){
+    $array = ['','Dom','Lun','Mar','Mie','Jue','Vie','Sáb'];
+    return $array[$num];
+}
 // Formatear el numero teléfonico
 function format_phone($numero) {
     if (strlen($numero) === 10) {
@@ -9,14 +64,23 @@ function format_phone($numero) {
     }
 }
 // Formatear numeros en monedas y porcentajes
-function format_number($number,$icon = '$'){
+function format_number($number,$icon = '$') {
     // Validamos si $number es numerico y quitamos posibles espacios en blanco
     $number = (is_numeric(trim($number))) ? trim($number) : 0;
+    
+    $number = number_format($number,2,'.','');
+    // Verificamos si el número es muy pequeño y se muestra como 0.00
+    $isTinyNumber = ($number > 0 && abs($number) < 0.01);
+
+    // Si el número es muy pequeño, devolvemos el guion (-) sin el icono
+    if ($isTinyNumber) {
+        return '-';
+    }
 
     // Le damos formato de numero con 2 decimales
     $format = ($number == 0 || $number == '') ? '-' : number_format($number,2,'.',',');
 
-
+    // Agregamos el prefijo necesario al numero.
     if($format !== '-') 
         return ($icon === '$') ? "{$icon} {$format}" : "{$format} {$icon}";
     else 
@@ -37,7 +101,7 @@ function code_security($longitud = 6){
     return $codigo;
 }
 // Subir un archivo al servidor
-function upload_file($file,$ruta,$new_name = null){    
+function upload_file($file,$ruta,$new_name = null){
     //Comprobar la existencia de la ruta
     if (!file_exists($ruta)) {
         mkdir($ruta, 0777, true); //Crearla si no existe.
@@ -77,26 +141,95 @@ function tratamiento_nombre($name,$last_name){
 
     return $nombre;
 }
-// Tratamiento del array para SQL
-function sql($arreglo, $where = 0){
-    if(isset($arreglo['opc'])) unset($arreglo['opc']);
-    $array = []; //Creamo un nuevo array para darle tratamiento
-    foreach ($arreglo as $key => $value) {
-        $array['values'][] = $key; // Obtenemos los index y los guardamos como values
-        $array['data'][] = $value; // Obtenemos los values que usamos para cada ?
+// HACER UN RECORRIDO DE FECHA_INICIO Y FECHA_FINAL
+function intervalDates($date1,$date2) {
+    $inicio = '';
+    $final  = '';
+    // Convertir las fechas a objetos DateTime
+    $inicio = new DateTime($date1);
+    $final  = new DateTime($date2);
+
+    $fechas_recorrido = array();
+
+    // Agregar la fecha de inicio al arreglo
+    $fechas_recorrido['dates'][]    = $inicio->format('Y-m-d');
+    $fechas_recorrido['fecha'][]    = $inicio->format('d-m-Y');
+    $fechas_recorrido['thead'][]    = strftime('%A<br>%d %B', $inicio->getTimestamp());
+    $fechas_recorrido['thsm'][]     = strftime('%a<br>%d %b', $inicio->getTimestamp());
+    $fechas_recorrido['week'][]     = strftime('%A', $inicio->getTimestamp());
+    $fechas_recorrido['dayMonth'][] = strftime('%d %B', $inicio->getTimestamp());
+    $fechas_recorrido['my'][]       = $inicio->format('m-Y');
+    $mes_inicial                    = $inicio->format('m');
+
+    // Iterar desde la fecha de inicio hasta la fecha de fin
+    $fecha_actual = clone $inicio;
+    while ($fecha_actual < $final) {
+        $fecha_actual->modify('+1 day'); // Avanzar un día
+        $fechas_recorrido['dates'][]       = $fecha_actual->format('Y-m-d');
+        $fechas_recorrido['fecha'][]       = $fecha_actual->format('d-m-Y');
+        $fechas_recorrido['thead'][]       = strftime('%A<br>%d %B', $fecha_actual->getTimestamp());
+        $fechas_recorrido['thsm'][]        = strftime('%a<br>%d %b', $fecha_actual->getTimestamp());
+        $fechas_recorrido['week'][]        = strftime('%A', $fecha_actual->getTimestamp());
+        $fechas_recorrido['dayMonth'][]    = strftime('%d %B', $fecha_actual->getTimestamp());
+        if($mes_inicial != $fecha_actual->format('m')) {
+            $mes_inicial              = $fecha_actual->format('m');
+            $fechas_recorrido['my'][] = $fecha_actual->format('m-Y');
+        }
     }
 
-    // Comprobamos que where exista
-    if ($where !== 0) {
-        // Separamos los valores acorde a la cantidad de valores del where
-        $array['where'] = array_slice($array['values'],-$where);
-        array_splice($array['values'],-$where);
+    return $fechas_recorrido;
+}
+// TRATAMIENTO DE VALORES SQL
+function sql($arreglo,$slice = 0){
+    if(!empty($arreglo)){
+        if(isset($arreglo['opc'])) unset($arreglo['opc']);
+        $sqlArray = [];
+
+        
+        if (is_array($arreglo) && is_array($arreglo[0])) {
+            $sqlArray['values'] = array_keys(current($arreglo));
+            foreach ($arreglo as $row) $sqlArray['data'][] = array_values($row);
+        } else {
+            foreach ($arreglo as $key => $value) {
+                $sqlArray['values'][] = $key; // Obtenemos los index y los guardamos como values
+                $sqlArray['data'][] =  ($value == '') ? null : $value; // Obtenemos los values que usamos para cada ?
+            }
+        }
+
+        // Comprobamos que where exista
+        if ($slice !== 0) {
+            // Separamos los valores acorde a la cantidad de valores del where
+            $sqlArray['where'] = array_slice($sqlArray['values'],-$slice);
+            array_splice($sqlArray['values'],-$slice);
+        }
+
+        // if(count($sqlArray['values']) == 0 ) unset($sqlArray['values']);
+
+        return $sqlArray;
+
     }
+}
+// CALCULAR SUMATORIA DE MINUTOS Y SEGUNDOS
+function calcularTiempoTotal($totalMinutos, $totalSegundos) {
+    // Convertir los segundos a minutos
+    $totalMinutos += floor($totalSegundos / 60);
+    $totalSegundos = $totalSegundos % 60; // Obtener los segundos restantes
 
-    // En caso que values sea igual a 0 lo eliminamos del array
-    if(count($array['values']) == 0 ) unset($array['values']);
+    // Convertir los minutos a horas
+    $horas = floor($totalMinutos / 60);
+    $minutos = $totalMinutos % 60; // Obtener los minutos restantes
+    
+     // Agregar ceros a la izquierda si es menor a 10
+    $horas = str_pad($horas, 2, '0', STR_PAD_LEFT);
+    $minutos = str_pad($minutos, 2, '0', STR_PAD_LEFT);
+    $totalSegundos = str_pad($totalSegundos, 2, '0', STR_PAD_LEFT);
 
-    return $array;
+    // Retornar el string con el formato deseado
+    return [
+            'h' => $horas,
+            'm' => $minutos,
+            's' => $totalSegundos
+        ];
 }
 }
 ?>

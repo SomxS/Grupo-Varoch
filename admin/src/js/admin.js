@@ -1,22 +1,25 @@
-let app;
-const ctrl = 'ctrl/ctrl-admin.php';
+let ctrl = "ctrl/app.php";
 
-let udn;
 
-/* Init components */
-$(function () {
-    fn_ajax({ opc: 'init' }, ctrl).then((data) => {
+// init vars.
+let app, calendarizacion;
 
+let udn, udnForm, estados, temporadas, form_elements;
+const link = 'https://erp-varoch.com/DEV/calendarizacion/ctrl/app.php';
+
+
+$(async () => {
+    await fn_ajax({ opc: "init" }, link).then((data) => {
+        // vars.
         udn = data.udn;
+        udnForm = data.udnForm;
+        estados = data.estados;
+        temporadas = data.temporada;
 
-        // Instanciar.
-        app = new App(ctrl, '');
-        app.init();
+        calendarizacion = new Calendarizacion(link, "");
+        calendarizacion.init();
     });
-
 });
-
-
 
 class App extends Templates {
     constructor(link, div_modulo) {
@@ -24,52 +27,65 @@ class App extends Templates {
     }
 
     init() {
+        this.createNavBar();
         this.render();
     }
 
-
-    render(){
-        this.layout();
-        this.filterBar();
+    layout() {
+        this.primaryLayout({
+            parent: "root",
+            id: "Calendarizacion",
+        });
     }
 
+    filterBar(options) {
+        let defaults = {
+            type: "",
+        };
 
-    layout(){
-        this.primaryLayout({ parent: 'root' ,id:'Admin'});
-    }
+        let opts = Object.assign(defaults, options);
 
+        this.createfilterBar({
+            parent: "filterBarCalendarizacion",
+            data: [
+                { opc: "input-calendar", class: "col-3", id: "calendar", lbl: "Consultar fecha: " },
+                { opc: "select", class: "col-3", id: "udn", lbl: "Seleccionar UDN: ", data: udn },
+                { opc: "select", class: "col-3", id: "status", lbl: "Seleccionar estados: ", data: estados },
+                ...(opts.type === "admin" ? [{ opc: "button", class: "col-3", id: "btn", className: "col-12", text: "Nuevo evento", onClick: () => this.modalNewEvent() }] : []),
+            ],
+        });
 
+        $("#udn, #status")
+            .off("change")
+            .on("change", () => this.ls());
 
+        // initialized.
 
-
-
-    filterBar() {
-        const filter = [
-            {
-                opc: "select",
-                lbl: "Selecciona una udn",
-              
-                data: udn,
-                class: 'col-sm-4 col-12'
+        dataPicker({
+            parent: "calendar",
+            onSelect: (start, end) => {
+                this.ls();
             },
-
-
-            {
-                opc: 'btn',
-                class: 'col-sm-3',
-                color_btn: 'secondary',
-                text: 'Buscar',
-                fn: '',
-            },
-
-        ];
-
-        this.createfilterBar({ parent: 'filterBarAdmin', data: filter });
-
-
+        });
     }
 
+    ls(options) {
+        let rangePicker = getDataRangePicker("calendar");
+        // this._link = link;
 
+        this.createTable({
+            parent: "containerCalendarizacion",
+            idFilterBar: "filterBarCalendarizacion",
 
-
+            data: { opc: "lsEvents", date_init: rangePicker.fi, date_end: rangePicker.ff },
+            conf: { datatable: false, pag: 15 },
+            attr: {
+                class_table: "table table-bordered table-sm table-striped text-uppercase",
+                id: "lsTable",
+                center: [1, 2, 3, 6, 7],
+                extends: true,
+            },
+            extends: false,
+        });
+    }
 }

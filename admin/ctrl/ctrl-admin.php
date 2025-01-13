@@ -1,17 +1,16 @@
 <?php
-if (empty($_POST['opc']))
-    exit(0);
+
 
 // incluir tu modelo
-require_once ('../mdl/mdl-admin.php');
+// require_once ('../mdl/mdl-admin.php');
 
 // sustituir 'mdl' extends de acuerdo al nombre que tiene el modelo
-class ctrl extends mdl{
+class ctrl {
 
     function init(){
-        return[
-            'udn' => $this->lsUDN()
-        ];
+        // return[
+        //     'udn' => $this->lsUDN()
+        // ];
 
     }
 
