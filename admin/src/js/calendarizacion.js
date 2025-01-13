@@ -99,8 +99,6 @@ class Calendarizacion extends App {
     }
 
 
-
-
     async statusEvents(id_status, id_Event, year, title) {
         const lblStatus = ["", "", "Comenzar", "Pausar", "Finalizar", "Eliminar", "Reanudar"];
 
