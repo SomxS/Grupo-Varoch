@@ -666,11 +666,6 @@ class Components extends Complements {
 
     createModalForm(options) {
 
-
-     
-
-
-
         const idFormulario = options.id ? options.id : 'frmModal';
 
         const components = options.components
