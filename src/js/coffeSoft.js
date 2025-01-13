@@ -410,26 +410,190 @@ class Components extends Complements {
 
     }
 
-    createModalForm(options) {
+    form(options) {
+        var defaults = {
+            json: [],
 
-        const idFormulario = options.id ? options.id : 'frmModal';
+            class: "row",
+            parent: "",
+            Element: "div",
 
+            id: "containerForm",
+            prefijo: "",
+            icon: "icon-dollar",
+
+            color: "primary",
+            color_btn: "outline-primary",
+            color_default: "primary",
+            text_btn: "Aceptar",
+            fn: "EnviarDatos()",
+            id_btn: "btnAceptar",
+            required: true,
+        };
+
+        let opts = Object.assign(defaults, options);
+
+        // Creamos el contenedor
+        var div = $("<div>", { class: opts.class, id: opts.id });
+
+        opts.json.map((item, index) => {
+
+            const propierties = { ...item }; // Crear una copia del objeto para evitar modificar el original
+            delete propierties.class;
+            delete propierties.classElement;
+            delete propierties.default;
+            delete propierties.opc;
+
+            var children = $("<div>", {
+                class: item.class ? "my-2 " + item.class : "col-12 ",
+            }).append(
+                $("<label>", {
+                    class: "fw-semibold ",
+                    html: item.lbl,
+                })
+            );
+
+            // config. attr
+            var attr = {
+                class: " form-control input-sm " + item.classElement,
+                id: item.id,
+                name: item.id ? item.id : item.name,
+                ...propierties,
+            };
+
+            const htmlElements = item.opc ? item.opc : item.element;
+            switch (htmlElements) {
+                case "input":
+                    // Agregar clase de alineación según el tipo de `item`
+                    if (item.tipo === "cifra" || item.tipo === "numero") {
+                        attr.class += " text-end";
+                    }
+
+                    var element = $("<input>", attr);
+                    break;
+
+                case "input-calendar":
+                    // Crear contenedor del grupo de input
+                    var element = $("<div>", {
+                        class: "input-group date calendariopicker",
+                    });
+
+                    element.append($("<input>", attr));
+                    element.append(
+                        $("<span>", { class: "input-group-text" }).append(
+                            $("<i>", { class: "icon-calendar-2" })
+                        )
+                    );
+                    break;
+
+                case "select":
+                    attr.class = "form-select input-sm " + item.classElement;
+                    var element = $("<select>", attr);
+
+                    if (item.default) {
+                        element.append($("<option>", { value: "0", text: item.default }));
+                    }
+
+                    $.each(item.data, function (_, option) {
+                        const isSelected = option.id === item.value;
+
+                        element.append(
+                            $("<option>", {
+                                value: option.id,
+                                text: option.valor,
+                                selected: isSelected,
+                            })
+                        );
+                    });
+
+                    break;
+
+                case "textarea":
+                    // Crear el elemento textarea
+                    attr.class = "form-control resize" + item.classElement;
+                    var element = $("<textarea>", attr);
+                    break;
+
+                case 'dropdown':
+
+                    // data default.
+                    let defaults = [
+                        { icon: "icon-pencil", text: "Editar", onClick: () => alert() },
+                        { icon: "icon-trash", text: "Eliminar", onClick: () => alert() },
+                    ];
+
+                    let opts = Object.assign(defaults, item.data);
+
+                    var $button = $("<button>", {
+                        class: "btn btn-outline-primary btn-sm ",
+                        id: item.id || "dropdownMenu",
+                        type: "button",
+                        "data-bs-toggle": "dropdown",
+                        "aria-expanded": "false",
+                        html: `<i class="${item.iconClass || 'icon-dot-3 text-info'}"></i>`,
+                    });
+
+
+                    var $ul = $("<ul>", { class: "dropdown-menu" });
+
+                    opts.forEach((dropdownItem) => {
+                        const $li = $("<li>");
+
+                        // Construir el contenido dinámico con íconos y texto
+                        let html = dropdownItem.icon && dropdownItem.icon !== ""
+                            ? `<i class="text-info ${dropdownItem.icon}"></i>`
+                            : "<i class='icon-minus'></i>";
+                        html += dropdownItem.text && dropdownItem.text !== ""
+                            ? ` ${dropdownItem.text}`
+                            : "";
+
+                        const $a = $("<a>", {
+                            class: "dropdown-item",
+                            id: dropdownItem.id,
+                            href: dropdownItem.href || "#",
+                            html: html, // Usar el HTML construido con íconos y texto
+                        });
+
+                        if (dropdownItem.onClick) {
+                            $a.on("click", dropdownItem.onClick);
+                        }
+
+                        $li.append($a);
+                        $ul.append($li);
+                    });
+                    var element = $("<div>", { class: "dropdown" }).append($button, $ul);
+                    break;
+
+
+            }
+
+            children.append(element);
+
+            div.append(children);
+        });
+
+        $("#" + opts.parent).append(div);
+    }
+
+
+    ModalForm(options){
+
+        // Configuración para formularios.
+        const idFormulario = options.id ? options.id : 'modalForm';
         const components = options.components
-
             ? options.components
-            : $("<form>", { novalidate: true, id: idFormulario, class: "" });
-
+            : $("<form>", { novalidate: true, id: idFormulario, class: "" }); // Componente form.
 
 
         let defaults = {
             id: idFormulario,
-
+            autofill: false,
             bootbox: {
-                title: 'Modal example',
+                title      : 'Modal example',
                 closeButton: true,
-                message: components,
+                message    : components,
+                id         : 'modal'
             },
-
             json: [
                 {
                     opc: 'input-group',
@@ -442,69 +606,229 @@ class Components extends Complements {
                     class: 'col-12'
                 }
             ],
-
-
-            autovalidation: false,
-
-            data: { opc: 'sendForm' }
-
+            plugin: 'content_json_form',
+            autovalidation: true,
+            data: { opc: 'setForm' }
         };
 
-        const conf = this.ObjectMerge(defaults, options);
-        let modal = bootbox.dialog(conf.bootbox);
+        const opts = this.ObjectMerge(defaults, options);
+        let modal = bootbox.dialog(opts.bootbox); // Crear componente modal.
+
+        // Proceso de construccion de un formulario
+        $('#' + opts.id)[opts.plugin]({ data: opts.json, type: '' });
 
 
-        $('#' + conf.id).content_json_form({ data: conf.json, type: '' });
-
-        if (options.beforeSend)
-            options.beforeSend();
+        let formData = new FormData($("#" + opts.id)[0]);
 
 
-        if (conf.autovalidation) {
+
+        // Proceso de autovalidacion
+        if (opts.autovalidation) {
+           
 
             let options_validation = {
-                // tipo: "text",
+                tipo: "text",
                 opc: "save-frm",
             };
 
-            options_validation = Object.assign(options_validation, conf.data);
+            let formData = new FormData($("#" + opts.id)[0]);
+
+            console.log(formData);
+
+            options_validation = Object.assign(options_validation, opts.data);
 
 
-            $("#" + conf.id).validation_form(options_validation, (formData) => {
+            $("#" + opts.id).validation_form(options_validation, (data) => {
 
-                const datos = {};
-                formData.forEach((value, key) => datos[key] = value);
+                console.log("#" + opts.id)
+                let formData = new FormData($("#" + opts.id)[0]);
 
-            console.log(2,conf.data);
-                fn_ajax(datos, this._link, '').then((data) => {
-
-
-
-                    if (conf.success)
-                        conf.success(data);
-
-
-                    modal.modal('hide');
-
-                });
-
-                // fetch(this._link, {
-                //     method: 'POST', // Método HTTP
-                //     body: datos, // FormData como cuerpo de la solicitud
-
-                // }).then(response => { }).then(data => {
-
-                     
-                // })
-
+                console.log(formData);
 
 
             });
 
 
-        } else {
-            return modal;
+
+        } 
+
+
+        
+
+
+
+
+
+
+
+    }
+
+
+    createModalForm(options) {
+
+
+     
+
+
+
+        const idFormulario = options.id ? options.id : 'frmModal';
+
+        const components = options.components
+
+            ? options.components
+            : $("<form>", { novalidate: true, id: idFormulario, class: "" });
+
+
+
+        let defaults = {
+            id: idFormulario,
+            autofill:false,
+            bootbox: {
+                title: 'Modal example',
+                closeButton: true,
+                message: components,
+            },
+            json: [ {opc: 'label', text: 'Agrega tu formulario',class:'col-12' } ],
+            autovalidation: true,
+            data: { opc: 'sendForm' }
+        };
+
+        const conf = this.ObjectMerge(defaults, options);
+
+
+        // Operations.
+        let SuccessForm = () => {
+
+            if (conf.autovalidation) {
+                let options_validation = {
+                    tipo: "text",
+                    opc: "save-frm",
+                };
+                $("#" + conf.id).validar_contenedor({tipo:'text'}, (ok) => {
+                    let formData = new FormData($('#' + conf.id)[0]);
+                    const datos = {};
+                    formData.forEach((value, key) => (datos[key] = value));
+                    // Agregar datos dinámicos
+                    const dynamicData = {};
+                    if (conf.dynamicValues)
+                        Object.keys(conf.dynamicValues).forEach((key) => {
+                            dynamicData[key] = $(conf.dynamicValues[key]).val();
+                        });
+                    const data = Object.assign(datos, conf.data, dynamicData);
+                    useFetch({
+                        url: this._link,
+                        data: data,
+                        success: (request) => {
+                            if (conf.success) conf.success(request);
+                            modal.modal('hide');
+                        }
+                    })
+                });
+            }
+
         }
+        let CancelForm = () => { modal.modal('hide'); }
+          
+
+        conf.json.push(
+            { opc: "button", className: "w-full", onClick: () => CancelForm(), text: "Cancelar", color_btn: "outline-danger", class: "col-6" },
+            { opc: "button", className: "w-full", onClick: () => SuccessForm(), text: "Aceptar", class: "col-6" },
+        );
+        
+
+        // Components.
+        let modal = bootbox.dialog(conf.bootbox);
+        $('#' + conf.id).content_json_form({ data: conf.json, type: '' });
+
+
+      
+        
+        /* propiedades de autofill*/
+   
+        if (conf.autofill) {
+            // init process auto inputs
+            for (const frm in conf.autofill) {
+                // Buscar elementos en el DOM cuyo atributo name coincida con la clave
+                const $element = $('#' + conf.id).find(`[name="${frm}"]`);
+                // Si se encuentra el elemento, establecer su valor
+                if ($element.length > 0) {
+                    $element.val(conf.autofill[frm]);
+                } else {
+                    console.log('no se encontro el elemento');
+                }
+            }
+          
+        }
+
+
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // if (options.beforeSend)
+        //     options.beforeSend();
+
+
+        // if (conf.autovalidation) {
+
+        //     let options_validation = {
+        //         // tipo: "text",
+        //         opc: "save-frm",
+        //     };
+
+        //     options_validation = Object.assign(options_validation, conf.data);
+
+
+        //     $("#" + conf.id).validation_form(options_validation, (formData) => {
+
+        //         const datos = {};
+        //         formData.forEach((value, key) => datos[key] = value);
+
+        //     console.log(2,conf.data);
+        //         fn_ajax(datos, this._link, '').then((data) => {
+
+
+
+        //             if (conf.success)
+        //                 conf.success(data);
+
+
+        //             modal.modal('hide');
+
+        //         });
+
+        //         // fetch(this._link, {
+        //         //     method: 'POST', // Método HTTP
+        //         //     body: datos, // FormData como cuerpo de la solicitud
+
+        //         // }).then(response => { }).then(data => {
+
+                     
+        //         // })
+
+
+
+        //     });
+
+
+        // } else {
+        //     return modal;
+        // }
 
 
         // return modal;
@@ -747,8 +1071,7 @@ class Components extends Complements {
     }
 
     createNavBar(options){
-        console.log('nav')
-
+ 
         let defaults = {
             logoSrc: 'https://erp-varoch.com/ERP2/src/img/logos/logo_icon_wh.png',
             logoAlt: 'Grupo Varoch',

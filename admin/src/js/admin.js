@@ -1,21 +1,23 @@
-const ctrl = "ctrl/ctrl-admin.php";
+let ctrl = "ctrl/app.php";
 
 
 // init vars.
 let app, calendarizacion;
 
 let udn, udnForm, estados, temporadas, form_elements;
+const link = 'https://erp-varoch.com/DEV/calendarizacion/ctrl/app.php';
+
 
 $(async () => {
-    await fn_ajax({ opc: "init" }, ctrl).then((data) => {
-        // // vars.
-        // udn = data.udn;
-        // udnForm = data.udnForm;
-        // estados = data.estados;
-        // temporadas = data.temporada;
+    await fn_ajax({ opc: "init" }, link).then((data) => {
+        // vars.
+        udn = data.udn;
+        udnForm = data.udnForm;
+        estados = data.estados;
+        temporadas = data.temporada;
 
-        // calendarizacion = new Calendarizacion(ctrl, "");
-        // calendarizacion.init();
+        calendarizacion = new Calendarizacion(link, "");
+        calendarizacion.init();
     });
 });
 
@@ -76,7 +78,7 @@ class App extends Templates {
             idFilterBar: "filterBarCalendarizacion",
 
             data: { opc: "lsEvents", date_init: rangePicker.fi, date_end: rangePicker.ff },
-            conf: { datatable: true, pag: 15 },
+            conf: { datatable: false, pag: 15 },
             attr: {
                 class_table: "table table-bordered table-sm table-striped text-uppercase",
                 id: "lsTable",

@@ -13,7 +13,8 @@ class Calendarizacion extends App {
             { id: "date_end", opc: "input-calendar", class: "col-6", lbl: "Fecha final:" },
             { id: "activities", opc: "textarea", class: "col-12", lbl: "Actividades", rows: 5, required: true },
             { id: "id_Employed", opc: "select", class: "col-12", lbl: "Responsable (s):", multiple: true },
-            { opc: "button", onClick: () => this.addEvent("addEvent"), text: "Enviar", class: "col-12" },
+            // { opc: "button", className: "w-full", onClick: () => this.addEvent("addEvent"), text: "Aceptar", color_btn: 'success', class: "col-6" },
+            // { opc: "button", className: "w-full", onClick: () => this.addEvent("addEvent"), text: "Cancelar", color_btn:'info', class: "col-6" },
         ];
     }
 
@@ -24,11 +25,15 @@ class Calendarizacion extends App {
     }
 
     modalNewEvent() {
+        
         this.createModalForm({
             id: "mdlEvent",
             bootbox: { title: "Nuevo Evento ", id: "modalNuevoEvento", size: "large" },
             json: form_elements,
+            data: { opc: "addEvent" },
         });
+
+
 
         // initialized.
         this.getListEmployed();
@@ -39,35 +44,64 @@ class Calendarizacion extends App {
         $("#id_Season").option_select({ select2: true, tags: true, father: true });
     }
 
-    async addEvent(opc) {
-        let formData = new FormData($("#mdlEvent")[0]);
+   
 
-        const datos = {};
-        formData.forEach((value, key) => (datos[key] = value));
 
-        datos.id_Employed = $("#id_Employed").val();
-        datos.opc = opc;
-
-        const data = await fn_ajax(datos, this._link);
-
-        if (data.success === true) {
-            alert();
-            temporadas = data.temporada;
-            this.ls();
-            closedModal();
-        }
-    }
-
-    editModal(id) {
+    async editModal(id) {
+        // get data.
+        let data = await useFetch({ url:this._link, data: { opc:'editEvent',id:id}});
+        // create component.
         this.createModalForm({
             id: "mdlEvent",
-            bootbox: { title: "Nuevo Evento ", id: "modalNuevoEvento", size: "large" },
-            json: form_elements,
-            autovalidation: true,
-            data: { opc: "editEvent", id },
-            success: (data) => { },
+            autofill: data,
+            bootbox: { title: "editar Evento ", id: "modalNuevoEvento", size: "large" },
+            json: [
+                { id: "id_UDN", opc: "select", lbl: "UDN:", data: udnForm, value: 8, class: "col-12", required: false, onchange: "calendarizacion.getListEmployed()" },
+                { id: "title", opc: "input", lbl: "Titulo:", required: true, class: "col-12", required: true },
+                { id: "id_Season", opc: "select", lbl: "Temporada", data: temporadas, class: "col-12" },
+                { id: "id_Replay", opc: "select", lbl: "Repetir evento:", data: [{ id: 1, valor: "Anual" }], class: "col-12" },
+                { id: "date_init", opc: "input-calendar", class: "col-6", lbl: "Fecha inicial:" },
+                { id: "date_end", opc: "input-calendar", class: "col-6", lbl: "Fecha final:" },
+                { id: "activities", opc: "textarea", class: "col-12", lbl: "Actividades", rows: 5, required: true },
+                { id: "id_Employed", opc: "select", class: "col-12", lbl: "Responsable (s):", multiple: true },
+            ],
+            validation: true,
+            data: { opc: 'editEvent', id: id},
+            dynamicValues: {
+                id_Employed: "#id_Employed", 
+            },
+            success:(data)=>{
+
+                if (data.success === true) {
+                    alert();
+                    temporadas = data.temporada;
+                    this.ls();
+                }
+            }
         });
+        // initialized.
+        this.getListEmployed();
+        // datapicker
+        dataPicker({ parent: "date_init", type: "simple" });
+        dataPicker({ parent: "date_end", type: "simple" });
+        // select2
+        $("#id_Season").option_select({ select2: true, tags: true, father: true });
     }
+
+
+    formEvents(options){
+
+     
+
+    
+
+
+
+
+    }
+
+
+
 
     async statusEvents(id_status, id_Event, year, title) {
         const lblStatus = ["", "", "Comenzar", "Pausar", "Finalizar", "Eliminar", "Reanudar"];

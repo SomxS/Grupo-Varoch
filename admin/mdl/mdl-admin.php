@@ -1,5 +1,5 @@
 <?php
-require_once('../conf/_Utileria.php');
+// require_once('../conf/_Utileria.php');
 require_once('../conf/_CRUD.php');
 
 

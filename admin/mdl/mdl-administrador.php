@@ -1,5 +1,5 @@
 <?php
-require_once('mdl-app.php');
+require_once('mdl-admin.php');
 class MAdministrador extends MApp {
 function listEvent($array){
     $values = [
