@@ -1621,6 +1621,18 @@ $.fn.rpt_json_table2 = function (options) {
 
       const header = opts.data.head ? createDocsHead(opts.data.head) : '';
 
+  
+
+    if (opts.header){
+
+        let header = $('<div>', {
+          class: opts.header.class ? opts.header.class : 'line',
+          id: opts.header.id ? opts.header.id: 'table-header'
+        });
+
+        div.append(header);
+
+    }
 
       div.append(opts.data.frm_head);
       div.append(header);
