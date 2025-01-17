@@ -35,15 +35,41 @@ class Calendarizacion extends App {
 
     async editModal(id) {
         // get data.
-        let data = await useFetch({ url:this._link, data: { opc:'editEvent',id:id}});
+        let data = await useFetch({ url: this._link, data: { opc: "getEvent", id: id } });
+
+        console.warn(data.id_Season);
         // create component.
 
         this.modalFormEvents({
-            bootbox: {title: "Editar Evento ", id: "modalNuevoEvento", size: "large"},
-            data: { opc: 'editEvent', id: id },
+            id: 'containerModalEdit',
+            bootbox: { title: "Editar Evento ", id: "modalNuevoEvento", size: "large" },
+            data: { opc: "updateEvent", id: id },
             autofill: data,
+            success: (data) => {
+            
+                // if (data.success === true) {
+                alert({ text: "Se ha editado el evento" });
+                this.ls();
+                // }
+            },
         });
-     
+
+        $("#id_Season").val(data.id_Season).trigger("change");
+       
+        setTimeout(() => {
+         
+            const valores = $("#id_Employed option")
+                .map(function () {
+                    return $(this).val();
+                })
+                .get();
+
+
+            console.log(data.id_Employed);
+            
+            $("#id_Employed").val(data.id_Employed).trigger("change");
+
+        }, 400);
     }
 
 
@@ -90,7 +116,7 @@ class Calendarizacion extends App {
         dataPicker({ parent: "date_init", type: "simple" });
         dataPicker({ parent: "date_end", type: "simple" });
         // select2
-        $("#id_Season").option_select({ select2: true, tags: true, father: true });
+        $("#id_Season").option_select({ select2: true,  father: true });
     
 
 

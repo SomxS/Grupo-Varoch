@@ -727,8 +727,8 @@ class Components extends Complements {
           
 
         conf.json.push(
-            { opc: "button", className: "w-full", onClick: () => CancelForm(), text: "Cancelar", color_btn: "outline-danger", class: "col-6" },
-            { opc: "button", className: "w-full", onClick: () => SuccessForm(), text: "Aceptar", class: "col-6" },
+            { opc: "button", id: 'btnExit', inert:true, className: "w-full", onClick: () => CancelForm(), text: "Cancelar", color_btn: "outline-danger", class: "col-6" },
+            { opc: "button", id:'btnSuccess', className: "w-full", onClick: () => SuccessForm(), text: "Aceptar", class: "col-6" },
         );
 
 
@@ -742,18 +742,26 @@ class Components extends Complements {
         /* propiedades de autofill*/
    
         if (conf.autofill) {
-            // init process auto inputs
+            // Init process auto inputs
             for (const frm in conf.autofill) {
                 // Buscar elementos en el DOM cuyo atributo name coincida con la clave
                 const $element = $('#' + conf.id).find(`[name="${frm}"]`);
-                // Si se encuentra el elemento, establecer su valor
+
                 if ($element.length > 0) {
-                    $element.val(conf.autofill[frm]);
+                    // Establecer valor dependiendo del tipo de elemento
+                    if ($element.is('select')) {
+                        // Seleccionar la opción correcta en el select
+                        $element.val(conf.autofill[frm]).trigger('change');
+                    } else {
+                        // Para otros elementos como input o textarea
+                        $element.val(conf.autofill[frm]);
+                    }
+
+                    console.log('Elemento encontrado y valor asignado:', $element);
                 } else {
-                    console.log('no se encontro el elemento');
+                    console.log('No se encontró el elemento:', frm);
                 }
             }
-          
         }
 
 
