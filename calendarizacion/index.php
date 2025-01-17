@@ -65,6 +65,6 @@
 <script src="../src/js/coffeSoft.js"></script>
 <script src="../src/js/plugins.js"></script>
 
-<script src="../app.js"></script>
+<script src="src/js/app.js"></script>
 
 </html>

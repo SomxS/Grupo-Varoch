@@ -1,5 +1,5 @@
-// let ctrl = "ctrl/app.php";
-const link = 'https://erp-varoch.com/DEV/costsys/ctrl/ctrl-costo-potencial-soft.php';
+let link = "ctrl/app.php";
+// const link = 'https://erp-varoch.com/DEV/costsys/ctrl/ctrl-costo-potencial-soft.php';
 
 
 // init vars.
@@ -8,20 +8,10 @@ let app, desplazamiento;
 
 $(async () => {
     await fn_ajax({ opc: "init" }, link).then((data) => {
-        
-        // vars.
-       
-        
-        // instancias.
-
-        app = new App(link,'root');
-     
-
-        // Instanciar.
-        desplazamiento = new Desplazamiento(link, '');
-        desplazamiento.init();
-   
-    
+        // // vars.
+        // // instancias.
+        app = new Desplazamiento(link,'root');
+        app.init();
     });
 
 });
@@ -33,12 +23,46 @@ class App extends Templates {
 
     init() {
         this.render();
-        
+
     }
 
-    render(){
-     
+   
+
+    ls() {
+
+        let rangePicker = getDataRangePicker("calendar");
+
+        this.createTable({
+
+            parent: "containerDesplazamiento",
+            idFilterBar: "filterBarCostsys",
+
+            data: {
+
+                opc: "lsDesplazamiento",
+                date_init: rangePicker.fi,
+                date_end: rangePicker.ff
+
+            },
+            conf: { datatable: false, pag: 15 },
+
+            attr: {
+                color_th: 'bg-primary',
+                color: 'bg-default',
+                class: "table table-bordered table-sm ",
+                f_size: 12,
+                id: "lsTable",
+                center: [1, 6, 7],
+                extends: true,
+
+            },
+        });
+
+
+
     }
+
+
 
     layout() {
 
@@ -52,9 +76,12 @@ class App extends Templates {
             json  : [
                 { 
                     tab:'Desplazamientos' , id: 'tab-desplazamientos',active:true ,
+                    
                     contenedor: [
+
                         { id: 'filterBarDesplazamientos',class:'line' },
                         { id:'containerDesplazamiento',class: 'line my-2'},
+                    
                     ]
                 
                 },
@@ -66,11 +93,7 @@ class App extends Templates {
 
     }
 
-
     filterBar(options) {
-
-  
-
         this.createfilterBar({
             parent: "filterBarCostsys",
             data: [
@@ -79,9 +102,6 @@ class App extends Templates {
                 { opc: "select", class: "col-2", id: "Mes", lbl: "Seleccionar mes:", data: [{id: 1, valor:'ENERO'}] },
             ],
         });
-
-
-     
     }
 
     

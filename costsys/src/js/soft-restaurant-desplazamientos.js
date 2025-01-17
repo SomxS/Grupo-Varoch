@@ -1,6 +1,3 @@
-
-
-
 class Desplazamiento extends App {
     constructor(link, div_modulo) {
         super(link, div_modulo);
@@ -9,28 +6,26 @@ class Desplazamiento extends App {
     render() {
         this.createNavBar();
         this.layout();
-        this.filterBar();
+
         this.filterBarDesplazamiento();
-        this.ls();
+        // this.filterBar();
+        // this.ls();
     }
 
     filterBarDesplazamiento(options) {
+
         this.createfilterBar({
             parent: "filterBarDesplazamientos",
             data: [
-                { opc: "input-calendar", class: "col-3", id: "calendar", lbl: "Selecciona una fecha"},
-                {opc:'button',class:'col-3',color_btn:'outline-primary', text : 'Detallado' ,onClick:()=>this.ls()}
+                { opc: "input-calendar", class: "col-3", id: "calendar", lbl: "Selecciona una fecha" },
+                { opc: 'button', class:'col-3',color_btn:'outline-primary', text : 'Detallado' ,onClick:()=>this.ls()}
                ],
         });
 
         // initialized.
         dataPicker({
-
             parent: "calendar",
-            
-            onSelect: (start, end) => {
-                this.ls();
-            },
+            onSelect: (start, end) => { this.ls(); },
         });
     }
 
