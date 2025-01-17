@@ -117,6 +117,322 @@ class Components extends Complements {
     constructor(link, div_modulo) {
         super(link, div_modulo);
     }
+
+    createBasicHeader(options) {
+        var defaults = {
+            title: "GRUPO VAROCH",
+            icon: "icon-user-circle",
+            onButtonClick: () => alert("Botón presionado"),
+            class: "p-4 border-b border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800",
+            containerClass: "containerx mx-auto flex justify-between items-center",
+            buttonClass: "p-2 rounded-md bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none",
+        };
+
+        let opts = Object.assign({}, defaults, options);
+
+        // Crear el contenedor principal del header
+        var $header = $("<header>", { class: opts.class });
+
+        // Crear el contenedor interno
+        var $container = $("<div>", { class: opts.containerClass });
+
+        // Crear el título
+        var $title = $("<h1>", {
+            class: "text-xl font-bold",
+            html: opts.title,
+        });
+
+        // Crear el botón
+        var $button = $("<button>", {
+            id: "theme-toggle",
+            class: opts.buttonClass,
+        }).append(
+            $("<i>", { class: opts.icon })
+        );
+
+        // Agregar evento click al botón
+        $button.on("click", opts.onButtonClick);
+
+        // Ensamblar los elementos
+        $container.append($title, $button);
+        $header.append($container);
+
+        // Append to body or specific parent
+        $(opts.parent || 'body').prepend($header);
+    }
+
+    createHeader(options = {}) {
+    const defaults = {
+        logoSrc: '/images/dashboard/logo.svg',
+        searchPlaceholder: 'Buscar',
+        lightModeText: 'Light',
+        darkModeText: 'Dark',
+        avatarSrc: '/images/dashboard/avatar.svg',
+        branchIcon: "data:image/svg+xml,%3csvg%20...", // Truncated for clarity
+        bgClass: 'bg-[#1F2A37]',
+        borderColor: 'border-[#374151]',
+        textColor: 'text-white',
+        buttonBgLight: 'bg-[#232e3c]',
+        buttonBgDark: 'bg-[#7152F3]',
+    };
+
+    const settings = $.extend({}, defaults, options);
+
+    const $header = $('<header>', {
+        class: `flex justify-between items-center w-full px-4 py-3 ${settings.bgClass}  top-0 left-0 right-0 border-b ${settings.borderColor} sm:px-6 md:px-8 lg:px-10`
+    });
+
+    // Logo and search section
+    const $logoSection = $('<div>', {
+        class: 'flex items-center space-x-1'
+    }).append(
+        // $('<img>', {
+        //     src: settings.logoSrc,
+        //     alt: 'Admin Logo',
+        //     class: 'w-10 h-8 mr-2'
+        // }),
+        $('<i>', {
+            class: `${settings.textColor} flex items-center cursor-pointer w-9 h-9  icon-menu-3`,
+          
+        }),
+        $('<div>', {
+            class: 'hidden sm:flex relative items-center w-full max-w-xs ml-2 sm:w-80'
+        }).append(
+          
+            // $('<input>', {
+            //     type: 'text',
+            //     placeholder: settings.searchPlaceholder,
+            //     class: 'w-full pl-9 pr-2 py-1 bg-[#374151] text-white border border-[#4B5563] rounded-md focus:outline-none focus:ring-0 focus:border-[#51309A]'
+            // })
+        )
+    );
+
+    // Buttons section
+    const $buttonsSection = $('<div>', {
+        class: 'flex items-center space-x-3'
+    }).append(
+        $('<div>', {
+            class: 'flex space-x-2'
+        }).append(
+            $('<button>', {
+                class: `flex items-center space-x-2 px-4 py-2 rounded ${settings.buttonBgLight} text-gray-500`
+            }).append(
+                $('<svg>', {
+                    class: 'w-4 h-4',
+                    'aria-hidden': true,
+                    xmlns: 'http://www.w3.org/2000/svg',
+                    fill: 'currentColor',
+                    viewBox: '0 0 24 24',
+                    html: '<path fill-rule="evenodd" d="M13 3a1 1 0 1 0-2 0v2a1 1 0 1 0 2 0V3ZM..." clip-rule="evenodd"></path>'
+                }),
+                $('<p>', { text: settings.lightModeText })
+            ),
+            $('<button>', {
+                class: `flex items-center space-x-2 px-4 rounded ${settings.buttonBgDark} text-white`
+            }).append(
+                $('<svg>', {
+                    class: 'w-4 h-4',
+                    'aria-hidden': true,
+                    xmlns: 'http://www.w3.org/2000/svg',
+                    fill: 'currentColor',
+                    viewBox: '0 0 24 24',
+                    html: '<path fill-rule="evenodd" d="M11.675 2.015a.998.998 0 0 0-.403.011C..." clip-rule="evenodd"></path>'
+                }),
+                $('<p>', { text: settings.darkModeText })
+            )
+        ),
+        $('<button>').append(
+            $('<img>', {
+                src: settings.branchIcon,
+                alt: 'sucursales',
+                class: 'w-5'
+            })
+        ),
+        $('<button>', {
+            class: 'relative hover:cursor-pointer'
+        }).append(
+            $('<img>', {
+                src: settings.avatarSrc,
+                alt: 'Avatar',
+                class: 'w-8 h-8 border border-gray-400 rounded-full'
+            })
+        )
+    );
+
+    // Combine sections and return
+    $header.append($logoSection, $buttonsSection);
+    // Append to body or specific parent
+        $(settings.parent || 'body').prepend($header);
+    }
+
+    form(options) {
+        var defaults = {
+            json: [],
+
+            class: "row",
+            parent: "",
+            Element: "div",
+
+            id: "containerForm",
+            prefijo: "",
+            icon: "icon-dollar",
+
+            color: "primary",
+            color_btn: "outline-primary",
+            color_default: "primary",
+            text_btn: "Aceptar",
+            fn: "EnviarDatos()",
+            id_btn: "btnAceptar",
+            required: true,
+        };
+
+        let opts = Object.assign(defaults, options);
+
+        // Creamos el contenedor
+        var div = $("<div>", { class: opts.class, id: opts.id });
+
+        console.log(opts)
+
+        opts.json.map((item, index) => {
+
+            const propierties = { ...item }; // Crear una copia del objeto para evitar modificar el original
+            delete propierties.class;
+            delete propierties.classElement;
+            delete propierties.default;
+            delete propierties.opc;
+
+            var children = $("<div>", {
+                class: item.class ? "my-2 " + item.class : "col-12 ",
+            }).append(
+                $("<label>", {
+                    class: "fw-semibold ",
+                    html: item.lbl,
+                })
+            );
+
+            // config. attr
+            var attr = {
+                class: "border border-gray-600 bg-gray-800 text-slate-400 rounded px-4 py-2 text-xs w-full " + item.classElement,
+                id: item.id,
+                name: item.id ? item.id : item.name,
+                ...propierties,
+            };
+
+            const htmlElements = item.opc ? item.opc : item.element;
+            switch (htmlElements) {
+                case "input":
+                    // Agregar clase de alineación según el tipo de `item`
+                    if (item.tipo === "cifra" || item.tipo === "numero") {
+                        attr.class += " text-end ";
+                    }
+
+                    var element = $("<input>", attr);
+                    break;
+
+                case "input-calendar":
+                    // Crear contenedor del grupo de input
+                    var element = $("<div>", {
+                        class: "input-group date calendariopicker",
+                    });
+
+                    element.append($("<input>", attr));
+                    element.append(
+                        $("<span>", { class: "input-group-text" }).append(
+                            $("<i>", { class: "icon-calendar-2" })
+                        )
+                    );
+                    break;
+
+                case "select":
+                    attr.class = "form-select input-sm " + item.classElement;
+                    var element = $("<select>", attr);
+
+                    if (item.default) {
+                        element.append($("<option>", { value: "0", text: item.default }));
+                    }
+
+                    $.each(item.data, function (_, option) {
+                        const isSelected = option.id === item.value;
+
+                        element.append(
+                            $("<option>", {
+                                value: option.id,
+                                text: option.valor,
+                                selected: isSelected,
+                            })
+                        );
+                    });
+
+                    break;
+
+                case "textarea":
+                    // Crear el elemento textarea
+                    attr.class = "form-control resize" + item.classElement;
+                    var element = $("<textarea>", attr);
+                    break;
+
+                case 'dropdown':
+
+                    // data default.
+                    let defaults = [
+                        { icon: "icon-pencil", text: "Editar", onClick: () => alert() },
+                        { icon: "icon-trash", text: "Eliminar", onClick: () => alert() },
+                    ];
+
+                    let opts = Object.assign(defaults, item.data);
+
+                    var $button = $("<button>", {
+                        class: "btn btn-outline-primary btn-sm ",
+                        id: item.id || "dropdownMenu",
+                        type: "button",
+                        "data-bs-toggle": "dropdown",
+                        "aria-expanded": "false",
+                        html: `<i class="${item.iconClass || 'icon-dot-3 text-info'}"></i>`,
+                    });
+
+
+                    var $ul = $("<ul>", { class: "dropdown-menu" });
+
+                    opts.forEach((dropdownItem) => {
+                        const $li = $("<li>");
+
+                        // Construir el contenido dinámico con íconos y texto
+                        let html = dropdownItem.icon && dropdownItem.icon !== ""
+                            ? `<i class="text-info ${dropdownItem.icon}"></i>`
+                            : "<i class='icon-minus'></i>";
+                        html += dropdownItem.text && dropdownItem.text !== ""
+                            ? ` ${dropdownItem.text}`
+                            : "";
+
+                        const $a = $("<a>", {
+                            class: "dropdown-item",
+                            id: dropdownItem.id,
+                            href: dropdownItem.href || "#",
+                            html: html, // Usar el HTML construido con íconos y texto
+                        });
+
+                        if (dropdownItem.onClick) {
+                            $a.on("click", dropdownItem.onClick);
+                        }
+
+                        $li.append($a);
+                        $ul.append($li);
+                    });
+                    var element = $("<div>", { class: "dropdown" }).append($button, $ul);
+                    break;
+
+
+            }
+
+            children.append(element);
+
+            div.append(children);
+        });
+
+        $("#" + opts.parent).append(div);
+    }
+
+
 }
 
 class Templates extends Components {

@@ -8,7 +8,7 @@ class Desplazamiento extends App {
         this.layout();
 
         this.filterBarDesplazamiento();
-        // this.filterBar();
+        this.filterBar();
         // this.ls();
     }
 
@@ -18,40 +18,105 @@ class Desplazamiento extends App {
             parent: "filterBarDesplazamientos",
             data: [
                 { opc: "input-calendar", class: "col-3", id: "calendar", lbl: "Selecciona una fecha" },
-                { opc: 'button', class:'col-3',color_btn:'outline-primary', text : 'Detallado' ,onClick:()=>this.ls()}
-               ],
+                { opc: 'select', id:'typeReport', class: 'col-2 col-sm-3', lbl: 'Tipo de reporte', data: [{ id: 1, valor: 'desglozado' }, { id: 2, valor: 'resumido' }], onChange: () => this.ls() },
+
+                { opc: 'button', class: 'col-2',className:'w-full', color_btn: 'soft', text: 'Subir despl.', onClick: ()=> this.messageUpload() }
+            ],
         });
+
+       
 
         // initialized.
         dataPicker({
             parent: "calendar",
+            rangepicker: {
+                ranges: {
+                    'Hoy': moment().subtract(1, "days"),
+                    "Primeros 5 dias ": [
+                        moment().startOf("month"),
+                        moment().startOf("month").add(5, "days"),
+                    ],
+
+                    "Primera Quincena ": [
+                        moment().startOf("month"),
+                        moment().startOf("month").add(14, "days"),
+                    ],
+                    "Ultima quincena": [
+                        moment().startOf("month").add(15, "days"),
+                        moment().endOf("month"),
+                    ],
+
+                },
+
+                showDropdowns: true,
+                "autoApply": true,
+            },
             onSelect: (start, end) => { this.ls(); },
         });
     }
+
+    messageUpload(){
+        let month = $('#Mes option:selected').text();
+        let year = $('#Anio option:selected').text();
+
+
+
+        this.swalQuestion({
+
+            opts: {
+                title:`¿Deseas subir el desplazamiento del mes de ${month} del ${year}?`,
+                text:' Esta acción actualizará la información del costo potencial'
+            },
+            data: {
+                opc: 'updateDesplazamiento',
+                // idgastos: id
+
+
+            },
+            methods: {
+                request: (data) => {
+
+                    //   const row =   e.target.closest('tr');
+                    //   row.remove();
+
+
+                }
+            }
+
+        });
+
+
+    }
+
+
+
 
     ls() {
 
         let rangePicker = getDataRangePicker("calendar");
 
         this.createTable({
-            
-            parent      :"containerDesplazamiento",
-            idFilterBar :"filterBarCostsys",
 
-            data       : { 
-            
-                opc      : "lsDesplazamiento",
+            parent: "containerDesplazamiento",
+            idFilterBar: "filterBarCostsys",
+
+            data: {
+
+                opc: "lsDesplazamiento",
                 date_init: rangePicker.fi,
-                date_end : rangePicker.ff
-            
+                date_end: rangePicker.ff,
+                type: $('#typeReport').val()
+
             },
-            conf       : { datatable: false, pag: 15 },
+            conf: { datatable: false, pag: 15 },
 
             attr: {
+
                 color_th: 'bg-primary',
-                color:'bg-default',
+                color: 'bg-default',
                 class: "table table-bordered table-sm ",
-                f_size:12,
+
+                f_size: 10,
                 id: "lsTable",
                 center: [1, 6, 7],
                 extends: true,

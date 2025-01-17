@@ -1,5 +1,5 @@
-let link = "ctrl/app.php";
-// const link = 'https://erp-varoch.com/DEV/costsys/ctrl/ctrl-costo-potencial-soft.php';
+// let link = "ctrl/app.php";
+const link = 'https://erp-varoch.com/DEV/costsys/ctrl/ctrl-costo-potencial-soft.php';
 
 
 // init vars.
@@ -25,8 +25,6 @@ class App extends Templates {
         this.render();
 
     }
-
-   
 
     ls() {
 

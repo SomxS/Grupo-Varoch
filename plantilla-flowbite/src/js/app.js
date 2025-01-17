@@ -33,8 +33,14 @@ class App extends Templates {
     }
 
     render(){
-        this.createNavBar();
-        this.layout();
+        this.createHeader({
+            title: '<i class="icon-emo-happy"></i> GRUPO VAROCH',
+            // icon:' icon-user'
+        });
+
+
+        // this.createNavBar();
+        // this.layout();
         this.filterBar();
     }
 
@@ -49,13 +55,14 @@ class App extends Templates {
 
     filterBar(options) {
 
-  
+    
 
-        this.createfilterBar({
-            parent: "filterBarPrimary",
-            data: [
-                { opc: "select", class: "col-3", id: "UDNs", lbl: "Seleccionar UDN: ", data: [{id: 4, valor:'BAOS'}] },
-                { opc: "input-calendar", class: "col-3", id: "calendar", lbl: "Consultar fecha: " },
+        this.form({
+            parent: "filterBar",
+            class:'flex gap-2',
+            json: [
+                { opc: "input", class: "w-1/4", id: "UDNs", lbl: "Seleccionar UDN: ", data: [{id: 4, valor:'BAOS'}] },
+                { opc: "input", class: "w-1/4", id: "calendar", lbl: "Consultar fecha: " },
             ],
         });
 
@@ -64,6 +71,7 @@ class App extends Templates {
 
         dataPicker({
             parent: "calendar",
+        
             onSelect: (start, end) => {
                 // this.ls();
             },

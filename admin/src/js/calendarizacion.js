@@ -187,4 +187,153 @@ class Calendarizacion extends App {
             }
         });
     }
+
+    feedBackModal(id) {
+    
+        bootbox.dialog({
+            title: "<h3>RETROALIMENTACIÓN</h3>",
+            size: "large",
+            closeButton: true,
+            message: `
+                <div class="row mb-3">
+                    <div class="col-12" id="containerTableFeed">
+                    </div>
+                </div>
+                <form class="row" id="formFeedback" novalidate>
+                    <div class="col-12 mb-3">
+                        <textarea class="form-control textarea" rows="4" required="required" placeholder="Escribe aquí..."></textarea>
+                    </div>
+                    <div class="col-12">
+                        <div class="row d-flex justify-content-between mt-3">
+                            <div class="col-5" id="containerBtnSubmit">
+                                <button type="submit" class="btn btn-primary col-12"><small>GUARDAR</small></button>
+                            </div>
+                            <div class="col-5">
+                                <button type="button" class="btn btn-outline-danger col-12" data-bs-dismiss="modal"><small>CANCELAR</small></button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                `,
+        });
+        $("#formFeedback").validation_form({}, function (result) {
+            $("#formFeedback button[type='submit']").attr("disabled", "disabled");
+            calendarizacion.addFeedback(id);
+        });
+        calendarizacion.lsFeedBack(id);
+    }
+
+    lsFeedBack(id) {
+        this.createTable({
+            parent: "containerTableFeed",
+            idFilterBar: "filterBarFeed",
+            data: { opc: "lsFeedbacks", id: id },
+            conf: { datatable: false, pag: 15 },
+            attr: {
+                class_table: "table table-bordered table-sm table-striped text-uppercase",
+                id: "lsTbFeed",
+                center: [1, 2],
+            },
+        });
+    }
+
+    addFeedback(idEvent) {
+        let year = parseInt(new Date().getFullYear());
+        let usser = parseInt(calendarizacion.getCookie("IDU"));
+        let date = new Date().toISOString().slice(0, 10);
+        let datos = {
+            opc: "addFeedback",
+            id_Event: idEvent,
+            year: year,
+            date: date,
+            feedback: $("#formFeedback textarea").val(),
+            id_usser: usser,
+        };
+
+        fn_ajax(datos, ctrl).then((response) => {
+            if (response.status == 200) {
+                alert({ icon: "success", text: response.message });
+                calendarizacion.lsFeedBack(idEvent);
+                $("#formFeedback button[type='submit']").removeAttr("disabled");
+                $("#formFeedback textarea").val("");
+            } else {
+                alert({ icon: "error", text: response.message });
+                $("#formFeedback button[type='submit']").removeAttr("disabled");
+            }
+        });
+    }
+
+    editFeedback(id, idEvent) {
+        let datos = {
+            opc: "getByIdFeedback",
+            id: id,
+        };
+
+        fn_ajax(datos, ctrl).then((response) => {
+            if (response.status == 200) {
+                $("#containerBtnSubmit").html(`<a class="btn btn-primary col-12" id="btnUpdateFeed" onclick="calendarizacion.updateFeedback(${id}, ${idEvent})"><small>ACTUALIZAR</small></a>`);
+                response.data.forEach((element) => {
+                    $("#formFeedback textarea").val(element.valor);
+                });
+            } else {
+                alert({ icon: "error", text: response.message });
+            }
+        });
+    }
+
+    updateFeedback(id, idEvent) {
+        let jsonUpdate = {
+            opc: "editFeedback",
+            feedback: $("#formFeedback textarea").val(),
+            idFeedback: id,
+        };
+
+        fn_ajax(jsonUpdate, ctrl).then((response) => {
+            if (response.status == 200) {
+                alert({ icon: "success", text: response.message, time: 1000 });
+                
+                $("#formFeedback textarea").val("");
+                
+                $("#containerBtnSubmit").html('<button type="submit" class="btn btn-primary col-12"><small>GUARDAR</small></button>');
+                setTimeout(() => {
+                    calendarizacion.lsFeedBack(idEvent);
+                }, "1000");
+
+            } else {
+                alert({ icon: "error", text: response.message });
+            }
+        });
+    }
+
+    deleteFeedback(id, idEvent) {
+        let datos = {
+            opc: "destroyFeedback",
+            idFeedback: id,
+        };
+
+        fn_ajax(datos, ctrl).then((response) => {
+            if (response.status == 200) {
+                alert({ icon: "success", text: response.message });
+                calendarizacion.lsFeedBack(idEvent);
+            } else {
+                alert({ icon: "error", text: response.message });
+            }
+        });
+    }
+
+    getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== "") {
+            const cookies = document.cookie.split(";");
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Verifica si la cookie comienza con el nombre deseado
+                if (cookie.substring(0, name.length + 1) === name + "=") {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
 }
