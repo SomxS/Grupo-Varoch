@@ -59,43 +59,30 @@ class Desplazamiento extends App {
     messageUpload(){
         let month = $('#Mes option:selected').text();
         let year = $('#Anio option:selected').text();
-
-
-
         this.swalQuestion({
-
             opts: {
                 title:`¿Deseas subir el desplazamiento del mes de ${month} del ${year}?`,
                 text:' Esta acción actualizará la información del costo potencial'
             },
             data: {
-                opc: 'updateDesplazamiento',
-                UDNs: $('#UDNs').val(),
+                opc          : 'updateDesplazamiento',
+                UDNs         : $('#UDNs').val(),
                 Clasificacion: $('#Clasificacion').val(),
-                Anio: $('#Anio').val(),
-                Mes: $('#Mes').val(),
-
-
+                Anio         : $('#Anio').val(),
+                Mes          : $('#Mes').val(),
+                subir        : 1,
+                
             },
             methods: {
                 request: (data) => {
-
-                    //   const row =   e.target.closest('tr');
-                    //   row.remove();
-
-
+                    $('#containerDesplazamiento').rpt_json_table2({data: data});
                 }
             }
-
         });
-
-
     }
 
     lsDesp() {
      
-
-        let rangePicker = getDataRangePicker("calendar");
 
         this.createTable({
 
@@ -109,7 +96,7 @@ class Desplazamiento extends App {
                 Clasificacion: $('#Clasificacion').val(),
                 Anio: $('#Anio').val(),
                 Mes: $('#Mes').val(),
-
+                subir: 0,
 
 
             },
@@ -120,7 +107,7 @@ class Desplazamiento extends App {
                 color_th: 'bg-primary',
                 color: 'bg-default',
                 class: "table table-bordered table-sm ",
-
+             
                 f_size: 10,
                 id: "lsTable",
                 center: [1, 6, 7],
