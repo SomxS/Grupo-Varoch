@@ -19,8 +19,8 @@ class Calendarizacion extends App {
 
     render() {
         this.layout();
-        this.filterBar({ type: "admin" });
-        this.ls();
+        // this.filterBar({ type: "admin" });
+        // this.ls();
     }
 
     modalNewEvent() {
@@ -49,7 +49,6 @@ class Calendarizacion extends App {
         datos.opc = opc;
 
         const data = await fn_ajax(datos, this._link);
-        console.error(data);
 
         if (data.success === true) {
             alert();

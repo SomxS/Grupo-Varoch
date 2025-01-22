@@ -1622,7 +1622,7 @@ $.fn.rpt_json_table2 = function (options) {
 
       const header = opts.data.head ? createDocsHead(opts.data.head) : '';
 
-      console.log('header-table',opts); 
+  
 
     if (opts.header){
 

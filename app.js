@@ -12,11 +12,11 @@ $(function () {
     estados = data.estados;
     temporadas = data.temporada;
 
-    console.warn(data);
+  
 
     // 
-    app = new App("", "");
-    app.init();
+    // app = new App("", "");
+    // app.init();
 
   });
 

@@ -8,14 +8,19 @@ let app, calendarizacion;
 let udn, estados, temporadas, form_elements;
 
 $(async () => {
-    await fn_ajax({ opc: "init" }, ctrl).then((data) => {
+    await fn_ajax({ opc: "init" }, link).then((data) => {
         // vars.
         udn = data.udn;
         estados = data.estados;
         temporadas = data.temporada;
 
+        // 
+
         calendarizacion = new Calendarizacion(ctrl, "");
         calendarizacion.init();
+
+
+
     });
 });
 
@@ -25,6 +30,7 @@ class App extends Templates {
     }
 
     init() {
+        console.log('root')
         this.render();
     }
 
