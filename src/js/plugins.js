@@ -1849,28 +1849,3 @@ function fn_ajax(datos, url, div = '') {
     });
   });
 }
-function fn_ajax(datos, url, div = '') {
-  return new Promise(function (resolve, reject) {
-    $.ajax({
-      type: "POST",
-      url: url,
-      data: datos,
-      dataType: "json",
-      beforeSend: () => {
-        $(div).Loading();
-      },
-
-      success: (data) => {
-        resolve(data);
-      },
-      error: function (xhr, status, error) {
-        console.error("url: ", url);
-        console.error("status: ", status);
-        console.error("error: ", error);
-
-        if (xhr.responseText === "") console.error("No se obtuvo respuesta del servidor.");
-        else console.error(xhr);
-      },
-    });
-  });
-}

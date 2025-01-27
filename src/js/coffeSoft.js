@@ -1078,7 +1078,7 @@ class Components extends Complements {
  
         let defaults = {
             logoSrc: 'https://erp-varoch.com/ERP2/src/img/logos/logo_icon_wh.png',
-            logoAlt: 'Grupo Varoch',
+            logoAlt: 'https://erp-varoch.com/ERP2/src/img/logos/logo_icon_wh.png',
             onLogoClick: 'location.reload()',
             onMenuClick: '#',
             themeClass: 'bg-dia',
