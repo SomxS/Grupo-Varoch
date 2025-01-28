@@ -1037,7 +1037,7 @@ $.fn.validation_form = function (options, callback) {
         } else if (opts.tipo === "json") {
           if (typeof callback === "function") {
             // form.find(':submit').prop('disabled', true);
-              console.log(formData);
+              
               for (const x of formData) console.log(x);
             callback(formData);
           }
