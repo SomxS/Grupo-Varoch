@@ -1323,8 +1323,31 @@ $.fn.rpt_json_table2 = function (options) {
               cols_conf = 2;
 
           let last = dimension - cols_conf;
-          td = $("<tr>");
 
+          /*-- Crear el elemento folding   -- */
+          fold = "";
+          class_fold = "";
+          ico_group = '';
+
+
+          if (opts.folding == true) {
+
+            if (obj[last] == 1) {
+
+              fold       = `unfold(${idRow})`;
+              class_fold = "pointer fw-bold ";
+              ico_group  = '<i class="icon-right-dir"></i>';
+            
+            } else {
+            
+              class_fold = `unfold${idRow} d-none`;
+            }
+            
+          }
+
+
+          td = $("<tr>", { class: class_fold, onclick: fold });
+          
           // Recorrido por columnas
 
           for (let col = 1; col < dimension - 1; col++) {
