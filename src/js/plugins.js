@@ -1038,7 +1038,7 @@ $.fn.validation_form = function (options, callback) {
           if (typeof callback === "function") {
             // form.find(':submit').prop('disabled', true);
               
-              for (const x of formData) console.log(x);
+              // for (const x of formData) console.log(x);
             callback(formData);
           }
         }
@@ -1755,7 +1755,7 @@ function dataPicker(options) {
         },
 
         onSelect: (start, end) => {
-            console.log(`Seleccionado: ${start.format("YYYY-MM-DD")} - ${end.format("YYYY-MM-DD")}`);
+            // console.log(`Seleccionado: ${start.format("YYYY-MM-DD")} - ${end.format("YYYY-MM-DD")}`);
 
         }
 
@@ -1764,7 +1764,7 @@ function dataPicker(options) {
 
     let onDateRange = (start, end) => {
 
-        console.log(start,end);
+        // console.log(start,end);
 
     }
 
