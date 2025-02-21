@@ -1329,7 +1329,7 @@ $.fn.rpt_json_table2 = function (options) {
           class_fold = "";
           ico_group = '';
 
-
+          // folding
           if (opts.folding == true) {
 
             if (obj[last] == 1) {
@@ -1342,7 +1342,7 @@ $.fn.rpt_json_table2 = function (options) {
             
               class_fold = `unfold${idRow} d-none`;
             }
-            
+
           }
 
 
