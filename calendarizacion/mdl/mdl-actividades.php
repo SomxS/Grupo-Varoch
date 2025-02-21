@@ -151,7 +151,7 @@ class Actividades extends CRUD
             "{$this->bd}`status`" => "id_Status = idStatus",
         ];
 
-        $where = "id_Event = ? AND YEAR(date_ocurrence) >= YEAR(NOW()) - 2 AND YEAR (date_ocurrence) <= YEAR(NOW()) + 1";
+        $where = "id_Event = ? AND YEAR(date_ocurrence) >= YEAR(NOW()) - 2 AND YEAR (date_ocurrence) <= YEAR(NOW()) + 1 AND id_Status NOT IN (5)" ;
 
         return $this->_Select([
             'table' => "{$this->bd}`events_status`",

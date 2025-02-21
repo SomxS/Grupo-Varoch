@@ -414,24 +414,24 @@ class Components extends Complements {
         var defaults = {
             json: [],
 
-            class: "row",
-            parent: "",
+            class  : "row",
+            parent : "",
             Element: "div",
 
-            id: "containerForm",
+            id     : "containerForm",
             prefijo: "",
-            icon: "icon-dollar",
+            icon   : "icon-dollar",
 
-            color: "primary",
-            color_btn: "outline-primary",
+            color        : "primary",
+            color_btn    : "outline-primary",
             color_default: "primary",
-            text_btn: "Aceptar",
-            fn: "EnviarDatos()",
-            id_btn: "btnAceptar",
-            required: true,
+            text_btn     : "Aceptar",
+            fn           : "EnviarDatos()",
+            id_btn       : "btnAceptar",
+            required     : true,
         };
 
-        let opts = Object.assign(defaults, options);
+        let opts = Object.assign(defaults, options); // Union de 
 
         // Creamos el contenedor
         var div = $("<div>", { class: opts.class, id: opts.id });
@@ -848,11 +848,11 @@ class Components extends Complements {
 
 
         let defaults = {
-            id: '',
+            id     : '',
             bootbox: {
-                title: 'Modal example',
+                title      : 'Modal example',
                 closeButton: true,
-                message: ' ',
+                message    : ' ',
             },
 
             extends: false,
@@ -937,8 +937,10 @@ class Components extends Complements {
         });
 
         for (const x of opts.data) {
-            let active = "";
-            let tab_active = "";
+            
+            let active      = "";
+            let tab_active  = "";
+            
             if (x.active) {
                 active = "active";
                 tab_active = "show active";
@@ -948,12 +950,6 @@ class Components extends Complements {
                 class: "nav-item",
             });
 
-            // if(x.fn) 
-
-
-
-            // li.html(`<a class="nav-link ${active}" 
-            //     id="${x.id}-tab"  data-bs-toggle="tab" href="#${x.id}"  onclick="${x.fn}"> ${x.tab}</a>  `);
             li.append(
                 $('<a>', {
                     class: "nav-link " + active,
@@ -964,15 +960,14 @@ class Components extends Complements {
                     text: x.tab
                 })
             );
+            
             var div_tab = $("<div>", {
                 class: "tab-pane fade  mt-2 " + tab_active,
                 id: x.id,
             });
 
             if (x.contenedor) {
-                // let div_contenedor = $("<div>", {
-                //     class: "row",
-                // });
+         
 
                 for (const y of x.contenedor) {
                     var div_cont = $("<div>", {
@@ -983,7 +978,6 @@ class Components extends Complements {
                     div_tab.append(div_cont);
                 }
 
-                // div_tab.append(div_contenedor);
             }
 
             ul.append(li);
@@ -992,7 +986,7 @@ class Components extends Complements {
 
         div.append(ul);
         div.append(div_content);
-        $(`#${opts.parent}`).html(div);
+        $(`#${opts.parent}`).append(div); 
     }
 
     createLayaout(options = {}) {
@@ -1076,21 +1070,21 @@ class Components extends Complements {
     createNavBar(options){
  
         let defaults = {
-            logoSrc: 'https://erp-varoch.com/ERP2/src/img/logos/logo_icon_wh.png',
-            logoAlt: 'Grupo Varoch',
+            logoSrc    : 'https://erp-varoch.com/ERP2/src/img/logos/logo_icon_wh.png',
+            logoAlt    : 'Grupo Varoch',
             onLogoClick: 'location.reload()',
-            onMenuClick: '#',
-            themeClass: 'bg-dia',
-            menuItems: [
+            onMenuClick: '',
+            themeClass : 'bg-dia',
+            menuItems  : [
                 { icon: 'icon-sun-inv-1', visible: false },
                 { icon: 'icon-bell', visible: false },
                 {
-                    icon: 'icon-mail',
+                    icon   : 'icon-mail',
                     visible: false,
                     submenu: '<div id="mensage"><li>Hola</li></div>'
                 },
                 {
-                    id: 'li_user',
+                    id     : 'li_user',
                     visible: true,
                     submenu: '<li onClick="redireccion(\'perfil/perfil.php\');"></li>'
                 }
@@ -1098,22 +1092,15 @@ class Components extends Complements {
         };
 
         let opts = $.extend({}, defaults, options);
-
-
-
-
-
-        // Create header element
+          // Create header element
         let $header = $('<header>', { class: opts.themeClass });
-
-
-        // Create section for logo and menu button
+          // Create section for logo and menu button
         let $section = $('<section>')
             .append(
                 $('<span>', {
-                    type: 'button',
-                    id: 'btnSidebar',
-                    html: $('<i>', { class: 'icon-menu' }),
+                    type : 'button',
+                    id   : 'btnSidebar',
+                    html : $('<i>', { class: 'icon-menu' }),
                     click: function () {
                         if (opts.onMenuClick && typeof opts.onMenuClick === 'function') {
                             opts.onMenuClick();
@@ -1124,8 +1111,8 @@ class Components extends Complements {
             .append(
                 $('<img>', {
                     class: 'd-block d-sm-none',
-                    src: opts.logoSrc,
-                    alt: opts.logoAlt,
+                    src  : opts.logoSrc,
+                    alt  : opts.logoAlt,
                     click: function () {
                         if (opts.onLogoClick) {
                             eval(opts.onLogoClick);
@@ -1133,34 +1120,25 @@ class Components extends Complements {
                     }
                 })
             );
-
         $header.append($section);
-
-        // Create nav element
+          // Create nav element
         let $nav = $('<nav>');
-        let $ul = $('<ul>', { class: 'theme', id: 'navbar' });
-
-        // Create menu items
+        let $ul  = $('<ul>', { class: 'theme', id: 'navbar' });
+          // Create menu items
         opts.menuItems.forEach((item, index) => {
-            if (!item.visible) return; // Skip hidden items
-
+            if (!item.visible) return;  // Skip hidden items
             let $li = $('<li>', { id: item.id || null })
                 .append($('<i>', { class: item.icon }));
-
             if (item.submenu) {
                 let $submenu = $('<ul>').append(item.submenu);
                 $li.append($submenu);
             }
-
             $ul.append($li);
         });
-
         $nav.append($ul);
         $header.append($nav);
-
-        // Append to body or specific parent
+          // Append to body or specific parent
         $(opts.parent || 'body').prepend($header);
-
         
 
     }
@@ -1362,6 +1340,8 @@ class Templates extends Components {
             id: name,
             parent: this._div_modulo,
             class: "d-flex mx-2 my-2 h-100",
+            json:[],
+            data:[],
             card: {
                 name: "singleLayout",
                 class: "col-12",

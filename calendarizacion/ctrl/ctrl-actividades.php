@@ -1,6 +1,5 @@
 <?php
-if (empty($_POST['opc']))
-    exit(0);
+if (empty($_POST['opc'])) exit(0);
 
 
 class Act
@@ -20,8 +19,7 @@ class Act
         $this->obj = new Actividades;
     }
     // Listas 
-    function initComponent()
-    {
+    function initComponent(){
         if (isset($_COOKIE['IDU'])) {
             if (!isset($_COOKIE['IDT'])) {
                 $lsCookie = $this->obj->lsCookie([$_COOKIE['IDU'], 'IDT']);
@@ -119,11 +117,11 @@ class Act
 
         // Retorno
         return [
-            'udn' => $this->obj->lsUDN(),
-            'season' => $this->obj->lsSeason(),
-            'replay' => $this->obj->lsReplay(),
+            'udn'         => $this->obj->lsUDN(),
+            'season'      => $this->obj->lsSeason(),
+            'replay'      => $this->obj->lsReplay(),
             'responsible' => $__responsible,
-            "events" => $__events,
+            "events"      => $__events,
         ];
     }
 

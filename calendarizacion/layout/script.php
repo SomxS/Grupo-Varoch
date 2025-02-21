@@ -17,13 +17,17 @@
 <script src="../src/plugin/select2/bootstrap/select2.min.js"></script>
 <!--BOOTBOX-->
 <script src="../src/plugin/bootbox.min.js"></script>
+
 <!-- SWEETALERT -->
 <script src="../src/plugin/sweetalert2/sweetalert2.all.min.js"></script>
+
 <!--DATERANGEPICKER-->
 <script src="../src/plugin/daterangepicker/moment.min.js"></script>
 <script src="../src/plugin/daterangepicker/daterangepicker.js"></script>
+
 <!-- INTRO -->
 <script src="../src/plugin/intro-js/js/intro.min.js"></script>
+
 <!--DATATABLES-->
 <script src="../src/plugin/datatables/datatables.min.js"></script>
 <script src="../src/plugin/datatables/dataTables.responsive.min.js"></script>
@@ -36,7 +40,7 @@
 <!-- EXTERNOS -->
 <script src="https://plugins.erp-varoch.com/ERP/JS/complementos.js?t=<?php echo time(); ?>"></script>
 <!-- github -->
-<script src="https://raw.githack.com/SomxS/CoffeSoft/refs/heads/main/src/js/plugins.js?t=<?php echo time(); ?>"></script>
-<script src="https://raw.githack.com/SomxS/CoffeSoft/refs/heads/main/src/js/coffeSoft.js?t=<?php echo time(); ?>"></script>
+<script src="https://raw.githack.com/SomxS/Grupo-Varoch/refs/heads/main/src/js/coffeSoft.js?t=<?php echo time(); ?>"></script>
+<script src="https://rawcdn.githack.com/SomxS/Grupo-Varoch/refs/heads/main/src/js/plugins.js?t=<?php echo time(); ?>"></script>
 
 </head>

@@ -17,7 +17,7 @@ require_once('layout/script.php');
                     <li class='breadcrumb-item fw-bold active'>Calendarizacion</li>
                 </ol>
             </nav>
-            <div class="" id="root"></div>
+            <div class="main-container" id="root"></div>
             <script src='src/js/app.js?t=<?php echo time(); ?>'></script>
             <script src='src/js/calendarizacion.js?t=<?php echo time(); ?>'></script>
         </div>
