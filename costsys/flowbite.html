@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flowbite Dark Mode</title>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
+
+ 
+
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {  darkMode: "class" };
+    </script>
+
+    <!-- flowbite -->
+    <script src="https://unpkg.com/flowbite@1.6.5/dist/flowbite.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+
+     <link rel="stylesheet" href="https://erp-varoch.com/ERP24/src/plugin/bootstrap-5/css/bootstrap.min.css">
+
+
+    <!-- jquery -->
+    <script src="https://erp-varoch.com/ERP24/src/plugin/jquery/jquery-3.7.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+ 
+
+    <!-- datepicker -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+
+    <link  rel="stylesheet"  href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/css/datepicker.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/js/datepicker-full.min.js"></script>
+
+    <!-- Configuración para modo oscuro -->
+    <script>
+      // Detectar preferencia de modo oscuro del sistema
+      if (
+        localStorage.theme === "dark" ||
+        (!("theme" in localStorage) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    </script>
+    <style>
+      /* Personalización para transición suave entre modos */
+      html {
+        transition: background-color 0.3s, color 0.3s;
+      }
+    </style>
+  </head>
+
+
+
+
+  <body class="bg-white dark:bg-gray-900 dark:text-white">
+    <header
+      class="p-4 border-b border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800"
+    >
+      <div class="container mx-auto flex justify-between items-center">
+        <h1 class="text-xl font-bold">Modo Oscuro con Flowbite</h1>
+        <button
+          id="theme-toggle"
+          class="p-2 rounded-md bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none"
+        >
+        
+        </button>
+      </div>
+    </header>
+
+    <div class="relative max-w-sm">
+      <div
+        class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none"
+      >
+
+      </div>
+    </div>
+
+    <main class="container mx-auto p-4">
+    
+    </main>
+
+
+
+   <!-- Javascript -->
+    <script src="https://erp-varoch.com/ERP24/src/plugin/jquery/jquery-3.7.0.min.js"></script>
+    <script src="https://erp-varoch.com/DEV/src/plugin/bootstrap-5/js/bootstrap.bundle.js"></script>
+
+    
+    <!-- aux js -->
+    <script src="../src/js/coffeSoft.js"></script>
+    <script src="../src/js/plugins.js"></script>
+    <script src="src/js/app.js"></script>
+
+    
+
+
+
+    
+    <script>
+
+      const themeToggleBtn = document.getElementById("theme-toggle");
+      const darkIcon       = document.getElementById("theme-toggle-dark-icon");
+      const lightIcon      = document.getElementById("theme-toggle-light-icon");
+
+      // Actualizar el ícono según el tema actual
+      function updateIcons() {
+        // if (document.documentElement.classList.contains("dark")) {
+        //   darkIcon.classList.add("hidden");
+        //   lightIcon.classList.remove("hidden");
+        // } else {
+        //   darkIcon.classList.remove("hidden");
+        //   lightIcon.classList.add("hidden");
+        // }
+      }
+
+
+
+      themeToggleBtn.addEventListener("click", () => {
+        // Cambiar el tema y guardar en localStorage
+        if (document.documentElement.classList.contains("dark")) {
+          document.documentElement.classList.remove("dark");
+          localStorage.theme = "light";
+        } else {
+          document.documentElement.classList.add("dark");
+          localStorage.theme = "dark";
+        }
+        updateIcons();
+      });
+
+      // Configuración inicial del ícono
+      updateIcons();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,45 @@
+window.ctrl = "ctrl/ctrl-calendarizacion.php";
+// init vars.
+let app ;
+$(function () {
+    // fn_ajax({ opc: 'init' }, ctrl).then((data) => {});
+    app = new App();
+    app.render();
+});
+
+class App extends Templates {
+    constructor(link, div_modulo) {
+        super(link, div_modulo);
+    }
+    render() {
+        this.layout();
+        // this.filterBar();
+        // this.ls();
+    }
+    layout() {
+        // this.primaryLayout({
+        //     parent: 'root',
+        //     id: 'primary',
+        // });
+        // this.secondaryLayout({
+        //     parent: 'root',
+        //     id: 'secondary',
+        // });
+        // this.splitLayout({
+        //     parent: 'root',
+        //     id: 'split',
+        // }); 
+        // this.verticalLinearLayout({
+        //     parent: 'root'
+        // });
+        this.tabsLayout({
+            parent: 'root',
+            json: [ // JSON data for the tabs.
+                { tab: 'ejemp tab 1', active: true, onClick: () => console.log('tabs') },
+                { tab: 'ejemp tab 2', onClick: () => console.log('tabs2') }
+            ]
+        });
+    }
+    filterBar() { }
+    ls() { }
+}

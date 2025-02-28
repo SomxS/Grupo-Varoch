@@ -1037,8 +1037,8 @@ $.fn.validation_form = function (options, callback) {
         } else if (opts.tipo === "json") {
           if (typeof callback === "function") {
             // form.find(':submit').prop('disabled', true);
-              console.log(formData);
-              for (const x of formData) console.log(x);
+              
+              // for (const x of formData) console.log(x);
             callback(formData);
           }
         }
@@ -1155,6 +1155,7 @@ $.fn.rpt_json_table2 = function (options) {
           frm_head: "",
           frm_foot: "",
           title_th: "",
+          // headerTable:'',
           f_size: 14,
           font_size: 12,
           parametric: false,
@@ -1322,8 +1323,31 @@ $.fn.rpt_json_table2 = function (options) {
               cols_conf = 2;
 
           let last = dimension - cols_conf;
-          td = $("<tr>");
 
+          /*-- Crear el elemento folding   -- */
+          fold = "";
+          class_fold = "";
+          ico_group = '';
+
+          // folding
+          if (opts.folding == true) {
+
+            if (obj[last] == 1) {
+
+              fold       = `unfold(${idRow})`;
+              class_fold = "pointer fw-bold ";
+              ico_group  = '<i class="icon-right-dir"></i>';
+            
+            } else {
+            
+              class_fold = `unfold${idRow} d-none`;
+            }
+
+          }
+
+
+          td = $("<tr>", { class: class_fold, onclick: fold });
+          
           // Recorrido por columnas
 
           for (let col = 1; col < dimension - 1; col++) {
@@ -1621,6 +1645,18 @@ $.fn.rpt_json_table2 = function (options) {
 
       const header = opts.data.head ? createDocsHead(opts.data.head) : '';
 
+  
+
+    if (opts.header){
+
+        let header = $('<div>', {
+          class: opts.header.class ? opts.header.class : 'line',
+          id: opts.header.id ? opts.header.id: 'table-header'
+        });
+
+        div.append(header);
+
+    }
 
       div.append(opts.data.frm_head);
       div.append(header);
@@ -1719,7 +1755,7 @@ function dataPicker(options) {
         },
 
         onSelect: (start, end) => {
-            console.log(`Seleccionado: ${start.format("YYYY-MM-DD")} - ${end.format("YYYY-MM-DD")}`);
+            // console.log(`Seleccionado: ${start.format("YYYY-MM-DD")} - ${end.format("YYYY-MM-DD")}`);
 
         }
 
@@ -1728,7 +1764,7 @@ function dataPicker(options) {
 
     let onDateRange = (start, end) => {
 
-        console.log(start,end);
+        // console.log(start,end);
 
     }
 
@@ -1837,31 +1873,9 @@ function fn_ajax(datos, url, div = '') {
   });
 }
 
-// datatable
-function data_table_export(table, size = 10) {
+function unfold(id) {
 
-
-  $(table).DataTable({
-    destroy: true,
-    dom: "Bfrtip",
-    order: [],
-
-    pageLength: size,
-    // buttons: [{ extend: 'excel', className: 'btn-outline-primary' }, { extend: 'copy', className: 'btn-outline-primary' }],
-
-    buttons: ["copy", "excel"],
-    oLanguage: {
-      sSearch: "Buscar:",
-      sInfo:
-        "Mostrando del (_START_ al _END_) de un total de _TOTAL_ registros",
-      sInfoEmpty: "Mostrando del 0 al 0 de un total de 0 registros",
-      sLoadingRecords: "Por favor espere - cargando...",
-      oPaginate: {
-        sFirst: "Primero",
-        sLast: "Último",
-        sNext: "Siguiente",
-        sPrevious: "Anterior",
-      },
-    },
-  });
+  $(".unfold" + id).toggleClass("d-none");
+  $(".ico" + id).toggleClass("icon-right-dir-1");
+  $(".ico" + id).toggleClass(" icon-down-dir-1");
 }

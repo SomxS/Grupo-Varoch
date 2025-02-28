@@ -1,72 +1,65 @@
-<!doctype html>
-<html lang="en">
+<?php 
+    if( empty($_COOKIE["IDU"]) )  require_once('../acceso/ctrl/ctrl-logout.php');
 
-<head>
-
-
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <!-- icons -->
-    <link rel="stylesheet" href="src/plugin/fontello/css/fontello.css">
-
-    <!-- styles -->
-    <link rel="stylesheet" href="https://erp-varoch.com/ERP24/src/plugin/bootstrap-5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://erp-varoch.com/ERP24/src/css/navbar.css">
-    <link rel="stylesheet" href="./src/css/style.css">
-
-    <!-- datarange picker -->
-    <link rel="stylesheet" href="https://erp-varoch.com/DEV/src/plugin/daterangepicker/daterangepicker.css">
-
-    <!-- sweet alert -->
-    <link rel="stylesheet" href="https://erp-varoch.com/DEV/src/plugin/sweetalert2/sweetalert2.min.css">
-
-
-    <!-- CDN TAILWIND -->
-    <script src="https://cdn.tailwindcss.com"></script>
-
-
-    <title> CoffeSoft 2</title>
-
-</head>
+    require_once('layout/head.php');
+    require_once('layout/script.php'); 
+?>
 
 <body>
-
-    <?php require_once '../layout/navbar.php'; ?>
-
+    <?php require_once('../layout/navbar.php'); ?>
     <main>
+        <?php require_once('../layout/sidebar.php'); ?>
 
         <div id="main__content">
-            <nav aria-label='breadcrumb'>
-                <ol class='breadcrumb'>
-                    <li class='breadcrumb-item text-uppercase text-muted'>Calendarización</li>
-
-                    <li class='breadcrumb-item fw-bold active'>Ejemplo</li>
-                </ol>
-            </nav>
-            <div class="" id="root">
-
+            <div class="d-flex justify-content-center align-items-center"
+                style="height:100vh; background-color:transparent;">
+                <h3 class="text-primary">
+                    <i class="animate-spin icon-spin4"></i>
+                    A N A L I Z A N D O . . .
+                </h3>
             </div>
         </div>
     </main>
-
-
 </body>
 
-<!-- Javascript -->
-<script src="https://erp-varoch.com/ERP24/src/plugin/jquery/jquery-3.7.0.min.js"></script>
-<script src="https://erp-varoch.com/ERP24/src/plugin/bootstrap-5/js/bootstrap.min.js"></script>
-<script src="https://erp-varoch.com/DEV/src/plugin/bootstrap-5/js/bootstrap.bundle.js"></script>
-<!-- bootbox -->
-<script src="https://erp-varoch.com/DEV/src/plugin/bootbox.min.js"></script>
-<!-- data range picker -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-<script src="https://erp-varoch.com/DEV/src/plugin/daterangepicker/daterangepicker.js"></script>
-
-<!-- aux js -->
-<script src="src/js/coffeSoft.js?v=19"></script>
-<script src="src/js/plugins.js?v=2"></script>
-
-<script src="app.js"></script>
-
 </html>
+
+
+<div class="max-w-md mx-auto p-4 bg-white rounded-lg shadow-lg border border-gray-200">
+    <div class="flex items-start gap-3">
+        <!-- Icono de notificación -->
+        <div class="shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+            <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+        </div>
+
+        <!-- Contenido -->
+        <div class="flex-1">
+            <h3 class="text-gray-500 text-sm font-medium mb-1">Nueva incorporación</h3>
+            <p class="text-gray-900 font-semibold">
+                Juan Carlos Valera
+                <span class="text-gray-500 font-normal">se ha unido al chat</span>
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="max-w-md mx-auto p-4 bg-white rounded-lg shadow-lg border border-gray-200">
+    <div class="flex items-start gap-3">
+        <!-- Contenedor de la imagen de usuario -->
+        <div class="shrink-0 w-10 h-10">
+            <img src="https://erp-varoch.com/erp_files/user.png" alt="Avatar de usuario"
+                class="w-full h-full rounded-full object-cover border-2 border-blue-100">
+        </div>
+
+        <!-- Contenido -->
+        <div class="flex-1">
+            <h3 class="text-gray-500 text-sm font-medium mb-1">Nueva incorporación</h3>
+            <p class="text-gray-900 font-semibold">
+                Juan Carlos Valera
+                <span class="text-gray-500 font-normal">se ha unido al chat</span>
+            </p>
+        </div>
+    </div>
+</div>

@@ -1,25 +1,22 @@
-let ctrl = "ctrl/app.php";
+// let ctrl = "ctrl/app.php";
+const link = 'https://erp-varoch.com/DEV/costsys/ctrl/ctrl-costo-potencial-soft.php';
 
 
 // init vars.
-let app, calendarizacion;
-
-let udn, udnForm, estados, temporadas, form_elements;
-const link = 'https://erp-varoch.com/DEV/calendarizacion/ctrl/app.php';
+let app;
 
 
 $(async () => {
     await fn_ajax({ opc: "init" }, link).then((data) => {
         
         // vars.
-        udn        = data.udn;
-        udnForm    = data.udnForm;
-        estados    = data.estados;
-        temporadas = data.temporada;
+       
         
-        // 
-        calendarizacion = new Calendarizacion(link, "");
-        calendarizacion.init();
+        // instancias.
+
+        app = new App(link,'root');
+        app.init();
+   
     
     });
 
@@ -31,14 +28,20 @@ class App extends Templates {
     }
 
     init() {
-        this.createNavBar();
         this.render();
+        
+    }
+
+    render(){
+        this.createNavBar();
+        // this.layout();
+        this.filterBar();
     }
 
     layout() {
         this.primaryLayout({
             parent: "root",
-            id: "Calendarizacion",
+            id: "Primary",
         });
 
     }
@@ -46,32 +49,23 @@ class App extends Templates {
 
     filterBar(options) {
 
-        let defaults = {
-            type: "",
-        };
-
-        let opts = Object.assign(defaults, options);
+  
 
         this.createfilterBar({
-            parent: "filterBarCalendarizacion",
+            parent: "filterBar",
             data: [
+                { opc: "select", class: "col-3", id: "UDNs", lbl: "Seleccionar UDN: ", data: [{id: 4, valor:'BAOS'}] },
                 { opc: "input-calendar", class: "col-3", id: "calendar", lbl: "Consultar fecha: " },
-                { opc: "select", class: "col-3", id: "udn", lbl: "Seleccionar UDN: ", data: udn },
-                { opc: "select", class: "col-3", id: "status", lbl: "Seleccionar estados: ", data: estados },
-                ...(opts.type === "admin" ? [{ opc: "button", class: "col-3", id: "btn", className: "col-12", text: "Nuevo evento", onClick: () => this.modalNewEvent() }] : []),
             ],
         });
 
-        $("#udn, #status")
-            .off("change")
-            .on("change", () => this.ls());
 
         // initialized.
 
         dataPicker({
             parent: "calendar",
             onSelect: (start, end) => {
-                this.ls();
+                // this.ls();
             },
         });
     }

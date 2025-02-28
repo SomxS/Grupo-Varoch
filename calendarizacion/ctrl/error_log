@@ -1,0 +1,206 @@
+sss[22-Jan-2025 13:06:38 America/Mexico_City] PHP Fatal error:  Uncaught Error: [] operator not supported for strings in /home/rfwsmqex/public_html/DEV/calendarizacion/mdl/mdl-administrador.php:109
+Stack trace:
+#0 /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php(56): MAdministrador->listEvent(Array)
+#1 /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php(458): App->lsEvents()
+#2 {main}
+  thrown in /home/rfwsmqex/public_html/DEV/calendarizacion/mdl/mdl-administrador.php on line 109
+[22-Jan-2025 13:06:41 America/Mexico_City] PHP Fatal error:  Uncaught Error: [] operator not supported for strings in /home/rfwsmqex/public_html/DEV/calendarizacion/mdl/mdl-administrador.php:109
+Stack trace:
+#0 /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php(56): MAdministrador->listEvent(Array)
+#1 /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php(458): App->lsEvents()
+#2 {main}
+  thrown in /home/rfwsmqex/public_html/DEV/calendarizacion/mdl/mdl-administrador.php on line 109
+[22-Jan-2025 13:06:43 America/Mexico_City] PHP Fatal error:  Uncaught Error: [] operator not supported for strings in /home/rfwsmqex/public_html/DEV/calendarizacion/mdl/mdl-administrador.php:109
+Stack trace:
+#0 /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php(56): MAdministrador->listEvent(Array)
+#1 /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php(458): App->lsEvents()
+#2 {main}
+  thrown in /home/rfwsmqex/public_html/DEV/calendarizacion/mdl/mdl-administrador.php on line 109
+[22-Jan-2025 13:06:54 America/Mexico_City] PHP Fatal error:  Uncaught Error: [] operator not supported for strings in /home/rfwsmqex/public_html/DEV/calendarizacion/mdl/mdl-administrador.php:109
+Stack trace:
+#0 /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php(56): MAdministrador->listEvent(Array)
+#1 /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php(458): App->lsEvents()
+#2 {main}
+  thrown in /home/rfwsmqex/public_html/DEV/calendarizacion/mdl/mdl-administrador.php on line 109
+[22-Jan-2025 13:07:03 America/Mexico_City] PHP Fatal error:  Class 'MAdministrador' not found in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 11
+[22-Jan-2025 13:07:44 America/Mexico_City] PHP Fatal error:  Uncaught Error: [] operator not supported for strings in /home/rfwsmqex/public_html/DEV/calendarizacion/mdl/mdl-administrador.php:113
+Stack trace:
+#0 /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php(56): MAdministrador->listEvent(Array)
+#1 /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php(458): App->lsEvents()
+#2 {main}
+  thrown in /home/rfwsmqex/public_html/DEV/calendarizacion/mdl/mdl-administrador.php on line 113
+[22-Jan-2025 13:07:46 America/Mexico_City] PHP Fatal error:  Uncaught Error: [] operator not supported for strings in /home/rfwsmqex/public_html/DEV/calendarizacion/mdl/mdl-administrador.php:113
+Stack trace:
+#0 /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php(56): MAdministrador->listEvent(Array)
+#1 /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php(458): App->lsEvents()
+#2 {main}
+  thrown in /home/rfwsmqex/public_html/DEV/calendarizacion/mdl/mdl-administrador.php on line 113
+[22-Jan-2025 13:07:47 America/Mexico_City] PHP Fatal error:  Uncaught Error: [] operator not supported for strings in /home/rfwsmqex/public_html/DEV/calendarizacion/mdl/mdl-administrador.php:113
+Stack trace:
+#0 /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php(56): MAdministrador->listEvent(Array)
+#1 /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php(458): App->lsEvents()
+#2 {main}
+  thrown in /home/rfwsmqex/public_html/DEV/calendarizacion/mdl/mdl-administrador.php on line 113
+[22-Jan-2025 14:31:07 America/New_York] PHP Parse error:  syntax error, unexpected ''m' (T_ENCAPSED_AND_WHITESPACE), expecting ']' in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 352
+[22-Jan-2025 13:42:47 America/Mexico_City] PHP Fatal error:  Class 'MAdministrador' not found in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 11
+[22-Jan-2025 14:44:10 America/New_York] PHP Parse error:  syntax error, unexpected ''5'' (T_CONSTANT_ENCAPSED_STRING), expecting ']' in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 140
+[22-Jan-2025 14:44:11 America/New_York] PHP Parse error:  syntax error, unexpected ''5'' (T_CONSTANT_ENCAPSED_STRING), expecting ']' in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 140
+[22-Jan-2025 14:44:13 America/New_York] PHP Parse error:  syntax error, unexpected ''5'' (T_CONSTANT_ENCAPSED_STRING), expecting ']' in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 140
+[22-Jan-2025 14:44:14 America/New_York] PHP Parse error:  syntax error, unexpected ''5'' (T_CONSTANT_ENCAPSED_STRING), expecting ']' in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 140
+[22-Jan-2025 14:51:12 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 57
+[22-Jan-2025 14:51:14 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 57
+[22-Jan-2025 14:51:15 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 57
+[22-Jan-2025 14:51:17 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 57
+[22-Jan-2025 15:16:59 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 57
+[23-Jan-2025 09:33:53 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 57
+[23-Jan-2025 12:53:48 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 57
+[23-Jan-2025 13:32:17 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 57
+[23-Jan-2025 13:32:23 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 57
+[23-Jan-2025 16:12:58 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 57
+[25-Jan-2025 09:08:33 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 57
+[25-Jan-2025 20:41:30 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 57
+[25-Jan-2025 20:41:36 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 57
+[25-Jan-2025 20:41:44 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 57
+[27-Jan-2025 20:21:37 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 57
+[28-Jan-2025 08:57:58 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 57
+[28-Jan-2025 12:42:20 America/New_York] PHP Parse error:  syntax error, unexpected 'sendRecorders' (T_STRING), expecting function (T_FUNCTION) or const (T_CONST) in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 474
+[29-Jan-2025 09:37:52 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 57
+[29-Jan-2025 11:36:34 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 57
+[29-Jan-2025 11:36:37 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 57
+[29-Jan-2025 11:36:38 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 57
+[29-Jan-2025 11:36:41 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 57
+[29-Jan-2025 11:36:43 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 57
+[29-Jan-2025 11:36:44 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 57
+[29-Jan-2025 11:36:45 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 57
+[29-Jan-2025 11:36:48 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 57
+[29-Jan-2025 11:36:50 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 57
+[29-Jan-2025 11:36:52 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 57
+[29-Jan-2025 11:36:53 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 57
+[29-Jan-2025 11:36:55 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 57
+[29-Jan-2025 11:37:05 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 57
+[29-Jan-2025 11:37:35 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 57
+[29-Jan-2025 11:37:39 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 57
+[29-Jan-2025 12:16:30 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 57
+[29-Jan-2025 13:18:34 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 431
+[29-Jan-2025 13:20:56 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 481
+[29-Jan-2025 13:21:08 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 481
+[29-Jan-2025 13:24:03 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 481
+[29-Jan-2025 13:27:20 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 481
+[29-Jan-2025 13:27:41 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 481
+[29-Jan-2025 13:47:04 America/Mexico_City] PHP Fatal error:  Uncaught Error: Class 'Message' not found in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php:517
+Stack trace:
+#0 /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php(501): App->sendRecorderByWhatsapp(Array)
+#1 /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php(533): App->sendRecorders()
+#2 {main}
+  thrown in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 517
+[29-Jan-2025 13:47:50 America/Mexico_City] PHP Warning:  require_once(../../../conf/_Message.php): failed to open stream: No such file or directory in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 11
+[29-Jan-2025 13:47:50 America/Mexico_City] PHP Fatal error:  require_once(): Failed opening required '../../../conf/_Message.php' (include_path='.:/opt/cpanel/ea-php72/root/usr/share/pear') in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 11
+[29-Jan-2025 13:48:06 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 71
+[29-Jan-2025 13:56:35 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 71
+[29-Jan-2025 14:57:53 America/New_York] PHP Parse error:  syntax error, unexpected ')' in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 538
+[29-Jan-2025 14:57:59 America/New_York] PHP Parse error:  syntax error, unexpected ')' in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 538
+[29-Jan-2025 13:58:50 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[29-Jan-2025 14:02:38 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[29-Jan-2025 14:02:39 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[29-Jan-2025 14:57:36 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[29-Jan-2025 14:57:37 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[29-Jan-2025 15:13:17 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[29-Jan-2025 15:29:14 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[29-Jan-2025 15:34:47 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[29-Jan-2025 15:43:25 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[29-Jan-2025 16:02:20 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[29-Jan-2025 16:19:26 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[29-Jan-2025 16:50:33 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[29-Jan-2025 16:50:34 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[29-Jan-2025 16:50:35 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[29-Jan-2025 16:54:21 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[29-Jan-2025 16:54:23 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[29-Jan-2025 16:54:23 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[29-Jan-2025 16:57:46 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[29-Jan-2025 16:57:47 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[29-Jan-2025 16:57:48 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[29-Jan-2025 16:57:49 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[29-Jan-2025 17:00:43 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[29-Jan-2025 17:00:44 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[29-Jan-2025 17:00:46 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[29-Jan-2025 17:00:46 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[29-Jan-2025 17:03:19 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[29-Jan-2025 17:03:20 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[29-Jan-2025 17:03:21 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[29-Jan-2025 17:03:22 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[29-Jan-2025 17:05:34 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[29-Jan-2025 17:05:35 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[29-Jan-2025 17:05:36 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[29-Jan-2025 17:05:37 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[29-Jan-2025 17:11:30 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[30-Jan-2025 15:49:57 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 59
+[31-Jan-2025 15:08:35 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 59
+[01-Feb-2025 11:55:00 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 59
+[01-Feb-2025 12:00:48 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 59
+[03-Feb-2025 15:17:16 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 59
+[03-Feb-2025 15:17:34 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 59
+[03-Feb-2025 15:17:41 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 59
+[03-Feb-2025 15:17:43 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 59
+[03-Feb-2025 15:18:47 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 433
+[03-Feb-2025 15:36:27 America/Mexico_City] PHP Warning:  Use of undefined constant sucesss - assumed 'sucesss' (this will throw an Error in a future version of PHP) in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 474
+[03-Feb-2025 15:36:39 America/Mexico_City] PHP Warning:  Use of undefined constant success - assumed 'success' (this will throw an Error in a future version of PHP) in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 474
+[03-Feb-2025 16:50:21 America/New_York] PHP Parse error:  syntax error, unexpected '=>' (T_DOUBLE_ARROW), expecting ',' or ')' in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 492
+[03-Feb-2025 16:50:44 America/New_York] PHP Parse error:  syntax error, unexpected '=>' (T_DOUBLE_ARROW), expecting ',' or ')' in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 492
+[03-Feb-2025 16:52:25 America/New_York] PHP Parse error:  syntax error, unexpected '=>' (T_DOUBLE_ARROW), expecting ',' or ')' in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 492
+[03-Feb-2025 16:52:37 America/New_York] PHP Parse error:  syntax error, unexpected '=>' (T_DOUBLE_ARROW), expecting ',' or ')' in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 492
+[03-Feb-2025 16:52:52 America/New_York] PHP Parse error:  syntax error, unexpected '=>' (T_DOUBLE_ARROW), expecting ',' or ')' in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 492
+[03-Feb-2025 16:53:18 America/New_York] PHP Parse error:  syntax error, unexpected '=>' (T_DOUBLE_ARROW), expecting ',' or ')' in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 492
+[03-Feb-2025 15:54:49 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[03-Feb-2025 15:55:26 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[03-Feb-2025 15:56:08 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[03-Feb-2025 15:56:25 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[03-Feb-2025 15:56:50 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[03-Feb-2025 15:57:46 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[03-Feb-2025 16:59:19 America/New_York] PHP Parse error:  syntax error, unexpected '' (T_ENCAPSED_AND_WHITESPACE), expecting '-' or identifier (T_STRING) or variable (T_VARIABLE) or number (T_NUM_STRING) in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 490
+[03-Feb-2025 15:59:41 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[03-Feb-2025 16:00:43 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[03-Feb-2025 16:01:24 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[03-Feb-2025 16:02:11 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[03-Feb-2025 17:03:02 America/New_York] PHP Parse error:  syntax error, unexpected '' (T_ENCAPSED_AND_WHITESPACE), expecting '-' or identifier (T_STRING) or variable (T_VARIABLE) or number (T_NUM_STRING) in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 493
+[03-Feb-2025 17:03:39 America/New_York] PHP Parse error:  syntax error, unexpected '' (T_ENCAPSED_AND_WHITESPACE), expecting '-' or identifier (T_STRING) or variable (T_VARIABLE) or number (T_NUM_STRING) in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 494
+[03-Feb-2025 16:04:11 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[03-Feb-2025 16:05:00 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[03-Feb-2025 18:45:54 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[03-Feb-2025 18:47:40 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 433
+[03-Feb-2025 20:47:23 America/Mexico_City] PHP Warning:  strlen() expects parameter 1 to be string, array given in /home/rfwsmqex/public_html/DEV/conf/_Message.php on line 16
+[04-Feb-2025 14:25:38 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 59
+[04-Feb-2025 14:25:42 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 59
+[04-Feb-2025 23:14:49 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 59
+[05-Feb-2025 08:58:58 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 433
+[05-Feb-2025 09:02:03 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 433
+[05-Feb-2025 09:02:05 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 433
+[05-Feb-2025 09:07:56 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 433
+[06-Feb-2025 16:11:48 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 59
+[06-Feb-2025 16:12:36 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 59
+[06-Feb-2025 16:12:37 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 59
+[06-Feb-2025 16:12:39 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 59
+[06-Feb-2025 16:12:40 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 59
+[06-Feb-2025 16:12:44 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 59
+[06-Feb-2025 16:12:45 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 59
+[06-Feb-2025 16:12:46 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 59
+[06-Feb-2025 16:12:51 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 59
+[06-Feb-2025 16:38:32 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 59
+[07-Feb-2025 07:16:02 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 59
+[07-Feb-2025 09:29:22 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 59
+[07-Feb-2025 09:58:01 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 59
+[07-Feb-2025 09:58:16 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 59
+[07-Feb-2025 09:58:42 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 59
+[07-Feb-2025 09:58:44 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 59
+[07-Feb-2025 09:58:48 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 59
+[07-Feb-2025 09:58:49 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 59
+[07-Feb-2025 09:58:50 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 59
+[07-Feb-2025 09:58:52 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 59
+[07-Feb-2025 09:58:59 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 59
+[07-Feb-2025 11:06:03 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 59
+[08-Feb-2025 06:29:27 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 59
+[08-Feb-2025 06:52:34 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 59
+[08-Feb-2025 06:53:45 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 59
+[08-Feb-2025 07:07:11 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 59
+[08-Feb-2025 07:08:40 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 59
+[08-Feb-2025 07:13:45 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 59
+[10-Feb-2025 15:53:21 America/Mexico_City] PHP Warning:  Invalid argument supplied for foreach() in /home/rfwsmqex/public_html/DEV/calendarizacion/ctrl/app.php on line 59

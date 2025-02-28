@@ -1,9 +1,9 @@
 // let link = "ctrl/app.php";
 const link = 'https://erp-varoch.com/DEV/costsys/ctrl/ctrl-costo-potencial-soft.php';
 
-const ctrlCP = 'https://erp-varoch.com/ERP24/costsys/ctrl/ctrl-costo-potencial.php' ;
+
 // init vars.
-let app, desplazamiento,cp;
+let app, desplazamiento;
 
 
 $(async () => {
@@ -11,10 +11,7 @@ $(async () => {
         // // vars.
         // // instancias.
         app = new Desplazamiento(link,'root');
-        cp = new CostoPotencial(link,'root');
         app.init();
-        cp.init();
-        cp.ls();
     });
 
 });
@@ -63,6 +60,8 @@ class App extends Templates {
 
     }
 
+
+
     layout() {
 
         this.primaryLayout({ parent:'root', id:'Costsys' });
@@ -74,7 +73,7 @@ class App extends Templates {
 
             json  : [
                 { 
-                    tab:'Desplazamientos' , id: 'tab-desplazamientos' ,
+                    tab:'Desplazamientos' , id: 'tab-desplazamientos',active:true ,
                     
                     contenedor: [
 
@@ -85,15 +84,7 @@ class App extends Templates {
                 
                 },
 
-                { 
-                    tab: 'Costo potencial', 
-                    id: 'tab-costo-potencial',
-                    active: true,
-                    contenedor:[
-                        { id: 'filterBarCostoPotencial', class: 'line' },
-                        { id: 'containerCostoPotencial', class: 'line my-2' },
-                    ]
-                 },
+                { tab:'Costo potencial' ,id: 'tab-costo-potencial'},
 
             ]
         });

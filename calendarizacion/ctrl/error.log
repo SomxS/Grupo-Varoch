@@ -1,0 +1,651 @@
+[ 2025-02-10 15:53:21 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status  WHERE date_end <= ? AND id_Status = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+
+
+[ 2025-02-08 07:13:45 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_responsible ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_responsible.id_Event  WHERE date_end <= ? AND id_Status = ? AND ,id_Employed = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Employed = '116'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-02-08 07:08:40 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_responsible ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_responsible.id_Event  WHERE date_end <= ? AND id_Status = ? AND ,id_Employed = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Employed = '116'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-02-08 07:07:11 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_responsible ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_responsible.id_Event  WHERE date_end <= ? AND id_Status = ? AND ,id_Employed = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Employed = '116'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-02-08 06:53:45 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_responsible ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_responsible.id_Event  WHERE date_end <= ? AND id_Status = ? AND ,id_Employed = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Employed = '116'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-02-08 06:52:34 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status  WHERE date_end <= ? AND id_Status = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+
+
+[ 2025-02-08 06:29:27 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status  WHERE date_end <= ? AND id_Status = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+
+
+[ 2025-02-07 11:06:03 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status  WHERE date_end <= ? AND id_Status = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+
+
+[ 2025-02-07 09:58:59 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_responsible ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_responsible.id_Event  WHERE date_end <= ? AND id_Status NOT IN (3, 4, 5) AND ,id_Employed = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Employed = '117'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-02-07 09:58:52 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_responsible ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_responsible.id_Event  WHERE date_end <= ? AND id_Status NOT IN (3, 4, 5) AND ,id_Employed = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Employed = '117'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-02-07 09:58:50 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_responsible ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_responsible.id_Event  WHERE date_end <= ? AND id_Status NOT IN (3, 4, 5) AND ,id_Employed = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Employed = '117'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-02-07 09:58:49 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_responsible ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_responsible.id_Event  WHERE date_end <= ? AND id_Status NOT IN (3, 4, 5) AND ,id_Employed = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Employed = '117'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-02-07 09:58:48 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_responsible ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_responsible.id_Event  WHERE date_end <= ? AND id_Status NOT IN (3, 4, 5) AND ,id_Employed = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Employed = '117'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-02-07 09:58:44 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_responsible ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_responsible.id_Event  WHERE date_end <= ? AND id_Status NOT IN (3, 4, 5) AND ,id_Employed = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Employed = '117'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-02-07 09:58:42 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_responsible ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_responsible.id_Event  WHERE date_end <= ? AND id_Status = ? AND ,id_Employed = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Employed = '117'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-02-07 09:58:16 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_responsible ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_responsible.id_Event  WHERE date_end <= ? AND id_Status NOT IN (3, 4, 5) AND ,id_Employed = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Employed = '116'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-02-07 09:58:01 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_responsible ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_responsible.id_Event  WHERE date_end <= ? AND id_Status = ? AND ,id_Employed = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Employed = '116'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-02-07 09:29:22 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status  WHERE date_end <= ? AND id_Status = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+
+
+[ 2025-02-07 07:16:02 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status  WHERE date_end <= ? AND id_Status = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+
+
+[ 2025-02-06 16:38:32 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status  WHERE date_end <= ? AND id_Status = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+
+
+[ 2025-02-06 16:12:51 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_responsible ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_responsible.id_Event  WHERE date_end <= ? AND id_Status = ? AND ,id_Employed = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Employed = '577'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-02-06 16:12:46 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_responsible ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_responsible.id_Event  WHERE date_end <= ? AND id_Status = ? AND ,id_Employed = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Employed = '577'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-02-06 16:12:45 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_responsible ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_responsible.id_Event  WHERE date_end <= ? AND id_Status NOT IN (3, 4, 5) AND ,id_Employed = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Employed = '577'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-02-06 16:12:44 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_responsible ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_responsible.id_Event  WHERE date_end <= ? AND id_Status = ? AND ,id_Employed = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Employed = '577'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-02-06 16:12:40 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_responsible ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_responsible.id_Event  WHERE date_end <= ? AND id_Status = ? AND ,id_Employed = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Employed = '577'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-02-06 16:12:39 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_responsible ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_responsible.id_Event  WHERE date_end <= ? AND id_Status NOT IN (3, 4, 5) AND ,id_Employed = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Employed = '577'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-02-06 16:12:37 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_responsible ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_responsible.id_Event  WHERE date_end <= ? AND id_Status = ? AND ,id_Employed = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Employed = '577'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-02-06 16:12:36 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_responsible ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_responsible.id_Event  WHERE date_end <= ? AND id_Status = ? AND ,id_Employed = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Employed = '577'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-02-06 16:11:48 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status  WHERE date_end <= ? AND id_Status = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+
+
+[ 2025-02-05 08:46:25 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  INSERT INTO rfwsmqex_gvsl_calendarizacion2.event_responsible (id_Employed,id_Event,year) VALUES (?,?,?)
+[ ERROR C.U.D. ] :: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`rfwsmqex_gvsl_calendarizacion2`.`event_responsible`, CONSTRAINT `event_responsible_ibfk_2` FOREIGN KEY (`id_Employed`) REFERENCES `rfwsmqex_gvsl_rrhh`.`empleados` (`idEmpleado`) ON DELETE NO )
+
+
+[ 2025-02-04 23:14:49 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status  WHERE date_end <= ? AND id_Status = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+
+
+[ 2025-02-04 14:25:42 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_responsible ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_responsible.id_Event  WHERE date_end <= ? AND id_Status NOT IN (3, 4, 5) AND ,id_Employed = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Employed = '117'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-02-04 14:25:38 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_responsible ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_responsible.id_Event  WHERE date_end <= ? AND id_Status = ? AND ,id_Employed = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Employed = '117'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-02-03 21:16:35 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  
+        SELECT
+            title,
+            activities,
+            day_init,
+            month_init,
+            day_end,
+            month_end,
+            date_init,
+            date_end,
+            name_status
+        FROM
+        events
+        INNER JOIN event_year ON event_year.id_Event = events.idEvent
+        INNER JOIN event_status ON event_year.id_status = event_status.idStatus
+        WHERE idEvent = ?
+        
+[ ERROR READ] :: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'rfwsmqex_erp.events' doesn't exist
+
+
+[ 2025-02-03 21:15:00 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  
+        SELECT
+            title,
+            activities,
+            day_init,
+            month_init,
+            day_end,
+            month_end,
+            date_init,
+            date_end,
+            name_status
+        FROM
+        events
+        INNER JOIN event_year ON event_year.id_Event = events.idEvent
+        INNER JOIN event_status ON event_year.id_status = event_status.idStatus
+        WHERE idEvent = ?
+        
+[ ERROR READ] :: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'rfwsmqex_erp.events' doesn't exist
+
+
+[ 2025-02-03 21:13:50 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  
+        SELECT
+            title,
+            activities,
+            day_init,
+            month_init,
+            day_end,
+            month_end,
+            date_init,
+            date_end,
+            name_status
+        FROM
+        events
+        INNER JOIN event_year ON event_year.id_Event = events.idEvent
+        INNER JOIN event_status ON event_year.id_status = event_status.idStatus
+        WHERE idEvent = ?
+        
+[ ERROR READ] :: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'rfwsmqex_erp.events' doesn't exist
+
+
+[ 2025-02-03 18:47:40 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,name_status,year FROM rfwsmqex_gvsl_calendarizacion2.events  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status  WHERE id_status NOT IN (4, 5) AND id_UDN = ?   
+[ ERROR READ] :: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+
+
+[ 2025-02-03 15:18:47 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,name_status,year FROM rfwsmqex_gvsl_calendarizacion2.events  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status  WHERE id_status NOT IN (4, 5) AND id_UDN = ?   
+[ ERROR READ] :: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+
+
+[ 2025-02-03 15:17:43 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_responsible ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_responsible.id_Event  WHERE date_end <= ? AND id_Status = ? AND ,id_Employed = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Employed = '577'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-02-03 15:17:41 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_responsible ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_responsible.id_Event  WHERE date_end <= ? AND id_Status NOT IN (3, 4, 5) AND ,id_Employed = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Employed = '577'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-02-03 15:17:34 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_responsible ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_responsible.id_Event  WHERE date_end <= ? AND id_Status = ? AND ,id_Employed = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Employed = '577'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-02-03 15:17:16 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status  WHERE date_end <= ? AND id_Status = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+
+
+[ 2025-02-01 12:00:48 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_responsible ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_responsible.id_Event  WHERE date_end <= ? AND id_Status = ? AND ,id_Employed = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Employed = '409'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-02-01 11:55:00 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_responsible ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_responsible.id_Event  WHERE date_end <= ? AND id_Status = ? AND ,id_Employed = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Employed = '409'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-01-31 15:08:35 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_responsible ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_responsible.id_Event  WHERE date_end <= ? AND id_Status = ? AND ,id_Employed = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Employed = '117'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-01-30 15:49:57 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_responsible ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_responsible.id_Event  WHERE date_end <= ? AND id_Status = ? AND ,id_Employed = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Employed = '117'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-01-29 13:21:08 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,year FROM rfwsmqex_gvsl_calendarizacion2.events  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status  WHERE id_status NOT IN (4, 5) AND id_UDN = ?   
+[ ERROR READ] :: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+
+
+[ 2025-01-29 13:20:56 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,year FROM rfwsmqex_gvsl_calendarizacion2.events  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status  WHERE id_status NOT IN (4, 5) AND id_UDN = ?   
+[ ERROR READ] :: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+
+
+[ 2025-01-29 13:18:34 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,year FROM rfwsmqex_gvsl_calendarizacion2.events  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status  WHERE id_status NOT IN (4, 5) AND id_UDN = ?   
+[ ERROR READ] :: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+
+
+[ 2025-01-29 13:15:32 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  INSERT INTO rfwsmqex_gvsl_calendarizacion2.event_responsible (id_Employed,id_Event,year) VALUES (?,?,?)
+[ ERROR C.U.D. ] :: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`rfwsmqex_gvsl_calendarizacion2`.`event_responsible`, CONSTRAINT `event_responsible_ibfk_2` FOREIGN KEY (`id_Employed`) REFERENCES `rfwsmqex_gvsl_rrhh`.`empleados` (`idEmpleado`) ON DELETE NO )
+
+
+[ 2025-01-29 12:16:30 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_responsible ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_responsible.id_Event  WHERE date_end <= ? AND id_Status = ? AND ,id_Employed = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Employed = '117'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-01-29 11:37:39 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_responsible ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_responsible.id_Event  WHERE date_end <= ? AND id_Status = ? AND ,id_Employed = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Employed = '577'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-01-29 11:37:35 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_responsible ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_responsible.id_Event  WHERE date_end <= ? AND id_Status = ? AND ,id_Employed = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Employed = '577'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-01-29 11:37:05 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status  WHERE date_end <= ? AND id_Status = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+
+
+[ 2025-01-29 11:36:55 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status  WHERE date_end <= ? AND id_Status NOT IN (3, 4, 5)  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+
+
+[ 2025-01-29 11:36:53 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status  WHERE date_end <= ? AND id_Status NOT IN (3, 4, 5)  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+
+
+[ 2025-01-29 11:36:52 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status  WHERE date_end <= ? AND id_Status NOT IN (3, 4, 5)  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+
+
+[ 2025-01-29 11:36:50 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status  WHERE date_end <= ? AND id_Status NOT IN (3, 4, 5)  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+
+
+[ 2025-01-29 11:36:48 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status  WHERE date_end <= ? AND id_Status = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+
+
+[ 2025-01-29 11:36:45 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status  WHERE date_end <= ? AND id_Status = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+
+
+[ 2025-01-29 11:36:44 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status  WHERE date_end <= ? AND id_Status = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+
+
+[ 2025-01-29 11:36:43 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status  WHERE date_end <= ? AND id_Status = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+
+
+[ 2025-01-29 11:36:41 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status  WHERE date_end <= ? AND id_Status = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+
+
+[ 2025-01-29 11:36:38 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status  WHERE date_end <= ? AND id_Status = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+
+
+[ 2025-01-29 11:36:37 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status  WHERE date_end <= ? AND id_Status NOT IN (3, 4, 5)  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+
+
+[ 2025-01-29 11:36:34 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status  WHERE date_end <= ? AND id_Status = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+
+
+[ 2025-01-29 09:37:52 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status  WHERE date_end <= ? AND id_Status = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+
+
+[ 2025-01-28 08:57:58 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status  WHERE date_end <= ? AND id_Status = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+
+
+[ 2025-01-27 20:21:37 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_responsible ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_responsible.id_Event  WHERE date_end <= ? AND id_Status = ? AND ,id_Employed = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Employed = '117'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-01-25 20:41:44 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_responsible ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_responsible.id_Event  WHERE date_end <= ? AND id_Status = ? AND ,id_Employed = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Employed = '117'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-01-25 20:41:36 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_responsible ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_responsible.id_Event  WHERE date_end <= ? AND id_UDN = ? AND id_Status = ? AND ,id_Employed = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Employed = '117'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-01-25 20:41:30 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_responsible ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_responsible.id_Event  WHERE date_end <= ? AND id_Status = ? AND ,id_Employed = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Employed = '117'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-01-25 09:21:45 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  INSERT INTO rfwsmqex_gvsl_calendarizacion2.event_responsible (id_Employed,id_Event,year) VALUES (?,?,?)
+[ ERROR C.U.D. ] :: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`rfwsmqex_gvsl_calendarizacion2`.`event_responsible`, CONSTRAINT `event_responsible_ibfk_2` FOREIGN KEY (`id_Employed`) REFERENCES `rfwsmqex_gvsl_rrhh`.`empleados` (`idEmpleado`) ON DELETE NO )
+
+
+[ 2025-01-25 09:21:29 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  INSERT INTO rfwsmqex_gvsl_calendarizacion2.event_responsible (id_Employed,id_Event,year) VALUES (?,?,?)
+[ ERROR C.U.D. ] :: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`rfwsmqex_gvsl_calendarizacion2`.`event_responsible`, CONSTRAINT `event_responsible_ibfk_2` FOREIGN KEY (`id_Employed`) REFERENCES `rfwsmqex_gvsl_rrhh`.`empleados` (`idEmpleado`) ON DELETE NO )
+
+
+[ 2025-01-25 09:21:19 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  INSERT INTO rfwsmqex_gvsl_calendarizacion2.event_responsible (id_Employed,id_Event,year) VALUES (?,?,?)
+[ ERROR C.U.D. ] :: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`rfwsmqex_gvsl_calendarizacion2`.`event_responsible`, CONSTRAINT `event_responsible_ibfk_2` FOREIGN KEY (`id_Employed`) REFERENCES `rfwsmqex_gvsl_rrhh`.`empleados` (`idEmpleado`) ON DELETE NO )
+
+
+[ 2025-01-25 09:08:33 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_responsible ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_responsible.id_Event  WHERE date_end <= ? AND id_Status = ? AND ,id_Employed = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Employed = '117'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-01-23 16:12:58 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status  WHERE date_end <= ? AND id_Status = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+
+
+[ 2025-01-23 13:32:23 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status  WHERE date_end <= ? AND id_Status = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+
+
+[ 2025-01-23 13:32:17 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status  WHERE date_end <= ? AND id_Status = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+
+
+[ 2025-01-23 12:53:48 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status  WHERE date_end <= ? AND id_Status = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+
+
+[ 2025-01-23 09:33:53 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status  WHERE date_end <= ? AND id_Status = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+
+
+[ 2025-01-22 15:16:59 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status  WHERE date_end <= ? AND id_Status = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+
+
+[ 2025-01-22 14:51:17 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status  WHERE date_end <= ? AND ,id_Status = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Status = '1'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-01-22 14:51:15 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status  WHERE date_end <= ? AND ,id_Status = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Status = '1'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-01-22 14:51:14 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status  WHERE date_end <= ? AND ,id_Status = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Status = '1'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+[ 2025-01-22 14:51:12 ]
+[ UNIX_USR ] :: rfwsmqex
+[ WINDOWS_USR ] :: %USERNAME%
+[ INFO ] ::  SELECT idEvent AS id,title,name_season,activities,date_init,date_end,abreviatura,id_status,rfwsmqex_gvsl_calendarizacion2.event_year.year FROM rfwsmqex_gvsl_calendarizacion2.`events`  INNER JOIN udn ON idUDN = id_UDN INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_year ON idEvent = rfwsmqex_gvsl_calendarizacion2.event_year.id_Event INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_seasons ON idSeason = id_Season INNER JOIN rfwsmqex_gvsl_calendarizacion2.event_status ON idStatus = id_Status  WHERE date_end <= ? AND ,id_Status = ?  ORDER BY id_Status,date_init ASC 
+[ ERROR READ] :: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_Status = '1'  ORDER BY id_Status,date_init ASC' at line 1
+
+
+sss
