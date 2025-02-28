@@ -34,8 +34,8 @@ class App extends Templates {
 
     render(){
         this.createNavBar();
-        // this.layout();
-        this.filterBar();
+        this.layout();
+        // this.filterBar();
     }
 
     layout() {
@@ -43,6 +43,7 @@ class App extends Templates {
             parent: "root",
             id: "Primary",
         });
+        this.historyPay();
 
     }
 
@@ -93,4 +94,34 @@ class App extends Templates {
         
        
     }
+
+    // add component.
+
+    historyPay() {
+        // let modalAdvance = bootbox.dialog({
+        //     title: `<h4 class="text-uppercase">Historial de pago </h4>`,
+        //     size: "large",
+        //     closeButton: true,
+        //     message: `<div id="containerChat"></div>`,
+        // });
+
+        this.createTimeLine({
+            parent: "containerPrimary",
+            data: [
+                { valor: "Se agregó un pago", date: "Hoy 15:07", message: "En efectivo por $5,000.00", type: "payment" },
+                { valor: "Se agregó un comentario", date: "Hoy 15:07", message: "Este pago se realizó con efectivo.", type: "comment" },
+                { valor: "Nuevo evento programado", date: "Ayer 12:00", message: "Evento de conferencia en el auditorio", type: "event" },
+                { valor: "Acción desconocida", date: "Ayer 10:30", message: "Este evento no tiene un tipo definido", type: "otroTipo" }
+
+               
+            ]
+        });
+    }
+
+
+
+
+
+
+
 }

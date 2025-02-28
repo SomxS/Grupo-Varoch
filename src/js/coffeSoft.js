@@ -1143,6 +1143,80 @@ class Components extends Complements {
 
     }
 
+    createTimeLine(options) {
+        let defaults = {
+            parent: "",
+            id: "historial",
+            data: [],
+            input_id: "iptHistorial",
+            class: "p-3 bg-gray-200 rounded-lg h-80 overflow-y-auto",
+            user_photo: "https://w7.pngwing.com/pngs/81/570/png-transparent-profile-logo-computer-icons-user-user-blue-heroes-logo-thumbnail.png",
+            icons: {
+                payment: "💵",
+                comment: "💬",
+                event: "📅",
+                default: "🔹"
+            }
+        };
+
+        let opts = Object.assign(defaults, options);
+        let historialContainer = $('<div>', { class: opts.class, id: opts.id });
+
+        // 📌 **Campo de Comentario**
+        let header = $('<div>', { class: "flex items-center gap-2 mb-3 bg-white p-2 rounded-md" }).append(
+            $('<img>', { src: opts.user_photo, class: "w-6 h-6 rounded-full", alt: "Usuario" }),
+            $('<input>', { id: opts.input_id, class: "w-full border-none outline-none bg-transparent text-sm", placeholder: "Añadir un Comentario..." })
+        );
+
+        historialContainer.append(header);
+
+        // 📜 **Contenedor de línea de tiempo**
+        let timeline = $('<div>', { class: "relative flex flex-col gap-4" });
+
+        // 📜 **Generar los elementos del historial**
+        opts.data.forEach((item, index) => {
+            let entry = $('<div>', { class: "flex items-start gap-3 relative" });
+
+            // 🔵 **Seleccionar el icono basado en el `type`**
+            let iconType = opts.icons[item.type] || opts.icons.default;
+
+            // 🔵 **Columna de iconos y líneas**
+            let iconContainer = $('<div>', { class: "flex flex-col items-center relative" }).append(
+                // Icono del evento
+                $('<div>', {
+                    class: "w-8 h-8 flex items-center justify-center bg-gray-300 text-white rounded-full",
+                    html: iconType
+                }),
+                // 📏 Línea de tiempo (solo si no es el último elemento)
+                index !== opts.data.length - 1
+                    ? $('<div>', { class: "w-[2px] min-h-[28px] bg-gray-400 flex-1 mt-2" })
+                    : ""
+            );
+
+            // 📝 **Fila con título y fecha alineados**
+            let titleRow = $('<div>', { class: "flex justify-between items-center w-full" }).append(
+                $('<span>', { class: "font-semibold", text: item.valor }), // Título
+                $('<small>', { class: "text-gray-500 text-xs", text: item.date }) // Fecha
+            );
+
+            // 💬 **Mensaje o descripción del evento**
+            let details = $('<div>', { class: "text-sm bg-white p-2 rounded-md shadow-md w-full" }).append(titleRow);
+
+            if (item.message) {
+                let messageBox = $('<div>', { class: " text-xs p-2 rounded-md mt-1", text: item.message });
+                details.append(messageBox);
+            }
+
+            entry.append(iconContainer, details);
+            timeline.append(entry);
+        });
+
+        historialContainer.append(timeline);
+
+        // Renderizar el componente
+        $('#' + opts.parent).append(historialContainer);
+    }
+
 
 
 
