@@ -1,7 +1,7 @@
 // let ctrl = "ctrl/app.php";
 const link = 'https://erp-varoch.com/DEV/costsys/ctrl/ctrl-costo-potencial-soft.php';
 
-
+const api_alpha = 'https://huubie.com.mx/alpha/eventos/ctrl/ctrl-payment.php';
 // init vars.
 let app;
 
@@ -97,13 +97,12 @@ class App extends Templates {
 
     // add component.
 
-    historyPay() {
-        // let modalAdvance = bootbox.dialog({
-        //     title: `<h4 class="text-uppercase">Historial de pago </h4>`,
-        //     size: "large",
-        //     closeButton: true,
-        //     message: `<div id="containerChat"></div>`,
-        // });
+    async historyPay() {
+        
+        const data = await this.useFetch({ url: api_alpha, data: { opc: "getHistory" } });
+
+
+        console.log(data);
 
         this.createTimeLine({
             parent: "containerPrimary",
