@@ -1836,28 +1836,32 @@ function fn_ajax(datos, url, div = '') {
     });
   });
 }
-function fn_ajax(datos, url, div = '') {
-  return new Promise(function (resolve, reject) {
-    $.ajax({
-      type: "POST",
-      url: url,
-      data: datos,
-      dataType: "json",
-      beforeSend: () => {
-        $(div).Loading();
-      },
 
-      success: (data) => {
-        resolve(data);
-      },
-      error: function (xhr, status, error) {
-        console.error("url: ", url);
-        console.error("status: ", status);
-        console.error("error: ", error);
+// datatable
+function data_table_export(table, size = 10) {
 
-        if (xhr.responseText === "") console.error("No se obtuvo respuesta del servidor.");
-        else console.error(xhr);
+
+  $(table).DataTable({
+    destroy: true,
+    dom: "Bfrtip",
+    order: [],
+
+    pageLength: size,
+    // buttons: [{ extend: 'excel', className: 'btn-outline-primary' }, { extend: 'copy', className: 'btn-outline-primary' }],
+
+    buttons: ["copy", "excel"],
+    oLanguage: {
+      sSearch: "Buscar:",
+      sInfo:
+        "Mostrando del (_START_ al _END_) de un total de _TOTAL_ registros",
+      sInfoEmpty: "Mostrando del 0 al 0 de un total de 0 registros",
+      sLoadingRecords: "Por favor espere - cargando...",
+      oPaginate: {
+        sFirst: "Primero",
+        sLast: "Último",
+        sNext: "Siguiente",
+        sPrevious: "Anterior",
       },
-    });
+    },
   });
 }
