@@ -1865,7 +1865,7 @@ class Components extends Complements {
         let opts = Object.assign({}, defaults, options);
 
         // 📜 **Contenedor principal del cuestionario**
-        let container = $('<div>', { class: 'questionnaire p-4 bg-gray-200 rounded-lg shadow-sm overflow-auto', id: opts.parent, style: 'max-height: 500px;' });
+        let container = $('<div>', { class: 'questionnaire p-4 bg-gray-200 rounded-lg shadow-sm overflow-auto', id: opts.parent, style: 'max-height: 600px;' });
 
         // 🏷️ **TÍTULO PRINCIPAL**
         if (opts.mainTitle) {
