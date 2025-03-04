@@ -717,7 +717,7 @@ class Components extends Complements {
                         data: data,
                         success: (request) => {
                             if (conf.success) conf.success(request);
-                            if (opts.closeModal) modal.modal('hide');
+                            if (conf.closeModal) modal.modal('hide');
                         }
                     })
                 });
