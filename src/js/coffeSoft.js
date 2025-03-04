@@ -1143,6 +1143,788 @@ class Components extends Complements {
 
     }
 
+    createTimeLine(options) {
+        let defaults = {
+            parent: "",
+            id: "historial",
+            data: [],
+            input_id: "iptHistorial",
+            class: "p-3 bg-gray-200 rounded-lg h-80 overflow-y-auto",
+            user_photo: "https://w7.pngwing.com/pngs/81/570/png-transparent-profile-logo-computer-icons-user-user-blue-heroes-logo-thumbnail.png",
+            icons: {
+                payment: "💵",
+                comment: "💬",
+                event: "📅",
+                default: "🔹"
+            }
+        };
+
+        let opts = Object.assign(defaults, options);
+        let historialContainer = $('<div>', { class: opts.class, id: opts.id });
+
+        // 📌 **Campo de Comentario**
+        let header = $('<div>', { class: "flex items-center gap-2 mb-3 bg-white p-2 rounded-md" }).append(
+            $('<img>', { src: opts.user_photo, class: "w-6 h-6 rounded-full", alt: "Usuario" }),
+            $('<input>', { id: opts.input_id, class: "w-full border-none outline-none bg-transparent text-sm", placeholder: "Añadir un Comentario..." })
+        );
+
+        historialContainer.append(header);
+
+        // 📜 **Contenedor de línea de tiempo**
+        let timeline = $('<div>', { class: "relative flex flex-col gap-4" });
+
+        // 📜 **Generar los elementos del historial**
+        opts.data.forEach((item, index) => {
+            let entry = $('<div>', { class: "flex items-start gap-3 relative" });
+
+            // 🔵 **Seleccionar el icono basado en el `type`**
+            let iconType = opts.icons[item.type] || opts.icons.default;
+
+            // 🔵 **Columna de iconos y líneas**
+            let iconContainer = $('<div>', { class: "flex flex-col items-center relative" }).append(
+                // Icono del evento
+                $('<div>', {
+                    class: "w-8 h-8 flex items-center justify-center bg-gray-300 text-white rounded-full",
+                    html: iconType
+                }),
+                // 📏 Línea de tiempo (solo si no es el último elemento)
+                index !== opts.data.length - 1
+                    ? $('<div>', { class: "w-[2px] min-h-[28px] bg-gray-400 flex-1 mt-2" })
+                    : ""
+            );
+
+            // 📝 **Fila con título y fecha alineados**
+            let titleRow = $('<div>', { class: "flex justify-between items-center w-full" }).append(
+                $('<span>', { class: "font-semibold", text: item.valor }), // Título
+                $('<small>', { class: "text-gray-500 text-xs", text: item.date }) // Fecha
+            );
+
+            // 💬 **Mensaje o descripción del evento**
+            let details = $('<div>', { class: "text-sm bg-white p-2 rounded-md shadow-md w-full" }).append(titleRow);
+
+            if (item.message) {
+                let messageBox = $('<div>', { class: " text-xs p-2 rounded-md mt-1", text: item.message });
+                details.append(messageBox);
+            }
+
+            entry.append(iconContainer, details);
+            timeline.append(entry);
+        });
+
+        historialContainer.append(timeline);
+
+        // Renderizar el componente
+        $('#' + opts.parent).append(historialContainer);
+    }
+
+    createButtonGroup(options) {
+
+        const icon_default = 'icon-shop';
+
+
+        let groups = {
+
+            parent: 'groupButtons',
+            cols: 'w-25 ',
+            size: 'sm',
+            fn: '',
+            onClick: '',
+            class: '',
+            data: [{
+                text: 'FRANCES',
+                color: 'primary',
+                icon: 'icon-shop',
+                id: '',
+
+            },
+            {
+                text: 'PASTELERIA',
+                color: 'outline-success',
+                icon: 'icon-shop',
+
+
+            },
+
+            ]
+
+        };
+
+
+        let configuration = Object.assign(groups, options);
+
+        let divs = $('<div>', { class: 'd-flex overflow-auto ' + configuration.class });
+
+
+        // Iterate over the group data and create buttons
+
+        if (!configuration.dataEl) {
+            configuration.data.forEach((item) => {
+
+                let btn = $('<a>', {
+                    class: `btn btn-${configuration.size} btn-${item.color} ${configuration.cols} me-1 d-flex flex-column align-items-center justify-content-center`,
+                    id: item.id,
+                    click: item.onClick,
+                    onclick: item.fn
+                });
+
+                if (item.type) {
+
+                    btn = $('<label>', {
+                        class: `btn z-index-0 btn-${configuration.size} btn-${item.color} ${configuration.cols} me-1 `,
+                        for: item.id,
+                        id: item.btnid || 'btnfile'
+                    });
+
+
+
+
+                    let ipt_file = $('<input>', {
+                        class: 'hide',
+                        type: 'file',
+                        accept: item.accept ? item.accept : '.xlsx, .xls',
+                        id: item.id,
+                        onchange: item.fn,
+                    });
+
+                    divs.append(ipt_file);
+
+                    // btn.append(counter);
+                }
+
+
+
+
+                if (item.icon) {
+                    let icon = $('<i>', { class: item.icon + ' d-block' });
+                    btn.append(icon);
+                }
+
+                if (item.text) {
+                    let span = $('<span>', { text: item.text });
+                    btn.append(span);
+                }
+
+                divs.append(btn);
+
+            });
+        } else {
+
+
+            let classDisabled = configuration.dataEl.disabled ? 'disabled' : '';
+
+            configuration.dataEl.data.forEach((item) => {
+
+                let props = {
+                    onclick: configuration.dataEl.onClick + `(${item.id})` || configuration.dataEl.fn + `(${item.id})`
+                }
+
+                if (configuration.onClick) {
+                    props = {
+                        click: configuration.onClick
+                    }
+                }
+
+
+                let btn = $('<a>', {
+                    class: `btn ${classDisabled} btn-outline-primary ${configuration.cols} d-flex me-1 flex-column w-100 align-items-center justify-content-center`, // Add dynamic color class
+                    id: item.id,
+                    ...props
+
+                });
+
+
+                var itemIcon = configuration.dataEl.icon ? configuration.dataEl.icon : '';
+
+
+                let icon = $('<i>', { class: 'ms-2  d-block ' + (item.icon ? item.icon : itemIcon) });
+
+                let span = $('<span>', { text: item.valor });
+
+                // if(item.id){
+
+                btn.append(icon, span);
+                // }else{
+                //     btn.append(span);
+
+                // }
+
+
+
+                divs.append(btn);
+            });
+
+
+        }
+
+
+        if (groups.parent) {
+
+            $('#' + groups.parent).html(divs);
+        } else {
+
+            return divs;
+        }
+
+
+        const cardPosGroup = document.getElementById(groups.parent);
+
+
+
+        // Agregar un evento de clic al contenedor
+        cardPosGroup.addEventListener('click', function (event) {
+
+
+
+            // // Verificar si el elemento clicado es un botón
+            if (event.target.closest('a')) {
+                // Seleccionar todos los botones
+                const buttons = cardPosGroup.querySelectorAll('a');
+
+                buttons.forEach(button => {
+                    button.classList.remove('active', 'btn-primary', 'text-white');
+                    button.classList.add('btn-outline-primary');
+                });
+
+                // Agregar las clases de estilo al botón clicado
+                const clickedButton = event.target.closest('a');
+                clickedButton.classList.add('active', 'btn-primary', 'text-white');
+                clickedButton.classList.remove('btn-outline-primary');
+
+            }
+        });
+
+
+
+
+
+
+    }
+
+    createGrid(options) {
+
+        let defaults = {
+
+            parent: '',
+            color: 'bg-default',
+            data: [{ id: 1, nombre: 'BOSQUE DE CHOCOLATE' }],
+            size: 'soft',
+            type: '',
+            image: true,
+            class: 'grid-container'
+
+        };
+
+        let opts = Object.assign(defaults, options);
+        let divs = $('<div>', { class: opts.class, id: 'gridcontainer' });
+
+
+        opts.data.forEach((element) => {
+
+
+
+            if (opts.type == 'catalog') {
+                var img = "https://15-92.com/ERP3/src/img/default_flower.png";
+                var grid_item = $('<div>', { class: ` ${opts.color} grid-item  `, onClick: element.onclick });
+                var link = (element.attr.src) ? element.attr.src : img;
+                var imagen = $('<img>', { src: link, class: 'col-12' });
+
+                // add image.
+                var details = $('<div>', { class: 'col-12 div1 pointer' }).append(imagen);
+
+                // add text. 
+                var description = $('<div>', { class: 'col-12 bg-primary d-flex flex-column pt-1 div2 pointer' });
+                var h6 = $('<label>', { text: element.nombre, class: 'fw-bold col-12' });
+                var sub = $('<sub>', { text: element.costo, class: 'fw-bold py-2' })
+
+                description.append(h6, sub);
+                // draw grid items.
+                grid_item.append(details, description);
+
+            } else if (opts.type == 'almacen') {
+                // Config. Evento onclick.
+
+                let props = {
+                    onclick: element.onclick
+                }
+                if (opts.onClick) {
+                    props = {
+                        click: opts.onClick
+                    }
+                }
+
+
+                // Config. disponibilidad.
+
+                const disp = element.disponible ? element.disponible : '';
+                var class_disp = element.disponible == 0 ? 'disabled bg-gray-200 text-gray-400' : 'hover:shadow-md hover:bg-slate-800 hover:text-gray-100 ';
+                var especial = element.especial ? element.especial : 0;
+                var price = especial > 0 ? element.especial : element.costo;
+
+                var card = $('<div>', {
+
+                    id: element.id,
+                    costo: price ? price : 0,
+                    class: 'card h-32 transition-all text-center pointer ' + class_disp,
+
+                    ...props
+                });
+
+
+
+                var details = $('<div>', { class: 'p-2 card-content flex flex-col py-3 gap-2 w-full ' });
+                var label = $('<label>', { text: element.nombre ? element.nombre : element.valor, class: 'fw-semibold text-uppercase text-xs' });
+                var precio = $('<label>', { class: ` ${especial > 0 ? ' text-lime-600 ' : ''} font-bold text-lg`, text: element.costo ? formatPrice(price) : '' });
+                var text_almacen = $('<span>', { class: `text-xs font-semibold ${disp == 0 ? 'text-red-400 font-bold' : 'text-gray-400'} `, html: disp == 0 ? 'Sin stock' : `disponibles: ` });
+
+                var almacen = $('<span>', { id: 'cantidad' + element.id, class: `text-xs font-semibold text-gray-400 `, html: disp == 0 ? '' : disp })
+
+                var container_disponibilidad = $('<div>', { class: 'flex justify-center items-center' }).append(text_almacen, almacen);
+                details.append(label, precio, container_disponibilidad);
+
+                card.append(details);
+                divs.append(card);
+
+
+
+            } else if (opts.type == 'pos') {
+
+                // Config. Evento onclick.
+
+                let props = {
+                    onclick: element.onclick
+                }
+                if (opts.onClick) {
+                    props = {
+                        click: opts.onClick
+                    }
+                }
+
+
+                const disp = element.disponible ? element.disponible : '';
+
+                var class_disp = element.disponible == 0 ? ' disabled bg-gray-200 text-gray-400' : 'hover:shadow-md hover:bg-slate-800 hover:text-gray-100 ';
+
+                var card = $('<div>', {
+
+                    id: element.id,
+                    costo: element.costo ? element.costo : 0,
+                    class: ' card h-52 transition-all text-center pointer ' + class_disp,
+
+                    ...props
+                });
+
+                // img
+
+                // Crear el enlace `<a>`
+                let enlace = $('<a>', { href: element.href || '#!' });
+
+                // Crear la imagen `<img>`
+
+                let containerImage = $('<div>', {
+                    class: 'w-100 h-32  p-1  rounded-lg flex-shrink-0 ',
+                }).append(
+                    $('<img>', {
+                        class: element.imgClass || ' rounded-lg object-cover object-center h-100 w-full p-1',
+                        src: element.src,
+                    })
+                );
+
+
+
+
+                let iconContainer = $('<div>', {
+                    class: ' mx-2 py-4 mt-2 bg-gray-100  rounded-lg text-center',
+                }).append($('<i>', { class: ' icon-birthday text-muted', style: 'font-size: 42px;' }));
+
+
+                // info and details
+
+                var details = $('<div>', { class: ' px-2 card-content flex flex-col py-2 gap-2 w-full ' });
+                var label = $('<label>', { text: element.nombre ? element.nombre : element.valor, class: ' fw-semibold text-uppercase text-xs' });
+                var precio = $('<label>', { class: 'text-sm font-bold pb-2', text: element.costo ? formatPrice(element.costo) : '' });
+
+
+                details.append(label, precio);
+                if (opts.image) {
+
+                    if (element.src) {
+
+                        card.append(containerImage, details);
+                    } else {
+
+                        card.append(iconContainer, details);
+                    }
+
+                } else {
+
+                    card.append(details);
+                }
+
+                divs.append(card);
+
+            } else {
+
+                let props = { // propiedades del evento click/onClick
+                    onclick: element.onclick
+                }
+                if (opts.onClick) {
+                    props = {
+                        click: opts.onClick
+                    }
+                }
+
+                var grid_item = $('<div>', {
+
+                    id: element.id,
+                    costo: element.costo ? element.costo : 0,
+                    class: ` ${opts.color} grid-item-${opts.size}  `,
+                    ...props
+                    // click: element.onclick ? element.onclick : opts.onClick 
+                });
+
+                // add cost.
+                var details = $('<div>', { class: 'col-12 pointer' });
+                var lbl = $('<label>', { text: element.costo ? formatPrice(element.costo) : '', class: 'col-12 fw-semibold py-2 text-muted' });
+                details.append(lbl);
+                // add text. 
+                var description = $('<div>', { class: 'col-12 fw-bold d-flex flex-column pt-1 div1 pointer' });
+                var label = $('<label>', { text: element.nombre ? element.nombre : element.valor, class: 'fw-bold col-12' });
+                description.append(label);
+                // draw grid items.
+                grid_item.append(description, details);
+
+            }
+
+            divs.append(grid_item);
+
+
+        });
+
+        $('#' + opts.parent).html(divs);
+
+    }
+
+    creategroupCard(options) {
+
+        let groups = {
+
+            parent: 'groupButtons',
+            cols: 'w-25 ',
+            size: 'sm',
+            type: 'group',
+            colors: 'bg-primary',
+            description: '',
+            titleGroup: 'Tiempo',
+            subtitleGroup: 'hrs',
+
+            data: [
+                {
+                    valor: 'Limpieza',
+                    color: 'outline-primary',
+                    icon: 'icon-shop',
+                    onClick: '',
+                    id: 1,
+                    puntaje: '0',
+                    obtenido: '0',
+                },
+                {
+                    valor: 'Terraza',
+                    color: 'outline-primary',
+                    icon: 'icon-shop',
+                    onClick: '',
+                    id: 2,
+                    puntaje: '0',
+                    obtenido: '0',
+
+                },
+
+
+            ],
+
+            styleCard: {
+
+                group: {
+                    class: 'category-card mb-3',
+
+
+
+                }
+
+            }
+
+        };
+
+
+
+        let opts = Object.assign(groups, options);
+
+        let divs = $('#' + opts.parent);
+        divs.empty();
+
+        // add title.
+
+        let title = $('<label>', { class: 'text-uppercase fw-bold text-muted', text: opts.title });
+        let descr = $('<p>', { class: 'mb-0', text: opts.description });
+
+        if (opts.title) divs.append(title);
+
+        // Verificar si opts.data está definido y no es null
+        if (opts.data) {
+            // console.log('cards',opts.data)
+
+            opts.data.map((El, index) => {
+
+                // category or group
+
+                if (opts.type == 'group') {
+
+                    // --- items / result
+
+                    let items = El.items ? El.items : '';
+                    let results = El.items ? El.result : ' ';
+
+                    let class_answered_group = '';
+                    if (items == results) { class_answered_group = 'answered'; }
+
+
+
+
+                    let btn = $('<div>', {
+                        class: `category-card mb-3 ${class_answered_group} `,
+                        id: El.id,
+                        onclick: El.onclick ? El.onclick : opts.fn + `(${El.id})`  // jQuery usa 'click' en lugar de 'onclick'
+                    });
+
+
+                    let span = $('<h6>', { class: 'text-uppercase fw-bold', text: El.valor });
+                    let puntaje = $('<p>', { class: 'mb-0 fw-semibold', style: 'font-size:1rem;', text: opts.titleGroup + ' : ' + El.totalTime });
+                    let total = $('<span>', { html: `Preguntas: ${results} / ${items}` });
+
+                    btn.append(span, total);
+                    divs.append(btn);
+                }
+
+                else if (opts.type == 'subgroup') {
+
+                    let items = El.items;
+                    let result = El.result;
+                    let class_success = (result == items) ? 'answered' : ' d-flex justify-content-center ';
+
+
+                    let btn = $('<div>', {
+                        class: `group-card mb-3 ${El.id != 0 ? class_success : ''} `,
+                        id: El.id,
+                        idGroup: El.idGroup || '',
+                        onclick: (El.onclick) ? El.onclick : opts.fn + `(${El.id})`
+                    });
+
+
+                    if (El.id != 0) {
+
+                        // add components.
+
+                        var label = $('<label>', { class: 'text-uppercase' }).text(El.text ? El.text : El.valor);
+                        var paragraph = $('<span>', { class: 'mb-0' }).html(`Preguntas: <br> ${result} / ${items}`);
+
+                        btn.append(label, paragraph);
+
+                    } else {
+
+                        let icon = $('<i>', { class: El.icon + ' fs-1  d-block' });
+                        var label = $('<label>', { class: 'text-uppercase' }).text(El.text ? El.text : El.valor);
+
+                        btn.append(icon, label);
+                    }
+
+
+                    divs.append(btn);
+
+                }
+
+                else if (opts.type == 'question') {
+
+                    let noIndex = index + 1;
+
+                    let class_success = El.answer ? 'answered' : '';
+
+                    let btn = $('<div>', {
+
+                        class: `question-card   mb-3 ${El.id != 0 ? class_success : ''} `,
+                        id: 'question_' + El.id,
+
+                        idQuestion: El.id,
+                        type: El.id_QuestionType,
+
+                        name: 'question',
+                        noIndex: noIndex,
+                        points: El.points ? El.points : 0,
+                        onclick: (El.onclick) ? El.onclick : opts.fn + `(event)`
+
+
+                    });
+
+
+
+                    if (El.id == 0) {
+
+                        btn = $('<div>', {
+                            class: `question-card bg-primary mb-3 `,
+                            onclick: (El.onclick) ? El.onclick : opts.fn + `(event)`
+
+                        });
+
+                        let icon = $('<i>', { class: El.icon + ' fs-1  d-block' });
+                        var label = $('<label>', { class: 'text-uppercase' }).text(El.text ? El.text : El.valor);
+
+                        btn.append(icon, label);
+
+                    }
+
+                    else {
+
+                        var text = El.valor;
+
+                        var label = $('<label>', { class: 'text-uppercase' }).text(El.valor ? text : El.text);
+
+                        btn.append(label);
+
+                    }
+
+                    divs.append(btn);
+
+                }
+
+                else if (opts.type == 'options') {
+
+                    let options = {
+                        id: El.id,
+                        data: El.groups
+                    };
+
+                    let btn = $('<div>', {
+                        class: `question-card pointer my-2 `,
+
+                    }).click(() => {
+
+                        opts.success(options)
+
+                    });
+
+                    let getout = 0;
+
+                    if (El.data.length) {
+                        getout = El.data[0].getout;
+                    }
+
+
+
+                    let label = $('<label>', { class: 'text-uppercase pointer ', text: El.valor });
+                    let span = $('<span>', { class: 'ms-auto text-primary pointer fw-bold ', text: getout, style: 'font-size:1.2rem;' });
+
+                    span.append($('<i>', { class: 'icon-logout' }));
+
+                    btn.append(label, span);
+
+
+
+
+                    divs.append(btn);
+
+
+                }
+
+
+
+            });
+
+
+        } else {
+
+            divs.append('No hay grupos definidos.');
+        }
+
+
+
+
+
+
+
+    }
+
+    createQuestionnaire(options) {
+        // ⚙️ **Definición de valores por defecto**
+        let defaults = {
+            parent: 'questionnaireContainer',
+            mainTitle: 'CUESTIONARIO',
+            subTitle: 'Seleccione la respuesta adecuada para cada pregunta.',
+            data: [],
+            options: ['Muy mal', 'Mal', 'Regular', 'Bien', 'Muy bien']
+        };
+
+        // 🔄 **Mezclar valores por defecto con los proporcionados por el usuario**
+        let opts = Object.assign({}, defaults, options);
+
+        // 📜 **Contenedor principal del cuestionario**
+        let container = $('<div>', { class: 'questionnaire p-4 bg-gray-200 rounded-lg shadow-sm overflow-auto', id: opts.parent, style: 'max-height: 500px;' });
+
+        // 🏷️ **TÍTULO PRINCIPAL**
+        if (opts.mainTitle) {
+            let mainTitle = $('<h4>', { class: 'fw-bold text-uppercase mb-1', text: opts.mainTitle });
+            container.append(mainTitle);
+        }
+
+        // 📝 **SUBTÍTULO O INSTRUCCIONES**
+        if (opts.subTitle) {
+            let subTitle = $('<p>', { class: 'text-muted mb-3', text: opts.subTitle });
+            container.append(subTitle);
+        }
+
+        // 📌 **Iterar sobre las secciones del cuestionario**
+        opts.data.forEach(section => {
+            // 📦 **Contenedor de la sección**
+            let sectionContainer = $('<div>', { class: 'mb-4 p-4 bg-white rounded-md shadow-sm' });
+
+            // 🏷️ **Encabezado de la sección**
+            let header = $('<h6>', { class: 'fw-bold text-uppercase mb-2', text: section.title });
+            sectionContainer.append(header);
+
+            // ❓ **Generar cada pregunta dentro de la sección**
+            section.questions.forEach(question => {
+                // 📌 **Contenedor de la pregunta**
+                let questionContainer = $('<div>', { class: 'mb-3' });
+
+                // 📝 **Texto de la pregunta**
+                let questionText = $('<p>', { class: 'text-muted mb-1', text: question.text });
+
+                // 🎛️ **Contenedor de opciones de respuesta**
+                let buttonGroup = $('<div>', { class: 'relative flex grid grid-cols-5 gap-3' });
+
+                // 🔘 **Generar botones de opciones**
+                opts.options.forEach(opt => {
+                    let button = $('<button>', {
+                        class: 'btn btn-outline-secondary rounded-3 px-3 py-3 shadow-sm',
+                        text: opt,
+                        click: function () {
+                            $(this).siblings().removeClass('active btn-primary text-white').addClass('btn-outline-secondary');
+                            $(this).addClass('active btn-primary text-white').removeClass('btn-outline-secondary');
+                        }
+                    });
+                    buttonGroup.append(button);
+                });
+
+                questionContainer.append(questionText, buttonGroup);
+                sectionContainer.append(questionContainer);
+            });
+
+            container.append(sectionContainer);
+        });
+
+        // 🎯 **Renderizar el cuestionario en el contenedor padre**
+        $('#' + opts.parent).html(container);
+    }
+
+
+
 
 
 
