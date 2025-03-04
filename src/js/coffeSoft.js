@@ -678,6 +678,7 @@ class Components extends Complements {
         let defaults = {
             id: idFormulario,
             autofill:false,
+            closeModal: true,
             bootbox: {
                 title: 'Modal example',
                 closeButton: true,
@@ -716,7 +717,7 @@ class Components extends Complements {
                         data: data,
                         success: (request) => {
                             if (conf.success) conf.success(request);
-                            modal.modal('hide');
+                            if (opts.closeModal) modal.modal('hide');
                         }
                     })
                 });

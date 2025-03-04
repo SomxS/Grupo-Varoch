@@ -193,7 +193,7 @@ class App extends Templates {
 
         this.createButtonGroup({
             parent: 'groups',
-            cols: 'w-25 p-3',
+            cols: 'w-25 h-24 text-xs',
             size: 'sm',
             class: 'd-flex justify-content-start',
             onClick: () => { this.initEvaluation() },
@@ -201,6 +201,7 @@ class App extends Templates {
                 data: [
                     { id:1,valor: 'LEONARDO DE JESUS MARTINEZ DE LA CRUZ' },
                     { id:2,valor: 'SERGIO OSORIO MENDEZ'},
+                    { id:3,valor: 'ROSA ANGELICA PEREZ VELAZQUEZ'},
                     { id:3,valor: 'ROSA ANGELICA PEREZ VELAZQUEZ'},
                  
                 ]
