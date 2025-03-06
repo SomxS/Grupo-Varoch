@@ -7,8 +7,7 @@ class Act
     private $obj;
     private $msg;
     private $util;
-    public function __construct()
-    {
+    public function __construct(){
         require_once('../../conf/_Message.php');
         $this->msg = new Message();
 
@@ -18,6 +17,7 @@ class Act
         require_once('../mdl/mdl-actividades.php');
         $this->obj = new Actividades;
     }
+
     // Listas 
     function initComponent(){
         if (isset($_COOKIE['IDU'])) {
