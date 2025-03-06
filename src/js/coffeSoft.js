@@ -679,6 +679,25 @@ class Components extends Complements {
             id: idFormulario,
             autofill:false,
             closeModal: true,
+            btnCancel:{
+                opc: "button",
+                id: 'btnExit',
+                inert: true,
+                className: "w-full",
+                onClick: () => CancelForm(),
+                text: "Cancelar",
+                color_btn: "outline-danger",
+                class: "col-6"
+            },
+            btnSuccess:{
+                opc      : "button",
+                id       : 'btnSuccess',
+                className: "w-full",
+                onClick  : () => SuccessForm(),
+                text     : "Aceptar",
+                class    : "col-6"
+            },
+            
             bootbox: {
                 title: 'Modal example',
                 closeButton: true,
@@ -728,8 +747,12 @@ class Components extends Complements {
         let CancelForm = () => { modal.modal('hide'); }
           
         conf.json.push(
-            { opc: "button", id: 'btnExit', inert:true, className: "w-full", onClick: () => CancelForm(), text: "Cancelar", color_btn: "outline-danger", class: "col-6" },
-            { opc: "button", id:'btnSuccess', className: "w-full", onClick: () => SuccessForm(), text: "Aceptar", class: "col-6" },
+                { 
+                ...conf.btnSuccess
+                },
+            { 
+                ...conf.btnCancel
+            },
         );
 
 
