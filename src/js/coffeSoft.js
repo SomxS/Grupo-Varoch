@@ -1856,7 +1856,7 @@ class Components extends Complements {
         // ⚙️ **Definición de valores por defecto**
         let defaults = {
             parent: 'questionnaireContainer',
-            mainTitle: 'CUESTIONARIO',
+            mainTitle: 'CUESTIONARIO DE VAROCH',
             subTitle: 'Seleccione la respuesta adecuada para cada pregunta.',
             data: [],
             options: ['Muy mal', 'Mal', 'Regular', 'Bien', 'Muy bien']
