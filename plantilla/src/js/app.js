@@ -30,13 +30,13 @@ class App extends Templates {
 
     init() {
         this.render();
-        
+        this.QuestionLayout();
     }
 
     render(){
+        // this.layout();
         this.createNavBar();
-        this.layout();
-        // this.filterBar();
+        this.filterBar();
     }
 
     layout() {
@@ -45,7 +45,7 @@ class App extends Templates {
         //     id: "Primary",
         // });
         // this.historyPay();
-        this.QuestionLayout();
+        
 
     }
 
@@ -162,12 +162,15 @@ class App extends Templates {
 
     createEndEvaluationButtons() {
         let buttons = [
+          
             {
-                opc: 'btn',
-                icon: "icon-logout",
+                opc: 'button',
                 color: "outline-secondary fw-bold",
+                icon: "icon-logout",
                 text: "Salir de la evaluación",
-                fn: this.instancia + '.backEvaluation()'
+                onClick: () => {
+                    this.backEvaluation();
+                },
             },
             {
                 opc: 'button',
@@ -211,6 +214,7 @@ class App extends Templates {
        
     }
 
+    // Evaluation
 
     initEvaluation(){
 
@@ -220,28 +224,41 @@ class App extends Templates {
                 {
                     title: 'TRABAJO EN EQUIPO',
                     questions: [
-                        { text: '¿Se involucra en las actividades de equipo?', options: [1, 2, 3, 4, 5] },
-                        { text: '¿Aporta ideas y soluciones para resolver desafíos en equipo?', options: [1, 2, 3, 4, 5] },
-                        { text: '¿Se comunica de manera clara con el equipo?', options: [1, 2, 3, 4, 5] }
+                        { text: '¿Se involucra en las actividades de equipo?' },
+                        { text: '¿Aporta ideas y soluciones para resolver desafíos en equipo?'},
+                        { text: '¿Se comunica de manera clara con el equipo?'}
                     ]
                 },
                 {
                     title: 'PROFESIONALISMO',
                     questions: [
-                        { text: '¿Es una persona capacitada para realizar su trabajo?', options: [1, 2, 3, 4, 5] }
+                        { text: '¿Es una persona capacitada para realizar su trabajo?'}
                     ]
                 },
                 {
                     title: 'TRABAJO EN EQUIPO',
                     questions: [
-                        { text: '¿Se involucra en las actividades de equipo?', options: [1, 2, 3, 4, 5] },
-                        { text: '¿Aporta ideas y soluciones para resolver desafíos en equipo?', options: [1, 2, 3, 4, 5] },
-                        { text: '¿Se comunica de manera clara con el equipo?', options: [1, 2, 3, 4, 5] }
+                        { text: '¿Se involucra en las actividades de equipo?' },
+                        { text: '¿Aporta ideas y soluciones para resolver desafíos en equipo?' },
+                        { text: '¿Se comunica de manera clara con el equipo?' }
                     ]
                 },
             ]
         });
 
+    }
+
+    backEvaluation() {
+        alert({
+            icon: "question",
+            title: "¿Desea regresar?",
+            // text: "Si regresa puede que algunos cambios no se guarden.",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.render();
+                
+            }
+        });
     }
 
     
