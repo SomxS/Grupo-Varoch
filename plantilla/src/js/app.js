@@ -7,7 +7,7 @@ let app;
 
 
 $(async () => {
-    await fn_ajax({ opc: "init" }, link).then((data) => {
+    // await fn_ajax({ opc: "init" }, api_alpha).then((data) => {
         
         // vars.
        
@@ -18,7 +18,7 @@ $(async () => {
         app.init();
    
     
-    });
+    // });
 
 });
 
@@ -389,24 +389,16 @@ class App extends Templates {
 
     async groupCard() {
 
-        let data = await this.useFetch({ url: api_alpha, data: { opc: "init" } });
-
-        console.log('init',data);  
+        let group = await useFetch({ url: api_alpha, data: { opc: "init" } });
 
         this.createButtonGroup({
             parent: 'groups',
-            cols: 'w-25 h-24 text-xs',
-            size: 'sm',
+            cols: 'w-1/4 h-24 text-xs',
+            size: 'lg',
             class: 'd-flex justify-content-start',
-            onClick: () => { this.addSurvey() },
+            onClick: () => { this.initEvaluation() },
             dataEl: {
-                data: [
-                    { id:1,valor: 'LEONARDO DE JESUS MARTINEZ DE LA CRUZ' },
-                    { id:2,valor: 'SERGIO OSORIO MENDEZ'},
-                    { id:3,valor: 'ROSA ANGELICA PEREZ VELAZQUEZ'},
-                    { id:3,valor: 'ROSA ANGELICA PEREZ VELAZQUEZ'},
-                 
-                ]
+                data: group.udn
             }
         });
 
