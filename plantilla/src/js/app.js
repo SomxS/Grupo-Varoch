@@ -14,7 +14,7 @@ $(async () => {
         
         // instancias.
 
-        app = new App(link,'root');
+        app = new App(api_alpha,'root');
         app.init();
    
     
@@ -36,7 +36,12 @@ class App extends Templates {
     render(){
         // this.layout();
         this.createNavBar();
-        this.filterBar();
+        this.createTableForm({
+            parent: "root",
+        
+          
+        });
+        // this.filterBar();
     }
 
     layout() {
@@ -96,6 +101,122 @@ class App extends Templates {
         
        
     }
+
+    // add components
+
+    createTableForm(options) {
+
+        // 📜 **Definición de configuración por defecto**
+        
+        let defaults = {
+            id: options.id || 'root', // Identificador de referencia
+            
+            table: {
+                id:'contentTable',
+                parent: 'contentTable' + (options.id || 'root'),
+                idFilterBar:'filterBar',
+                data: { opc: "lsInventory" },
+                conf: {
+                    datatable: false,
+                    fn_datatable: 'simple_data_table',
+                    beforeSend: true,
+                    pag: 10,
+                },
+                methods: {
+                    send: (data) => { console.log("Table Data:", data); }
+                }
+            },
+
+            form: {
+                parent:  'recetasTableForm',
+                id: 'formRecetas',
+                autovalidation:true,
+                plugin: 'content_json_form',
+                json: [
+                    { opc: "input", lbl: "Nombre", id: "nombre", class: "col-12", tipo: "texto" , required:true},
+                    {
+                        opc: "select", lbl: "Categoría", id: "categoria", class: "col-12", data: [
+                          
+                            { id: "1", valor: "Platillo" },
+                            { id: "2", valor: "Bebida" },
+                            { id: "3", valor: "Extras" }
+                        ]
+                    },
+                    { opc: "input", lbl: "Cantidad", id: "cantidad", class: "col-12", tipo: "numero" },
+                    { opc: "btn-submit", id: "btnAgregar", text: "Agregar", class: "col-12" }
+                ],
+                methods: {
+                    send: (data) => { console.log("Form Data Sent:", data); }
+                }
+            }
+        };
+
+        let opts = Object.assign({}, defaults, options);
+
+       
+        console.log(opts.form);
+
+        // 🔵 **Generación del Layout sin usar primaryLayout**
+        let layout = `
+        <div class="row p-2">
+            <div class="col-12 col-md-4 p-0 m-0">
+                <div class="col-12 border rounded-3 p-3" id="${opts.form.id}" novalidate>
+                    <div class="col-12 mb-2 d-flex justify-content-between">
+                        <span class="fw-bold fs-5">Primer tiempo</span>
+                        <button type="button" class="btn-close" aria-label="Close" id="btnClose" onclick="
+                        app.closeForm('#${opts.form.id}', '#layoutTable', '#addRecetasSub')"></button>
+                        </div>
+                        <div id="recetasTableForm"></div>
+                </div>
+            </div>
+            
+            <div class="col-12 col-md-8" id="layoutTable">
+            <div class="">
+                <button type="button" class="btn btn-primary btn-sm d-none" id="addRecetasSub" onclick="app.openForm('#${opts.form.id}', '#layoutTable', '#addRecetasSub')"><i class="icon-plus"></i></button>
+            </div>
+
+            <div class="m-0 p-0" id="${opts.table.parent}">
+                <table class="table table-bordered table-hover table-sm">
+                    <thead class="text-white">
+                        <tr>
+                            <th>Subreceta</th>
+                            <th>Cantidad</th>
+                            <th><i class="icon-cog"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbRecetasSub"></tbody>
+                </table>
+            </div>
+            </div>
+        </div>`;
+
+        $("#" + opts.id).append(layout);
+
+        // Renderizar el formulario y la tabla
+        this.createForm(opts.form);
+        this.createTable(opts.table);
+    }
+
+    openForm(form, tb, btn) {
+        $(tb).removeClass("col-md-12");
+        $(tb).addClass("col-md-8");
+        $(form).parent().removeClass("d-none");
+        $(btn).addClass("d-none");
+    }
+
+    closeForm(form, tb, btn) {
+        $(form).parent().addClass("d-none");
+        
+        $(tb).removeClass("col-md-8");
+        $(tb).addClass("col-md-12");
+        
+        $(btn).removeClass("d-none");
+    }
+
+
+
+    
+
 
     // add component.
 
@@ -192,14 +313,92 @@ class App extends Templates {
         });
     }
 
+    addSurvey() {
+        let json = [
+            {
+                opc: "select",
+                id: "id_Format",
+                lbl: "¿Qué documento evaluará?",
+                class: "mt-2",
+                // data: tipoformatos,
+            },
+            {
+                opc: "select",
+                id: "camarista",
+                lbl: "Camarista",
+                class: "mt-2",
+                // data: camarista,
+            },
+            {
+                opc: "select",
+                id: "lavandera",
+                lbl: "Lavandera",
+                class: "mt-2",
+                // data: lavanderas,
+            },
+            {
+                opc: "input",
+                type: "date",
+                id: "date_create",
+                lbl: "Fecha de evaluación",
+                class: "col-12 mt-2",
+                value: new Date().toISOString().split("T")[0],
+            },
+            {
+                opc: "input",
+                id: "suite",
+                lbl: "Suite",
+                class: "col-12 mt-2",
+            },
+          
+        ];
+
+        this.createModalForm({
+            bootbox: {
+                idFormulario: "formStartEvaluation",
+                title: "Iniciar evaluación",
+            },
+            json: json,
+            autovalidation: true,
+            data: {
+                opc: "newEvaluation",
+            },
+            btnSuccess: {
+                className: "w-100",
+                text: "Iniciar evaluación ",
+                class:'col-12'
+            },
+            btnCancel:{
+                text: " adios",
+                className: "w-full ",
+                class:'d-none'
+            },
+
+            success: (data) => {
+                $("#containerTable").empty();
+                $("#containerBar").addClass("hide");
+                $("#navEvaluation").addClass("hide");
+                $("#navEvaluate").removeClass("hide");
+                fn_ajax({ opc: "getFolio", idFolio: data }, this._link).then((data) => {
+                    this.showEvaluation(data.group, data.folio);
+                });
+            },
+        });
+        $("#id_Format").addClass("text-uppercase");
+    }
+
     async groupCard() {
+
+        let data = await this.useFetch({ url: api_alpha, data: { opc: "init" } });
+
+        console.log('init',data);  
 
         this.createButtonGroup({
             parent: 'groups',
             cols: 'w-25 h-24 text-xs',
             size: 'sm',
             class: 'd-flex justify-content-start',
-            onClick: () => { this.initEvaluation() },
+            onClick: () => { this.addSurvey() },
             dataEl: {
                 data: [
                     { id:1,valor: 'LEONARDO DE JESUS MARTINEZ DE LA CRUZ' },
@@ -260,16 +459,6 @@ class App extends Templates {
             }
         });
     }
-
-    
-
-
-
-
-
-
-
-
 
 
 }
