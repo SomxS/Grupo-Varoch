@@ -1,7 +1,7 @@
 // let ctrl = "ctrl/app.php";
 const link = 'https://erp-varoch.com/DEV/costsys/ctrl/ctrl-costo-potencial-soft.php';
 
-const api_alpha = 'https://huubie.com.mx/alpha/eventos/ctrl/ctrl-payment.php';
+const api_alpha = 'https://erp-varoch.com/DEV/ch/ctrl/ctrl-encuesta.php';
 // init vars.
 let app;
 
