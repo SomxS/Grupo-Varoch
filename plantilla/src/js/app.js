@@ -56,9 +56,6 @@ class App extends Templates {
 
 
     filterBar(options) {
-
-  
-
         this.createfilterBar({
             parent: "filterBar",
             data: [
@@ -66,10 +63,7 @@ class App extends Templates {
                 { opc: "input-calendar", class: "col-3", id: "calendar", lbl: "Consultar fecha: " },
             ],
         });
-
-
         // initialized.
-
         dataPicker({
             parent: "calendar",
             onSelect: (start, end) => {
