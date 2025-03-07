@@ -307,83 +307,12 @@ class App extends Templates {
         });
     }
 
-    addSurvey() {
-        let json = [
-            {
-                opc: "select",
-                id: "id_Format",
-                lbl: "¿Qué documento evaluará?",
-                class: "mt-2",
-                // data: tipoformatos,
-            },
-            {
-                opc: "select",
-                id: "camarista",
-                lbl: "Camarista",
-                class: "mt-2",
-                // data: camarista,
-            },
-            {
-                opc: "select",
-                id: "lavandera",
-                lbl: "Lavandera",
-                class: "mt-2",
-                // data: lavanderas,
-            },
-            {
-                opc: "input",
-                type: "date",
-                id: "date_create",
-                lbl: "Fecha de evaluación",
-                class: "col-12 mt-2",
-                value: new Date().toISOString().split("T")[0],
-            },
-            {
-                opc: "input",
-                id: "suite",
-                lbl: "Suite",
-                class: "col-12 mt-2",
-            },
-          
-        ];
-
-        this.createModalForm({
-            bootbox: {
-                idFormulario: "formStartEvaluation",
-                title: "Iniciar evaluación",
-            },
-            json: json,
-            autovalidation: true,
-            data: {
-                opc: "newEvaluation",
-            },
-            btnSuccess: {
-                className: "w-100",
-                text: "Iniciar evaluación ",
-                class:'col-12'
-            },
-            btnCancel:{
-                text: " adios",
-                className: "w-full ",
-                class:'d-none'
-            },
-
-            success: (data) => {
-                $("#containerTable").empty();
-                $("#containerBar").addClass("hide");
-                $("#navEvaluation").addClass("hide");
-                $("#navEvaluate").removeClass("hide");
-                fn_ajax({ opc: "getFolio", idFolio: data }, this._link).then((data) => {
-                    this.showEvaluation(data.group, data.folio);
-                });
-            },
-        });
-        $("#id_Format").addClass("text-uppercase");
-    }
+    
 
     async groupCard() {
 
-        let group = await useFetch({ url: api_alpha, data: { opc: "init" } });
+        let group = await useFetch({ url: ctrl_encuesta, data: { opc: "getGroup" } });
+        console.log(group);
 
         this.createButtonGroup({
             parent: 'groups',
@@ -392,7 +321,7 @@ class App extends Templates {
             class: 'd-flex justify-content-start',
             onClick: () => { this.initEvaluation() },
             dataEl: {
-                data: group.udn
+                data: group
             }
         });
 
