@@ -97,6 +97,7 @@ class App extends Templates {
                     class: "col-12 line",
                     id: `content-header-${this.PROJECT_NAME}`,
                 },
+
                 {
                     type: "div",
                     class: "col  line",
@@ -106,6 +107,7 @@ class App extends Templates {
                         { class: "col-12 p-2 ", id: "questions" },
                     ],
                 },
+                
                 {
                     type: "div",
                     class: "col-12 text-end py-4 line",
