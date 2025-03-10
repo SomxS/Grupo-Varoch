@@ -664,15 +664,13 @@ class Components extends Complements {
     }
 
     createModalForm(options) {
-
+        // id 
         const idFormulario = options.id ? options.id : 'frmModal';
 
         const components = options.components
 
             ? options.components
             : $("<form>", { novalidate: true, id: idFormulario, class: "" });
-
-
 
         let defaults = {
             id: idFormulario,
