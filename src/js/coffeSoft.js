@@ -1874,6 +1874,7 @@ class Components extends Complements {
 
     createQuestionnaire(options) {
         // ⚙️ **Definición de valores por defecto**
+        // add defaults
         let defaults = {
             parent: 'questionnaireContainer',
             mainTitle: 'CUESTIONARIO DE VAROCH',
