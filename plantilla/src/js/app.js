@@ -1,25 +1,18 @@
 // let ctrl = "ctrl/app.php";
 const link = 'https://erp-varoch.com/DEV/costsys/ctrl/ctrl-costo-potencial-soft.php';
 
-const api_alpha = 'https://erp-varoch.com/DEV/ch/ctrl/ctrl-encuesta.php';
+const api = 'https://erp-varoch.com/DEV/ch/ctrl/ctrl-encuesta.php';
 // init vars.
 let app;
 
 
 $(async () => {
     // await fn_ajax({ opc: "init" }, api_alpha).then((data) => {
-        
         // vars.
-       
-        
         // instancias.
-
-        app = new App(api_alpha,'root');
+        app = new App(api,'root');
         app.init();
-   
-    
     // });
-
 });
 
 class App extends Templates {
@@ -35,8 +28,8 @@ class App extends Templates {
 
     render(){
         // this.layout();
-        this.createNavBar();
-      
+        // this.createNavBar();
+       
         // this.filterBar();
     }
 
@@ -52,9 +45,6 @@ class App extends Templates {
 
 
     filterBar(options) {
-
-  
-
         this.createfilterBar({
             parent: "filterBar",
             data: [
@@ -62,10 +52,7 @@ class App extends Templates {
                 { opc: "input-calendar", class: "col-3", id: "calendar", lbl: "Consultar fecha: " },
             ],
         });
-
-
         // initialized.
-
         dataPicker({
             parent: "calendar",
             onSelect: (start, end) => {
@@ -98,28 +85,6 @@ class App extends Templates {
        
     }
 
-   
-
-    // add component.
-
-    async historyPay() {
-        
-        const data = await this.useFetch({ url: api_alpha, data: { opc: "getHistory" } });
-
-        this.createTimeLine({
-            parent: "containerPrimary",
-            data: [
-                { valor: "Se agregó un pago", date: "Hoy 15:07", message: "En efectivo por $5,000.00", type: "payment" },
-                { valor: "Se agregó un comentario", date: "Hoy 15:07", message: "Este pago se realizó con efectivo.", type: "comment" },
-                { valor: "Nuevo evento programado", date: "Ayer 12:00", message: "Evento de conferencia en el auditorio", type: "event" },
-                { valor: "Acción desconocida", date: "Ayer 10:30", message: "Este evento no tiene un tipo definido", type: "otroTipo" }
-
-               
-            ]
-        });
-    }
-
-
     // Components. valores
     QuestionLayout(options) {
         let jsonComponents = {
@@ -132,6 +97,7 @@ class App extends Templates {
                     class: "col-12 line",
                     id: `content-header-${this.PROJECT_NAME}`,
                 },
+
                 {
                     type: "div",
                     class: "col  line",
@@ -141,6 +107,7 @@ class App extends Templates {
                         { class: "col-12 p-2 ", id: "questions" },
                     ],
                 },
+                
                 {
                     type: "div",
                     class: "col-12 text-end py-4 line",
@@ -178,7 +145,7 @@ class App extends Templates {
 
         // initials.
         this.createEndEvaluationButtons();
-        this.groupCard();
+        // this.groupCard();
     }
 
     createEndEvaluationButtons() {
@@ -213,83 +180,12 @@ class App extends Templates {
         });
     }
 
-    addSurvey() {
-        let json = [
-            {
-                opc: "select",
-                id: "id_Format",
-                lbl: "¿Qué documento evaluará?",
-                class: "mt-2",
-                // data: tipoformatos,
-            },
-            {
-                opc: "select",
-                id: "camarista",
-                lbl: "Camarista",
-                class: "mt-2",
-                // data: camarista,
-            },
-            {
-                opc: "select",
-                id: "lavandera",
-                lbl: "Lavandera",
-                class: "mt-2",
-                // data: lavanderas,
-            },
-            {
-                opc: "input",
-                type: "date",
-                id: "date_create",
-                lbl: "Fecha de evaluación",
-                class: "col-12 mt-2",
-                value: new Date().toISOString().split("T")[0],
-            },
-            {
-                opc: "input",
-                id: "suite",
-                lbl: "Suite",
-                class: "col-12 mt-2",
-            },
-          
-        ];
-
-        this.createModalForm({
-            bootbox: {
-                idFormulario: "formStartEvaluation",
-                title: "Iniciar evaluación",
-            },
-            json: json,
-            autovalidation: true,
-            data: {
-                opc: "newEvaluation",
-            },
-            btnSuccess: {
-                className: "w-100",
-                text: "Iniciar evaluación ",
-                class:'col-12'
-            },
-            btnCancel:{
-                text: " adios",
-                className: "w-full ",
-                class:'d-none'
-            },
-
-            success: (data) => {
-                $("#containerTable").empty();
-                $("#containerBar").addClass("hide");
-                $("#navEvaluation").addClass("hide");
-                $("#navEvaluate").removeClass("hide");
-                fn_ajax({ opc: "getFolio", idFolio: data }, this._link).then((data) => {
-                    this.showEvaluation(data.group, data.folio);
-                });
-            },
-        });
-        $("#id_Format").addClass("text-uppercase");
-    }
+    
 
     async groupCard() {
 
-        let group = await useFetch({ url: api_alpha, data: { opc: "init" } });
+        let group = await useFetch({ url: api, data: { opc: "getGroup" } });
+      
 
         this.createButtonGroup({
             parent: 'groups',
@@ -298,7 +194,7 @@ class App extends Templates {
             class: 'd-flex justify-content-start',
             onClick: () => { this.initEvaluation() },
             dataEl: {
-                data: group.udn
+                data: group
             }
         });
 
@@ -335,8 +231,8 @@ class App extends Templates {
     backEvaluation() {
         alert({
             icon: "question",
-            title: "¿Desea regresar?",
-            // text: "Si regresa puede que algunos cambios no se guarden.",
+            title: "¿Desea salir de la evaluación?",
+            text: "No se completaran los cambios almacenados",
         }).then((result) => {
             if (result.isConfirmed) {
                 this.render();

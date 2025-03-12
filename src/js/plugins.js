@@ -1708,6 +1708,78 @@ $.fn.Loading = function (options) {
 
 
 // funciones auxiliares.
+function alert(options) {
+  let defaults = {
+    icon: "success",
+    title: "",
+    text: "",
+    html: "",
+    width: "",
+    img: "",
+    imgw: "",
+    imgh: "",
+    btn1: false,
+    btn1Text: "Continuar",
+    btn1Class: "btn btn-primary",
+    btn2: false,
+    btn2Text: "Cancelar",
+    btn2Class: "btn btn-outline-danger",
+    btn3: false,
+    btn3Text: "Default",
+    btn3Class: "",
+    timer: 1000,
+    question: false,
+  };
+
+  let opts = {};
+
+  if (typeof options === "object" && options !== null) opts = $.extend(defaults, options);
+
+  if (typeof options !== "object" || options === undefined || options === null) opts = defaults;
+
+  if ((typeof options === "string" || typeof options === "number") && options !== "") {
+    opts.title = options;
+    opts.timer = 0;
+    opts.btn1 = true;
+    opts.icon = "info";
+  }
+
+  if (opts.title === "" && opts.text === "") opts.width = 200;
+
+  if (opts.icon == "question") {
+    opts.btn2 = true;
+    opts.btn1 = true;
+  }
+
+  if (opts.btn1 || opts.btn2 || opts.btn3) opts.timer = false;
+
+  let question = Swal.fire({
+    icon: opts.icon,
+    title: opts.title,
+    imageUrl: opts.img,
+    text: opts.text,
+    html: opts.html,
+    width: opts.width,
+    imageWidth: opts.imgw,
+    imageHeight: opts.imgh,
+    timer: opts.timer,
+    allowOutsideClick: false,
+    showConfirmButton: opts.btn1,
+    confirmButtonText: opts.btn1Text,
+    showCancelButton: opts.btn2,
+    cancelButtonText: opts.btn2Text,
+    showDenyButton: opts.btn3,
+    denyButtonText: opts.btn3Text,
+    customClass: {
+      confirmButton: opts.btn1Class,
+      cancelButton: opts.btn2Class,
+      denyButton: opts.btn3Class,
+    },
+  });
+
+  if (opts.icon == "question" || opts.btn1 || opts.btn2 || opts.btn3) return question;
+}
+
 function dataPicker(options) {
 
     let defaults = {

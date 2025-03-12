@@ -663,17 +663,14 @@ class Components extends Complements {
 
     }
 
-
     createModalForm(options) {
-
+        // id 
         const idFormulario = options.id ? options.id : 'frmModal';
 
         const components = options.components
 
             ? options.components
             : $("<form>", { novalidate: true, id: idFormulario, class: "" });
-
-
 
         let defaults = {
             id: idFormulario,
@@ -1877,6 +1874,7 @@ class Components extends Complements {
 
     createQuestionnaire(options) {
         // ⚙️ **Definición de valores por defecto**
+        // add defaults
         let defaults = {
             parent: 'questionnaireContainer',
             mainTitle: 'CUESTIONARIO DE VAROCH',
