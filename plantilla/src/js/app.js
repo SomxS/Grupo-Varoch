@@ -36,11 +36,7 @@ class App extends Templates {
     render(){
         // this.layout();
         this.createNavBar();
-        this.createTableForm({
-            parent: "root",
-        
-          
-        });
+      
         // this.filterBar();
     }
 
@@ -102,121 +98,7 @@ class App extends Templates {
        
     }
 
-    // add components
-
-    createTableForm(options) {
-
-        // 📜 **Definición de configuración por defecto**
-        
-        let defaults = {
-            id: options.id || 'root', // Identificador de referencia
-            
-            table: {
-                id:'contentTable',
-                parent: 'contentTable' + (options.id || 'root'),
-                idFilterBar:'filterBar',
-                data: { opc: "lsInventory" },
-                conf: {
-                    datatable: false,
-                    fn_datatable: 'simple_data_table',
-                    beforeSend: true,
-                    pag: 10,
-                },
-                methods: {
-                    send: (data) => { console.log("Table Data:", data); }
-                }
-            },
-
-            form: {
-                parent:  'recetasTableForm',
-                id: 'formRecetas',
-                autovalidation:true,
-                plugin: 'content_json_form',
-                json: [
-                    { opc: "input", lbl: "Nombre", id: "nombre", class: "col-12", tipo: "texto" , required:true},
-                    {
-                        opc: "select", lbl: "Categoría", id: "categoria", class: "col-12", data: [
-                          
-                            { id: "1", valor: "Platillo" },
-                            { id: "2", valor: "Bebida" },
-                            { id: "3", valor: "Extras" }
-                        ]
-                    },
-                    { opc: "input", lbl: "Cantidad", id: "cantidad", class: "col-12", tipo: "numero" },
-                    { opc: "btn-submit", id: "btnAgregar", text: "Agregar", class: "col-12" }
-                ],
-                methods: {
-                    send: (data) => { console.log("Form Data Sent:", data); }
-                }
-            }
-        };
-
-        let opts = Object.assign({}, defaults, options);
-
-       
-        console.log(opts.form);
-
-        // 🔵 **Generación del Layout sin usar primaryLayout**
-        let layout = `
-        <div class="row p-2">
-            <div class="col-12 col-md-4 p-0 m-0">
-                <div class="col-12 border rounded-3 p-3" id="${opts.form.id}" novalidate>
-                    <div class="col-12 mb-2 d-flex justify-content-between">
-                        <span class="fw-bold fs-5">Primer tiempo</span>
-                        <button type="button" class="btn-close" aria-label="Close" id="btnClose" onclick="
-                        app.closeForm('#${opts.form.id}', '#layoutTable', '#addRecetasSub')"></button>
-                        </div>
-                        <div id="recetasTableForm"></div>
-                </div>
-            </div>
-            
-            <div class="col-12 col-md-8" id="layoutTable">
-            <div class="">
-                <button type="button" class="btn btn-primary btn-sm d-none" id="addRecetasSub" onclick="app.openForm('#${opts.form.id}', '#layoutTable', '#addRecetasSub')"><i class="icon-plus"></i></button>
-            </div>
-
-            <div class="m-0 p-0" id="${opts.table.parent}">
-                <table class="table table-bordered table-hover table-sm">
-                    <thead class="text-white">
-                        <tr>
-                            <th>Subreceta</th>
-                            <th>Cantidad</th>
-                            <th><i class="icon-cog"></i></th>
-                        </tr>
-                    </thead>
-                    <tbody id="tbRecetasSub"></tbody>
-                </table>
-            </div>
-            </div>
-        </div>`;
-
-        $("#" + opts.id).append(layout);
-
-        // Renderizar el formulario y la tabla
-        this.createForm(opts.form);
-        this.createTable(opts.table);
-    }
-
-    openForm(form, tb, btn) {
-        $(tb).removeClass("col-md-12");
-        $(tb).addClass("col-md-8");
-        $(form).parent().removeClass("d-none");
-        $(btn).addClass("d-none");
-    }
-
-    closeForm(form, tb, btn) {
-        $(form).parent().addClass("d-none");
-        
-        $(tb).removeClass("col-md-8");
-        $(tb).addClass("col-md-12");
-        
-        $(btn).removeClass("d-none");
-    }
-
-
-
-    
-
+   
 
     // add component.
 
@@ -274,6 +156,24 @@ class App extends Templates {
             parent: opts.parent,
             design: false,
         });
+
+        // initials.
+        $('#content-header-' + this.PROJECT_NAME).append(`
+        <div class="flex flex-col line">
+          <!-- Título principal -->
+            <h3 class="font-bold text-blue-950 uppercase text-center mb-2 text-lg">
+            Sistema de Evaluación de Resultados - Valores
+            </h3>
+            
+            <!-- Descripción o subtítulo -->
+            <p class="text-gray-700 text-sm mb-2">
+                En grupo VAROCH buscamos mejorar nuestros procesos y desempeño.
+                Por favor evalúa a las siguientes personas de acuerdo con la siguiente escala y coloca el número correspondiente:
+            </p>
+
+         <span class="text-gray-800 font-semibold  text-xs "> 5= Totalmente de acuerdo,  4= De acuerdo, 3= Ni de acuerdo ni en desacuerdo, 2= En desacuerdo, 1= Totalmente en desacuerdo</span>
+        
+        </div> `);
 
 
         // initials.
@@ -402,39 +302,32 @@ class App extends Templates {
             }
         });
 
+        this.initEvaluation();
+
        
     }
 
     // Evaluation
 
-    initEvaluation(){
+    async initEvaluation(){
 
-        this.createQuestionnaire({
+        let questions = await useFetch({ url: api_alpha, data: { opc: "getQuestionnaire" } });
+
+    
+        this.createEvaluation({
             parent: 'questions',
-            data: [
-                {
-                    title: 'TRABAJO EN EQUIPO',
-                    questions: [
-                        { text: '¿Se involucra en las actividades de equipo?' },
-                        { text: '¿Aporta ideas y soluciones para resolver desafíos en equipo?'},
-                        { text: '¿Se comunica de manera clara con el equipo?'}
-                    ]
-                },
-                {
-                    title: 'PROFESIONALISMO',
-                    questions: [
-                        { text: '¿Es una persona capacitada para realizar su trabajo?'}
-                    ]
-                },
-                {
-                    title: 'TRABAJO EN EQUIPO',
-                    questions: [
-                        { text: '¿Se involucra en las actividades de equipo?' },
-                        { text: '¿Aporta ideas y soluciones para resolver desafíos en equipo?' },
-                        { text: '¿Se comunica de manera clara con el equipo?' }
-                    ]
-                },
-            ]
+            data: questions,
+
+            questions:{
+                data: [],
+                json: questions
+            },
+
+            info: {
+                user: 'Sergio Osorio',
+                puesto: 'Desarrollador'
+            }
+     
         });
 
     }
@@ -452,5 +345,65 @@ class App extends Templates {
         });
     }
 
+
+    createEvaluation(options) {
+        let defaults = {
+            parent: 'questionnaireContainer',
+            questions: {
+                data: [],
+                json: []
+            },
+            info: {
+                user: '',
+                puesto: 'somx'
+            },
+            options: ['1', '2', '3', '4', '5']
+        };
+
+        let opts = Object.assign({}, defaults, options);
+
+        let container = $('<div>', { class: 'questionnaire p-3 bg-gray-200 rounded-lg shadow-sm overflow-auto', id: opts.parent, style: 'max-height: 600px;' });
+
+        let mainTitle = $('<div>', { class: 'p-3 text-sm rounded-lg' }).append(
+            $('<span>', { class: '', html: `<strong>  Nombre:</strong> ${opts.info.user} | ` }),
+            $('<span>', { class: 'mb-1', html: `<strong>Puesto:</strong> ${opts.info.puesto}` })
+        );
+        let titleElement = $('<h4>', { class: 'text-uppercase', html: mainTitle });
+        container.append(titleElement);
+
+        opts.questions.json.forEach(section => {
+            let sectionContainer = $('<div>', { class: 'mb-4 p-3 bg-white rounded-md shadow-sm' });
+
+            let header = $('<h6>', { class: 'fw-bold text-uppercase mb-2', text: section.title });
+            sectionContainer.append(header);
+
+            section.questions.forEach(question => {
+                let questionContainer = $('<div>', { class: 'mb-3' });
+
+                let questionText = $('<p>', { class: 'text-muted font-semibold mb-1', text: question.text });
+
+                let buttonGroup = $('<div>', { class: 'relative flex grid grid-cols-5 gap-3' });
+
+                opts.options.forEach(opt => {
+                    let button = $('<button>', {
+                        class: 'btn btn-outline-secondary rounded-2 px-2 py-2 shadow-sm',
+                        text: opt,
+                        click: function () {
+                            $(this).siblings().removeClass('active btn-primary text-white').addClass('btn-outline-secondary');
+                            $(this).addClass('active btn-primary text-white').removeClass('btn-outline-secondary');
+                        }
+                    });
+                    buttonGroup.append(button);
+                });
+
+                questionContainer.append(questionText, buttonGroup);
+                sectionContainer.append(questionContainer);
+            });
+
+            container.append(sectionContainer);
+        });
+
+        $('#' + opts.parent).html(container);
+    }
 
 }
