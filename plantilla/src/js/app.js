@@ -145,8 +145,89 @@ class App extends Templates {
 
         // initials.
         this.createEndEvaluationButtons();
-        // this.groupCard();
+        this.groupCard();
     }
+    createGroups(options) {
+        let defaults = {
+            parent: "groupButtons",
+            cols: "w-25 ",
+            size: "sm",
+            type: "group",
+            colors: "bg-primary",
+            description: "",
+            titleGroup: "Tiempo",
+            subtitleGroup: "hrs",
+            data: [],
+            styleCard: {
+                group: { class: "category-card mb-3" }
+            }
+        };
+
+        let opts = Object.assign(defaults, options);
+        let container = $('<div>', { class: 'flex gap-2 overflow-auto ' + opts.class });
+        let divs = $('#' + opts.parent);
+        divs.empty();
+
+        // 📜 **Agregar título y descripción**
+        if (opts.title) {
+            divs.append(
+                $('<label>', { class: 'uppercase font-bold text-muted mb-2', text: opts.title }),
+                $('<p>', { class: 'mb-0', text: opts.description })
+            );
+        }
+
+        divs.append(container);
+
+        // 📜 **Generar los elementos del grupo**
+        if (opts.data.length) {
+            opts.data.forEach((El) => {
+                let class_answered_group = (El.items && El.result && El.items === El.result) ? 'btn-success' : 'btn-outline-primary';
+                let btn = $('<a>', {
+                    class: `btn btn-${opts.size}  ${opts.cols} flex  p-3 flex-col align-items-center justify-content-center ${class_answered_group}`,
+                    id: El.id,
+                    click: () => opts.onclick(El.id)
+                });
+
+                if (El.icon) {
+                    let icon = $('<i>', { class: El.icon + ' d-block' });
+                    btn.append(icon);
+                }
+
+                btn.append(
+                    $('<h6>', { class: 'text-uppercase fw-bold', text: El.valor })
+                );
+
+                if (El.items !== undefined && El.result !== undefined) {
+                    btn.append(
+                        $('<span>', { html: `Preguntas: ${El.result} / ${El.items}` })
+                    );
+                }
+
+                container.append(btn);
+            });
+        } else {
+            container.append('No hay grupos definidos.');
+        }
+
+        // 📌 **Manejar selección de botón activo**
+        const cardPosGroup = document.getElementById(opts.parent);
+        if (!cardPosGroup) return;
+
+        cardPosGroup.addEventListener('click', function (event) {
+            if (event.target.closest('a')) {
+                const buttons = cardPosGroup.querySelectorAll('a');
+                buttons.forEach(button => {
+                    button.classList.remove('active', 'btn-primary', 'text-white');
+                    button.classList.add('btn-outline-primary');
+                });
+
+                const clickedButton = event.target.closest('a');
+                clickedButton.classList.add('active', 'btn-primary', 'text-white');
+                clickedButton.classList.remove('btn-outline-primary');
+            }
+        });
+    }
+
 
     createEndEvaluationButtons() {
         let buttons = [
@@ -187,18 +268,20 @@ class App extends Templates {
         let group = await useFetch({ url: api, data: { opc: "getGroup" } });
       
 
-        this.createButtonGroup({
-            parent: 'groups',
-            cols: 'w-1/4 h-24 text-xs',
-            size: 'lg',
-            class: 'd-flex justify-content-start',
-            onClick: () => { this.initEvaluation() },
-            dataEl: {
-                data: group
+        this.createGroups({
+            parent: "groups",
+            title: "Evaluados",
+           
+            data: [
+                { id: 1, valor: "SERGIO OSORIO MENDEZ", items: 2, result: 5, },
+                { id: 2, valor: "ROSA ANGELICA PEREZ VELASQUEZ", items: 2, result: 8,  },
+                { id: 2, valor: "LEONARDO D J. MARTINEZ DE LA CRUZ", items: 8, result: 8,  }
+            ],
+            onclick:  (id)=> {
+                this.initEvaluation(id)
             }
         });
-
-        this.initEvaluation();
+        // this.initEvaluation();
 
        
     }
@@ -207,7 +290,7 @@ class App extends Templates {
 
     async initEvaluation(){
 
-        let questions = await useFetch({ url: api_alpha, data: { opc: "getQuestionnaire" } });
+        let questions = await useFetch({ url: api, data: { opc: "getQuestionnaire" } });
 
     
         this.createEvaluation({
