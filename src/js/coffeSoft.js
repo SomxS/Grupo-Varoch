@@ -1945,6 +1945,134 @@ class Components extends Complements {
         $('#' + opts.parent).html(container);
     }
 
+    createTableForm(options) {
+
+        // 📜 ** Definición de configuración por defecto **
+
+        let defaults = {
+            id: options.id || 'root', // Identificador de referencia
+            parent: 'root',
+            title: '',
+            classForm: 'col-12 border rounded-3 p-3',
+            success: (data) => { },
+            table: {
+                id: 'contentTable',
+                parent: 'contentTable' + (options.id || 'root'),
+                idFilterBar: 'filterBar',
+                message: false,
+                data: { opc: "ls" },
+                attr: {
+                    color_th: 'bg-[#374151] text-white',
+                },
+                conf: {
+                    datatable: false,
+                    fn_datatable: 'simple_data_table',
+                    beforeSend: false,
+                    pag: 10,
+                },
+
+            },
+
+            form: {
+                parent: 'contentForm',
+                id: 'formRecetas',
+                autovalidation: true,
+                plugin: 'content_json_form',
+                json: [
+                    { opc: "input", lbl: "Nombre", id: "nombre", class: "col-12", tipo: "texto", required: true },
+                    {
+                        opc: "select", lbl: "Categoría", id: "categoria", class: "col-12", data: [
+
+                            { id: "1", valor: "Platillo" },
+                            { id: "2", valor: "Bebida" },
+                            { id: "3", valor: "Extras" }
+                        ]
+                    },
+                    { opc: "input", lbl: "Cantidad", id: "cantidad", class: "col-12", tipo: "numero" },
+                    { opc: "btn-submit", id: "btnAgregar", text: "Agregar", class: "col-12" }
+                ],
+
+                success: (data) => { }
+
+
+
+            },
+
+            success: (data) => {
+
+            }
+        };
+
+        let opts = this.ObjectMerge(defaults, options);
+
+        // 🔵 Corrección del error en la asignación de `success`
+        opts.form.success = (data) => {
+            this.createTable(opts.table);
+            opts.success(data);
+            $('#contentForm')[0].reset();
+
+        };
+
+        // 📜 **Funciones para abrir y cerrar el formulario**
+        const OpenForm = (form, tb, btn) => {
+            $(tb).removeClass("col-md-12").addClass("col-md-8");
+            $(form).parent().removeClass("d-none");
+            $(btn).addClass("d-none");
+        };
+
+        const closeForm = (form, tb, btn) => {
+            $(form).parent().addClass("d-none");
+            $(tb).removeClass("col-md-8").addClass("col-md-12");
+            $(btn).removeClass("d-none");
+        };
+
+
+        // 🔵 **Generación del Layout sin usar primaryLayout**
+
+
+        let layout = `
+        <div class="row p-2">
+
+            <div class="col-12 col-md-4 p-3 m-0">
+                
+            <div class="${opts.classForm}" id="${opts.form.id}" novalidate>
+                <div class="col-12 mb-2 d-flex justify-content-between">
+                        <span class="fw-bold fs-5">${opts.title}</span>
+                        <button type="button" class="btn-close" aria-label="Close" id="btnClose" ></button>
+                        </div>
+                        <form class="mt-3 " id="${opts.form.parent}" ></form>
+                </div>
+
+            </div>
+            
+            <div class="col-12 col-md-8" id="layoutTable">
+            <div class="">
+                <button type="button" class="btn btn-primary btn-sm d-none" id="addRecetasSub">
+                <i class="icon-plus"></i></button>
+            </div>
+
+            <div class="m-0 p-0" id="${opts.table.parent}">
+               
+            </div>
+            </div>
+        </div>`;
+
+        $("#" + opts.parent).append(layout);
+
+        // 📜 **Asignar eventos después de agregar el layout**
+        $("#btnClose").on("click", function () {
+            closeForm(`#${opts.form.id}`, "#layoutTable", "#addRecetasSub");
+        });
+
+        $("#addRecetasSub").on("click", function () {
+            OpenForm(`#${opts.form.id}`, "#layoutTable", "#addRecetasSub");
+        });
+
+        // Renderizar el formulario y la tabla
+        this.createForm(opts.form);
+        this.createTable(opts.table);
+    }
+
     // ADD COMMENTS
 
 
