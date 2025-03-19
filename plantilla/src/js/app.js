@@ -22,25 +22,24 @@ class App extends Templates {
     }
 
     init() {
-        this.render();
-        this.QuestionLayout();
+        this.render({
+            evaluators: {
+                id: 1,
+                valor: [],
+            },
+            id: 41,
+        });
+       
     }
 
-    render(){
-        // this.layout();
-        // this.createNavBar();
-       
-        // this.filterBar();
+    render(options){
+
+        this.QuestionLayout(options);
+
     }
 
     layout() {
-        // this.primaryLayout({
-        //     parent: "root",
-        //     id: "Primary",
-        // });
-        // this.historyPay();
-        
-
+   
     }
 
 
@@ -87,7 +86,7 @@ class App extends Templates {
 
     // Components. valores
     QuestionLayout(options) {
-        let jsonComponents = {
+        let opts = {
             id: `content-${this.PROJECT_NAME}`,
             parent:'root',
             class: "row px-3 py-2",
@@ -103,8 +102,8 @@ class App extends Templates {
                     class: "col  line",
                     id: `content-questions-${this.PROJECT_NAME}`,
                     children: [
-                        { class: "col-12 ", id: "groups" },
-                        { class: "col-12 p-2 ", id: "questions" },
+                        { class: "col-12  ", id: "groups" },
+                        { class: "col-12  mt-2 ", id: "questions" },
                     ],
                 },
                 
@@ -116,10 +115,10 @@ class App extends Templates {
             ],
         };
 
-        let opts = Object.assign(jsonComponents, options);
+    
 
         this.createPlantilla({
-            data: jsonComponents,
+            data: opts,
             parent: opts.parent,
             design: false,
         });
@@ -138,15 +137,15 @@ class App extends Templates {
                 Por favor evalúa a las siguientes personas de acuerdo con la siguiente escala y coloca el número correspondiente:
             </p>
 
-         <span class="text-gray-800 font-semibold  text-xs "> 5= Totalmente de acuerdo,  4= De acuerdo, 3= Ni de acuerdo ni en desacuerdo, 2= En desacuerdo, 1= Totalmente en desacuerdo</span>
-        
+            <span class="text-gray-800 font-bold  text-xs "> 5= Totalmente de acuerdo,  4= De acuerdo, 3= Ni de acuerdo ni en desacuerdo, 2= En desacuerdo, 1= Totalmente en desacuerdo</span>
         </div> `);
 
 
         // initials.
         this.createEndEvaluationButtons();
-        this.groupCard();
+        this.groupCard(options);
     }
+    
     createGroups(options) {
         let defaults = {
             parent: "groupButtons",
@@ -263,7 +262,7 @@ class App extends Templates {
 
     
 
-    async groupCard() {
+    async groupCard(options) {
 
         let group = await useFetch({ url: api, data: { opc: "getGroup" } });
       
@@ -275,10 +274,10 @@ class App extends Templates {
             data: [
                 { id: 1, valor: "SERGIO OSORIO MENDEZ", items: 2, result: 5, },
                 { id: 2, valor: "ROSA ANGELICA PEREZ VELASQUEZ", items: 2, result: 8,  },
-                { id: 2, valor: "LEONARDO D J. MARTINEZ DE LA CRUZ", items: 8, result: 8,  }
+                { id: 3, valor: "LEONARDO D J. MARTINEZ DE LA CRUZ", items: 8, result: 8,  }
             ],
             onclick:  (id)=> {
-                this.initEvaluation(id)
+                this.initEvaluation(options,id);
             }
         });
         // this.initEvaluation();
@@ -288,23 +287,28 @@ class App extends Templates {
 
     // Evaluation
 
-    async initEvaluation(){
+    async initEvaluation(options,id){
 
-        let questions = await useFetch({ url: api, data: { opc: "getQuestionnaire" } });
+        console.log(options)
 
-    
+        let questions = await useFetch({ url: api, data: { opc: "getQuestionnaire", id_evaluated: id, id_evaluation: options.id} });
+
+        var nombre = document.getElementById(id).querySelector("h6").innerText;
+     
         this.createEvaluation({
             parent: 'questions',
             data: questions,
 
             questions:{
+                id:options.id,
                 data: [],
                 json: questions
             },
 
             info: {
-                user: 'Sergio Osorio',
-                puesto: 'Desarrollador'
+                user: nombre,
+                id: id,
+                
             }
      
         });
@@ -319,7 +323,7 @@ class App extends Templates {
         }).then((result) => {
             if (result.isConfirmed) {
                 this.render();
-                
+                this 
             }
         });
     }
@@ -329,49 +333,89 @@ class App extends Templates {
         let defaults = {
             parent: 'questionnaireContainer',
             questions: {
+                id: 0,
                 data: [],
                 json: []
             },
             info: {
                 user: '',
-                puesto: 'somx'
+                puesto: 'somx',
+                id: 0
             },
             options: ['1', '2', '3', '4', '5']
         };
 
         let opts = Object.assign({}, defaults, options);
 
-        let container = $('<div>', { class: 'questionnaire p-3 bg-gray-200 rounded-lg shadow-sm overflow-auto', id: opts.parent, style: 'max-height: 600px;' });
+        let container = $('<div>', { class: 'questionnaire bg-gray-200 p-3 rounded-lg shadow-sm overflow-auto', id: opts.parent, style: 'max-height: 600px;' });
 
-        let mainTitle = $('<div>', { class: 'p-3 text-sm rounded-lg' }).append(
+        let mainTitle = $('<div>', { class: 'p-2 text-sm rounded-lg' }).append(
             $('<span>', { class: '', html: `<strong>  Nombre:</strong> ${opts.info.user} | ` }),
-            $('<span>', { class: 'mb-1', html: `<strong>Puesto:</strong> ${opts.info.puesto}` })
+            // $('<span>', { class: 'mb-1', html: `<strong>Puesto:</strong> ${opts.info.puesto}` })
         );
+
         let titleElement = $('<h4>', { class: 'text-uppercase', html: mainTitle });
-        container.append(titleElement);
+        let subTitle = $('<h6>', {
+            class: 'text-muted mx-1 px-2 mb-2', html: '' });
+
+     
+        container.append(titleElement,
+            // subTitle
+            );
 
         opts.questions.json.forEach(section => {
+
+          
+            let id_valor = section.id_valor;    
+
             let sectionContainer = $('<div>', { class: 'mb-4 p-3 bg-white rounded-md shadow-sm' });
 
             let header = $('<h6>', { class: 'fw-bold text-uppercase mb-2', text: section.title });
             sectionContainer.append(header);
 
             section.questions.forEach(question => {
+              
+                let id_question = question.id;
+
                 let questionContainer = $('<div>', { class: 'mb-3' });
-
                 let questionText = $('<p>', { class: 'text-muted font-semibold mb-1', text: question.text });
-
                 let buttonGroup = $('<div>', { class: 'relative flex grid grid-cols-5 gap-3' });
 
+
+                // 📜 **Guardar la respuesta si ya fue respondida, si no, dejar vacío**
+                let answeredValue = question.data.length > 0 ? question.data[0].answered : "";
+
+
                 opts.options.forEach(opt => {
+                   
                     let button = $('<button>', {
                         class: 'btn btn-outline-secondary rounded-2 px-2 py-2 shadow-sm',
                         text: opt,
+                        id: question.id,
                         click: function () {
+                        
+                            useFetch({
+                                url:api,
+                                data: {
+                                    opc: 'addSurvey',
+                                    id_evaluation:opts.questions.id,
+                                    id_evaluated: opts.info.id,
+                                    id_question: id_question,
+                                 
+                                    answered: opt
+                                }
+                            })
+                           
                             $(this).siblings().removeClass('active btn-primary text-white').addClass('btn-outline-secondary');
                             $(this).addClass('active btn-primary text-white').removeClass('btn-outline-secondary');
                         }
                     });
+
+                    // 🔵 **Si la pregunta ya fue respondida, seleccionar el botón correspondiente**
+                    if (opt === answeredValue) {
+                        button.addClass('active btn-primary text-white').removeClass('btn-outline-secondary');
+                    }
+
                     buttonGroup.append(button);
                 });
 
