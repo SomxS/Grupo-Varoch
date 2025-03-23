@@ -1634,14 +1634,14 @@ $.fn.rpt_json_table2 = function (options) {
       tabla.append(tbody);
 
       div_table = $("<div>", {
-          class: "table-responsive",
+          class: "h-full table-responsive",
       });
 
       div_table.append(tabla);
 
       /* --  Contenedor para Reporte  -- */
 
-      div = $("<div>");
+      div = $("<div>",{class:'h-full'});
 
       const header = opts.data.head ? createDocsHead(opts.data.head) : '';
 
