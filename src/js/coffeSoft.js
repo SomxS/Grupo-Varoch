@@ -2414,12 +2414,21 @@ class Templates extends Components {
         ];
         let defaults = {
             parent: 'tabsLayout',
+            class: 'h-full',
+            options: {
+                class_tab_content: 'h-full flex-grow flex flex-col'
+            },
             id: 'tabs',
             json: jsonTabs
         };
 
         let opts = Object.assign(defaults, components);
-        $(`#${opts.parent}`).simple_json_tab({ data: opts.json });
+        $(`#${opts.parent}`).simple_json_tab({
+            data   : opts.json,
+            // class  : opts.class,
+            // id     : opts.id,
+            // options: opts.options
+        });
     }
 }
 
