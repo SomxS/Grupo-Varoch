@@ -2273,14 +2273,15 @@ class Templates extends Components {
         let defaults = {
             id: name,
             parent: this._div_modulo,
-            class: "d-flex mx-2 my-2 h-100",
+            // class: "d-flex mx-2 my-2 h-full",
+            class: "flex flex-col p-2 h-full",
             json:[],
             data:[],
             card: {
-                name: "singleLayout",
-                class: "col-12",
-                filterBar: { class: 'w-full line', id: 'filterBar' + name },
-                container: { class: 'w-full my-2 line', id: 'container' + name }
+                name: "containerLayout",
+                class: "flex flex-col h-full",
+                filterBar: { class: 'h-[10%] line', id: 'filterBar' + name },
+                container: { class: 'h-[90%] mt-2 line', id: 'container' + name }
             }
         };
 
