@@ -24,7 +24,7 @@ $.fn.simple_json_tab = function (options) {
     });
   
     var div_content = $("<div>", {
-      class: "tab-content " + opts.options.class_tab_content,
+      class: "tab-content " + opts.options.class_tab_content, // mod para hacer h-full
     });
   
     for (const x of opts.data) {
