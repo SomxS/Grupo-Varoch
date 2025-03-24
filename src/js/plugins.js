@@ -6,7 +6,7 @@ $.fn.simple_json_tab = function (options) {
       id: "myTab",
       class:'h-full',
       options:{
-        class_tab_content: 'h-full flex-grow flex flex-col'
+        class_tab_content: 'h-full flex-grow flex flex-col' // mod
       }
     };
   
