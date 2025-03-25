@@ -8,10 +8,10 @@ let app;
 
 $(async () => {
     // await fn_ajax({ opc: "init" }, api_alpha).then((data) => {
-        // vars.
-        // instancias.
-        app = new App(api,'root');
-        app.init();
+    // vars.
+    // instancias.
+    app = new App(api, 'root');
+    app.init();
     // });
 });
 
@@ -22,24 +22,54 @@ class App extends Templates {
     }
 
     init() {
-        this.render();
-        this.QuestionLayout();
+        this.render({
+            evaluators: {
+                id: 1,
+                valor: [],
+            },
+            id: 41,
+        });
+
     }
 
-    render(){
-        // this.layout();
-        // this.createNavBar();
+    render(options) {
+
+        this.layout();
+
        
-        // this.filterBar();
+
     }
 
     layout() {
+        this.tabsLayout({
+            parent: "root",
+          
+           
+            json: [
+                {
+                    tab: "Creados",
+                    id: "gestorCreados",
+                   
+                    contenedor: [
+                        { class: " min-h-[10%] line", id: "filterBarGestorCreados" },
+                        { class: "h-[83%] flex-grow line mt-2", id: "containerGestorCreados" },
+                    ],
+                    active: true,
+                },
+            ],
+        });
+
+
         // this.primaryLayout({
-        //     parent: "root",
-        //     id: "Primary",
+        //     parent: 'root',
+        //     class:'flex flex-col h-full',
+        //     card: {
+        //         class:'h-full',
+        //         filterBar: {class:'h-[10%] line'},
+        //         container: {class:'h-[88%] mt-2 line '}
+
+        //     }
         // });
-        // this.historyPay();
-        
 
     }
 
@@ -48,7 +78,7 @@ class App extends Templates {
         this.createfilterBar({
             parent: "filterBar",
             data: [
-                { opc: "select", class: "col-3", id: "UDNs", lbl: "Seleccionar UDN: ", data: [{id: 4, valor:'BAOS'}] },
+                { opc: "select", class: "col-3", id: "UDNs", lbl: "Seleccionar UDN: ", data: [{ id: 4, valor: 'BAOS' }] },
                 { opc: "input-calendar", class: "col-3", id: "calendar", lbl: "Consultar fecha: " },
             ],
         });
@@ -62,9 +92,9 @@ class App extends Templates {
     }
 
     ls(options) {
-     
+
         let rangePicker = getDataRangePicker("calendar");
-     
+
         this.createTable({
             parent: "containerCalendarizacion",
             idFilterBar: "filterBarCalendarizacion",
@@ -72,163 +102,45 @@ class App extends Templates {
             data: { opc: "lsEvents", date_init: rangePicker.fi, date_end: rangePicker.ff },
             conf: { datatable: false, pag: 15 },
             attr: {
-               
+
                 class_table: "table table-bordered table-sm table-striped text-uppercase",
-                id         : "lsTable",
-                center     : [1, 2, 3, 6, 7],
-                extends    : true,
-                
+                id: "lsTable",
+                center: [1, 2, 3, 6, 7],
+                extends: true,
+
             },
         });
 
-        
-       
+
+
     }
 
-    // Components. valores
-    QuestionLayout(options) {
-        let jsonComponents = {
-            id: `content-${this.PROJECT_NAME}`,
-            parent:'root',
-            class: "row px-3 py-2",
-            contenedor: [
-                {
-                    type: "div",
-                    class: "col-12 line",
-                    id: `content-header-${this.PROJECT_NAME}`,
-                },
-
-                {
-                    type: "div",
-                    class: "col  line",
-                    id: `content-questions-${this.PROJECT_NAME}`,
-                    children: [
-                        { class: "col-12 ", id: "groups" },
-                        { class: "col-12 p-2 ", id: "questions" },
-                    ],
-                },
-                
-                {
-                    type: "div",
-                    class: "col-12 text-end py-4 line",
-                    id: `content-footer-${this.PROJECT_NAME}`,
-                },
-            ],
-        };
-
-        let opts = Object.assign(jsonComponents, options);
-
-        this.createPlantilla({
-            data: jsonComponents,
-            parent: opts.parent,
-            design: false,
-        });
 
 
-        // initials.
-        this.createEndEvaluationButtons();
-        // this.groupCard();
-    }
-
-    createEndEvaluationButtons() {
-        let buttons = [
-          
-            {
-                opc: 'button',
-                color: "outline-secondary fw-bold",
-                icon: "icon-logout",
-                text: "Salir de la evaluación",
-                onClick: () => {
-                    this.backEvaluation();
-                },
-            },
-            {
-                opc: 'button',
-                color: "primary fw-bold",
-                icon: "icon-check",
-                text: "Terminar evaluación",
-                onClick: () => {
-                    this.init();
-                },
-            },
-        ];
-
-        this.createButtonGroup({
-            data: buttons,
-            class: "justify-content-end gap-2 pt-2",
-            parent: "content-footer-" + this.PROJECT_NAME,
-            size: "sm",
-            cols: "w-25 p-2",
-        });
-    }
-
-    
-
-    async groupCard() {
+    async groupCard(options) {
 
         let group = await useFetch({ url: api, data: { opc: "getGroup" } });
-      
 
-        this.createButtonGroup({
-            parent: 'groups',
-            cols: 'w-1/4 h-24 text-xs',
-            size: 'lg',
-            class: 'd-flex justify-content-start',
-            onClick: () => { this.initEvaluation() },
-            dataEl: {
-                data: group
+
+        this.createGroups({
+            parent: "groups",
+            title: "Evaluados",
+
+            data: [
+                { id: 1, valor: "SERGIO OSORIO MENDEZ", items: 2, result: 5, },
+                { id: 2, valor: "ROSA ANGELICA PEREZ VELASQUEZ", items: 2, result: 8, },
+                { id: 3, valor: "LEONARDO D J. MARTINEZ DE LA CRUZ", items: 8, result: 8, }
+            ],
+            onclick: (id) => {
+                this.initEvaluation(options, id);
             }
         });
+        // this.initEvaluation();
 
-       
+
     }
 
     // Evaluation
-
-    initEvaluation(){
-
-        this.createQuestionnaire({
-            parent: 'questions',
-            data: [
-                {
-                    title: 'TRABAJO EN EQUIPO',
-                    questions: [
-                        { text: '¿Se involucra en las actividades de equipo?' },
-                        { text: '¿Aporta ideas y soluciones para resolver desafíos en equipo?'},
-                        { text: '¿Se comunica de manera clara con el equipo?'}
-                    ]
-                },
-                {
-                    title: 'PROFESIONALISMO',
-                    questions: [
-                        { text: '¿Es una persona capacitada para realizar su trabajo?'}
-                    ]
-                },
-                {
-                    title: 'TRABAJO EN EQUIPO',
-                    questions: [
-                        { text: '¿Se involucra en las actividades de equipo?' },
-                        { text: '¿Aporta ideas y soluciones para resolver desafíos en equipo?' },
-                        { text: '¿Se comunica de manera clara con el equipo?' }
-                    ]
-                },
-            ]
-        });
-
-    }
-
-    backEvaluation() {
-        alert({
-            icon: "question",
-            title: "¿Desea salir de la evaluación?",
-            text: "No se completaran los cambios almacenados",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                this.render();
-                
-            }
-        });
-    }
 
 
 }

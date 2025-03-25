@@ -1,9 +1,14 @@
+
 $.fn.simple_json_tab = function (options) {
     txt = "";
   
     var defaults = {
       data: [],
       id: "myTab",
+      class:'h-full',
+      options:{
+        class_tab_content: 'h-full flex-grow flex flex-col' // mod
+      }
     };
   
     // Carga opciones por defecto
@@ -11,7 +16,7 @@ $.fn.simple_json_tab = function (options) {
   
     // Creamos el contenedor
     var div = $("<div>", {
-      class: " ",
+      class: " " + opts.class,
     });
   
     var ul = $("<ul>", {
@@ -20,7 +25,7 @@ $.fn.simple_json_tab = function (options) {
     });
   
     var div_content = $("<div>", {
-      class: "tab-content ",
+      class: "tab-content " + opts.options.class_tab_content, // mod para hacer h-full
     });
   
     for (const x of opts.data) {
@@ -52,7 +57,7 @@ $.fn.simple_json_tab = function (options) {
     li.append(navLink);
 
       var div_tab = $("<div>", {
-        class: "tab-pane fade  mt-2 " + tab_active,
+        class: "tab-pane fade flex flex-col h-full mt-2  " + tab_active,
         id: x.id,
       });
   
@@ -1634,14 +1639,14 @@ $.fn.rpt_json_table2 = function (options) {
       tabla.append(tbody);
 
       div_table = $("<div>", {
-          class: "table-responsive",
+          class: "h-full table-responsive",
       });
 
       div_table.append(tabla);
 
       /* --  Contenedor para Reporte  -- */
 
-      div = $("<div>");
+      div = $("<div>",{class:'h-full'});
 
       const header = opts.data.head ? createDocsHead(opts.data.head) : '';
 
