@@ -366,6 +366,31 @@ class Components extends Complements {
 
         $('#' + opts.parent)[opts.plugin]({ data: jsonForm, class: opts.class, type: 'default', id: opts.id, Element: opts.type });
 
+        /* propiedades de autofill*/
+
+        if (opts.autofill) {
+            // Init process auto inputs
+            for (const frm in opts.autofill) {
+                // Buscar elementos en el DOM cuyo atributo name coincida con la clave
+                const $element = $('#' + opts.parent).find(`[name="${frm}"]`);
+
+                if ($element.length > 0) {
+                    // Establecer valor dependiendo del tipo de elemento
+                    if ($element.is('select')) {
+                        // Seleccionar la opción correcta en el select
+                        $element.val(opts.autofill[frm]).trigger('change');
+                    } else {
+                        // Para otros elementos como input o textarea
+                        $element.val(opts.autofill[frm]);
+                    }
+
+                    console.log('Elemento encontrado y valor asignado:', $element);
+                } else {
+                    console.log('No se encontró el elemento:', frm);
+                }
+            }
+        }
+
         let dataForm = {
             tipo: 'text',
             opc: 'set',
