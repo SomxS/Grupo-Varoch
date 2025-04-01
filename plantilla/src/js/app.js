@@ -106,8 +106,6 @@ class App extends Templates {
 
     }
 
-
-
     async groupCard(options) {
 
         let group = await useFetch({ url: api, data: { opc: "getGroup" } });
@@ -297,7 +295,11 @@ class SubEvent extends App{
 
             const bodyWrapper = $('<div>', {
                 class: "bg-gray-800/30 px-4 py-4 hidden text-sm text-gray-300 accordion-body",
-                html: `<form novalidate class="" id="containerMenu${opt.id}" ></form>`,
+                id   : 'containerSubMenu' + opt.id,
+                html : `
+                    <form novalidate class="" id="containerMenu${opt.id}" ></form>
+                    <div class=" mt-2 " id="containerDishes${opt.id}"></div>
+                 `,
             });
 
             // 🧠 Evento toggle en el row completo (excluyendo botones)
@@ -333,7 +335,7 @@ class SubEvent extends App{
                 if (typeof opts.onEdit === "function") {
                     opts.onEdit(opt, index);
                 } else {
-                    console.log("Editar:", opt);
+                 
                 }
             });
 
@@ -343,7 +345,7 @@ class SubEvent extends App{
                 if (typeof opts.onDelete === "function") {
                     opts.onDelete(opt, index);
                 } else {
-                    console.log("Eliminar:", opt);
+                    
                 }
             });
 
@@ -387,8 +389,6 @@ class SubEvent extends App{
     }
 
     newSubEvent() {
-
-      
 
         this.createModalForm({
             id: 'frmModalUser',
@@ -538,8 +538,6 @@ class SubEvent extends App{
 
         let data = await useFetch({ url: this._link, data: { opc: "getMenu", id_sub_event: idSubEvent } });
 
-      
-      
      
 
         this.createForm({
@@ -599,10 +597,7 @@ class SubEvent extends App{
 
                 $("#formMenu #btnMenuSave").attr("disabled", "disabled");
 
-                $('<div>', {
-                    id: 'containerDishes' + idSubEvent,
-                    class: 'mt-2 border-t border-gray-600'
-                }).insertAfter('#containerMenu' + idSubEvent);
+            
 
                 sub.newDish(1, idSubEvent);
 
@@ -612,14 +607,9 @@ class SubEvent extends App{
 
 
         if (data.status == 200) {
-
             $("#formMenu #btnMenuSave").attr("disabled", "disabled");
-            
-       
-
-            sub.newDish(1, idSubEvent);
+            sub.newDish(data.menu.id, idSubEvent);
         }
-
 
 
      
@@ -628,9 +618,9 @@ class SubEvent extends App{
 
 
     newDish(idMenu, idEvent) {
-        // $("#btnSalir").removeClass("d-none");
-        // $("#prueba").empty();
-        // // Formulario de platillos
+
+        $( "containerDishes" + idEvent).html();
+        // Formulario de platillos
 
 
         this.createTableForm({
@@ -650,7 +640,7 @@ class SubEvent extends App{
 
             form: {
                 id: "formDish",
-                data: { opc: "addDish", id_event: idEvent, id_menu: idMenu },
+                data: { opc: "addDish", id_sub_event: idEvent, id_menu: idMenu },
                 json: [
                     {
                         opc: "input",
@@ -658,8 +648,9 @@ class SubEvent extends App{
                         id: "dish",
                         class: "col-12 mb-3",
                         tipo: "texto",
-                        required: true,
+                        required: true
                     },
+
                     {
                         opc: "input",
                         lbl: "Cantidad",
@@ -667,6 +658,7 @@ class SubEvent extends App{
                         class: "col-12 mb-3",
                         tipo: "numero",
                     },
+
                     {
                         opc: "select",
                         lbl: "Categoría",
@@ -678,6 +670,7 @@ class SubEvent extends App{
                             { id: "3", valor: "Extras" },
                         ],
                     },
+
                     {
                         opc: "select",
                         lbl: "Tiempo",
@@ -696,10 +689,14 @@ class SubEvent extends App{
                         class: "col-12",
                     },
                 ],
+
                 success: (response) => {
+
                     if (response.status == 200) {
+
                         alert({ icon: "success", text: response.message, timer: 1500 });
                         this.newDish(id, idEvent);
+
                     } else {
                         alert({
                             icon: "error",
@@ -712,9 +709,7 @@ class SubEvent extends App{
             },
         });
 
-        $("#prueba").children().first().each(function () {
-            $(this).removeClass("p-2");
-        });
+   
 
         $("#tableForm").addClass("mb-3");
     }
