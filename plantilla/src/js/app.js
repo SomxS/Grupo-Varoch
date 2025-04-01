@@ -539,17 +539,23 @@ class SubEvent extends App{
 
     // Menu
 
-    layoutMenu(idSubEvent){
+    async layoutMenu(idSubEvent){
 
         $('#containerMenu' + idSubEvent).empty();
 
+        let data = await useFetch({ url: this._link, data: { opc: "getMenu", id_sub_event: idSubEvent } });
+
+      
+      
+     
 
         this.createForm({
             parent: 'containerMenu'+idSubEvent,
             id: 'formMenu',
             class: 'row',
+            autofill:data.menu,
             autovalidation: true,
-            data: { opc: 'addMenu', id: idSubEvent }, 
+            data: { opc: 'addMenu', id_sub_event: idSubEvent }, 
             json: [
                 {
                     opc: 'input',
@@ -597,19 +603,33 @@ class SubEvent extends App{
                
             ],
             success: (result) => {
+
                 $("#formMenu #btnMenuSave").attr("disabled", "disabled");
+
+                $('<div>', {
+                    id: 'containerDishes' + idSubEvent,
+                    class: 'mt-2 border-t border-gray-600'
+                }).insertAfter('#containerMenu' + idSubEvent);
+
+                sub.newDish(1, idSubEvent);
 
                 
             }
         });
 
 
-        $('#containerMenu' + idSubEvent).append($('<div>', {
-            id: 'containerDishes' + idSubEvent,
-            class: 'mt-3 border-t border-gray-600'
-        }));
-        
-        sub.newDish(1, idSubEvent);
+        if (data.status == 200) {
+
+            $("#formMenu #btnMenuSave").attr("disabled", "disabled");
+            
+       
+
+            sub.newDish(1, idSubEvent);
+        }
+
+
+
+     
 
     }
 
