@@ -32,13 +32,84 @@ class App extends Templates {
 
     }
 
+
+
     render(options) {
-
-        this.layout();
-
-       
-
+        this.accordingMenu({
+            parent:'root'
+        });
+        // this.layout();
     }
+
+
+    accordingMenu(options) {
+    const defaults = {
+        parent: "tab-sub-event",
+        id: "accordionExample",
+        data: [
+            {
+                title: "Desayuno Buffet y Networking",
+                fecha: "19/'04/2024",
+                localizacion: "Jardin la ceiba",
+                tipo: "Privado",
+                body: "",
+            },
+            {
+                title: "Ceremonia de apertura",
+                fecha: "19/01/2024",
+                localizacion: "Salón Principal",
+                tipo: "Ceremonia",
+                body: "Contenido de ejemplo del sub-evento.",
+            },
+        ],
+    };
+
+    const opts = Object.assign(defaults, options);
+    const container = $('<div>', { id: opts.id, class: "space-y-2" });
+
+    opts.data.forEach((opt, index) => {
+        const item = $('<div>', {
+            class: "bg-[#1F2A37] rounded-lg overflow-hidden border border-gray-800",
+        });
+
+        const header = $(`
+        <div class="grid grid-cols-12 gap-4 p-4 items-center cursor-pointer hover:bg-gray-800/50">
+            <div class="col-span-4 font-medium text-white">${opt.title}</div>
+            <div class="col-span-2 text-gray-400">${opt.fecha}</div>
+            <div class="col-span-2 text-gray-400">${opt.localizacion}</div>
+            <div class="col-span-2">
+            <span class="px-2 py-1 bg-gray-800 text-gray-200 text-sm rounded-full">${opt.tipo}</span>
+            </div>
+            <div class="col-span-2 flex justify-end gap-2">
+            <button class="text-white hover:text-blue-500">✏️</button>
+            <button class="text-red-500 hover:text-red-600">🗑️</button>
+            <span class="text-gray-400 toggle-arrow">▾</span>
+            </div>
+        </div>
+    `);
+
+        const bodyWrapper = $('<div class="bg-gray-800/30 px-4 py-2 hidden border-t border-gray-700 text-sm text-gray-300">')
+            .html(opt.body);
+
+        header.on("click", function () {
+            const isVisible = bodyWrapper.is(":visible");
+            $(".accordion-body").slideUp();
+            $(".toggle-arrow").text("▾");
+
+            if (!isVisible) {
+                bodyWrapper.slideDown().addClass("accordion-body");
+                $(this).find(".toggle-arrow").text("▴");
+            }
+        });
+
+        item.append(header, bodyWrapper);
+        container.append(item);
+    });
+
+    $(`#${opts.parent}`).html(container);
+}
+
+
 
     layout() {
         this.tabsLayout({
@@ -60,16 +131,7 @@ class App extends Templates {
         });
 
 
-        // this.primaryLayout({
-        //     parent: 'root',
-        //     class:'flex flex-col h-full',
-        //     card: {
-        //         class:'h-full',
-        //         filterBar: {class:'h-[10%] line'},
-        //         container: {class:'h-[88%] mt-2 line '}
-
-        //     }
-        // });
+      
 
     }
 
