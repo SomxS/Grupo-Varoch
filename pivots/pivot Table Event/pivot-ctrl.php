@@ -95,42 +95,50 @@ class ctrl extends mdl{
 }
 
 // Complements.
-function dropdown($id, $status) {
-       
-        $instancia = 'app'; // Puedes cambiarlo dinámicamente según sea necesario.
+ function dropdown($id, $idStatus) {
 
-      
-        $options = [
-            ['Ver', 'icon-eye', "{$instancia}.show({$id})"], 
-            ['Editar', 'icon-pencil', "{$instancia}.edit({$id})"],
-            ['Cancelar', 'icon-block-1', "{$instancia}.cancel({$id})"], 
-            ['Historial', 'icon-history', "{$instancia}.history({$id})"], 
-            ['Imprimir', 'icon-print', "{$instancia}.print({$id})"], 
+         // 📏 INSTANCIA BASE
+        $instancia = 'gestor';
+
+        $values = [
+            'inProgress' => ['icon' => 'icon-play',    'text' => 'Iniciar',   'onclick' => "{$instancia}.statusTasks(2,{$id})"],
+            'finalize'   => ['icon' => 'icon-ok',      'text' => 'Finalizar', 'onclick' => "{$instancia}.statusTasks(4,{$id})"],
+            'delete'     => ['icon' => 'icon-cancel',  'text' => 'Cancelar',  'onclick' => "{$instancia}.statusTasks(5,{$id})"],
+            'edit'       => ['icon' => 'icon-pencil',  'text' => 'Editar',    'onclick' => "{$instancia}.editTaskModal({$id})"],
+            'advance'    => ['icon' => 'icon-comment', 'text' => 'Avances',   'onclick' => "{$instancia}.advanceModal({$id})"],
+            'reminder'   => ['icon' => 'icon-whatsapp','text' => 'Recordar',  'onclick' => "{$instancia}.reminderModal({$id})"],
         ];
 
-      
-        if ($status == 3) {
-            $options = [
-                ['Ver', 'icon-eye', "{$instancia}.show({$id})"], 
-                ['Historial', 'icon-history', "{$instancia}.history({$id})"], 
-            ];
-        }
 
-       
-        if ($status == 2) {
-            $options = [
-                ['Ver', 'icon-eye', "{$instancia}.show({$id})"], 
-                ['Historial', 'icon-history', "{$instancia}.history({$id})"], 
-                ['Imprimir', 'icon-print', "{$instancia}.print({$id})"], 
-            ];
-        }
+       $options = [
+            '1' => [
+                $values['inProgress'],
+                $values['edit'],
+                $values['advance'],
+                $values['reminder'],
+                $values['delete'],
+            ],
+            '2' => [
+                $values['finalize'],
+                $values['edit'],
+                $values['advance'],
+                $values['reminder'],
+                $values['delete'],
+            ],
+            '4' => [
+                $values['advance'],
+                $values['delete'],
+            ],
+            '5' => [
+                $values['advance'],
+            ],
+        ];
 
-        return array_map(fn($opt) => [
-            'text'    => $opt[0], // 📝 Texto del botón
-            'icon'    => $opt[1], // 📝 Icono asociado
-            'onclick' => $opt[2], // 📝 Evento onclick en JavaScript
-        ], $options);
+
+        // 📌 Verificar estado, si no crea dropdown vacion
+        return $options[$idStatus] ?? [];
 }
+
 
 function getEstatus($idstatus) {
     // 🔵 Definimos los estados con sus respectivos emojis y etiquetas

@@ -120,6 +120,9 @@ class Table extends App {
     }
 
     cancel(id) {
+        let tr = $(event.target).closest("tr");
+        let title = tr.find("td").eq(1).text();
+        
         this.swalQuestion({
             opts: {
                 title: `¿Esta seguro?`,
