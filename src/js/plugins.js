@@ -1956,3 +1956,14 @@ function unfold(id) {
   $(".ico" + id).toggleClass("icon-right-dir-1");
   $(".ico" + id).toggleClass(" icon-down-dir-1");
 }
+
+function formatPrice(amount, locale = 'es-MX', currency = 'MXN') {
+  // Verificar si el monto es null, undefined o 0
+  if (!amount) {
+    return '-';
+  }
+  return new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency: currency
+  }).format(amount);
+}
