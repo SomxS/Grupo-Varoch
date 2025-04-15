@@ -1,9 +1,9 @@
 // let ctrl = "ctrl/app.php";
 const link = 'https://erp-varoch.com/DEV/costsys/ctrl/ctrl-costo-potencial-soft.php';
 
-const api = 'https://erp-varoch.com/DEV/ch/ctrl/ctrl-encuesta.php';
-const api_subEvent = 'https://huubie.com.mx/dev/eventos/ctrl/ctrl-sub-eventos.php';
 
+const api_subEvent = 'https://huubie.com.mx/dev/eventos/ctrl/ctrl-sub-eventos.php';
+const api_payment = '';
 // init vars.
 let app,sub;
 
@@ -58,9 +58,6 @@ class App extends Templates {
                 },
             ],
         });
-
-
-      
 
     }
 
