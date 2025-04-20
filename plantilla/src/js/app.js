@@ -1,9 +1,9 @@
 // let ctrl = "ctrl/app.php";
 const link = 'https://erp-varoch.com/DEV/costsys/ctrl/ctrl-costo-potencial-soft.php';
 
-const api = 'https://erp-varoch.com/DEV/ch/ctrl/ctrl-encuesta.php';
-const api_subEvent = 'https://huubie.com.mx/dev/eventos/ctrl/ctrl-sub-eventos.php';
 
+const api_subEvent = 'https://huubie.com.mx/dev/eventos/ctrl/ctrl-sub-eventos.php';
+const api_payment  = 'https://huubie.com.mx/alpha/eventos/ctrl/ctrl-payment.php';
 // init vars.
 let app,sub;
 
@@ -11,13 +11,15 @@ let idEvent = 34;
 
 
 $(async () => {
-    // await fn_ajax({ opc: "init" }, api_alpha).then((data) => {
-    // vars.
+   
     // instancias.
-    app = new App(api, 'root');
-    sub = new SubEvent(api_subEvent, 'root');
-    sub.init();
-    // });
+    app = new App(api_subEvent, 'root');
+
+    sub = new Payment(api_payment,'root');
+    sub.render();
+
+    
+   
 });
 
 class App extends Templates {
@@ -29,6 +31,8 @@ class App extends Templates {
     init() {
         this.render();
     }
+
+
 
     render(options) {
         this.layout();
@@ -49,6 +53,10 @@ class App extends Templates {
                 }
             ]
         });
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4841b4a40bd12f7a8fa6e67768ab4bb25279e378
     }
 
     filterBar(options) {
@@ -105,6 +113,209 @@ class App extends Templates {
     // Evaluation
 }
 
+<<<<<<< HEAD
+=======
+class Payment extends App {
+    constructor(link, div_modulo) {
+        super(link, div_modulo);
+        this.PROJECT_NAME = "Payment";
+    }
+
+    render() {
+        this.layout();
+    }
+
+    layout() {
+        this.tabsLayout({
+            parent: "root",
+            json: [
+                {
+                    tab: "Creados",
+                    id: "gestorCreados",
+                    contenedor: [
+                        { class: " min-h-[10%] line", id: "filterBarGestorCreados" },
+                        { class: "h-[83%] flex-grow line mt-2", id: "containerPayment" },
+                    ],
+                    active: true,
+                },
+            ],
+        });
+
+        this.createNote();
+       
+    }
+
+    async createNote(){
+        let data = await useFetch({ url: this._link, data: { opc: 'getEvent', idEvent: 104 }  });
+
+        this.createPDF({ 
+            parent: 'containerPayment',
+            data_header: data.Event,
+            dataMenu: data.Menu,
+            dataPayment: data.Payment
+        
+        });
+      
+    }
+
+
+   
+    // Components. 
+    createPDF(options) {
+
+        const defaults = {
+            parent: 'containerNote',
+            dataPackage: [],
+            dataMenu   : [],
+            dataPayment: [],
+            data_header: {
+                email          : "[email]",
+                phone          : "[phone]",
+                contact        : "[contact]",
+                idEvent        : "[idEvent]",
+                location       : "[location]",
+                date_creation  : "[date_creation]",
+                date_start     : "[date_start]",
+                date_start_hr  : "[date_start_hr]",
+                date_end       : "[date_end]",
+                date_end_hr    : "[date_end_hr]",
+                day            : "[day]",
+                quantity_people: "[quantity_people]",
+                advance_pay    : "[advance_pay]",
+                total_pay      : "[total_pay]",
+                notes          : "[notes]",
+                type_event     : "[type_event]"
+            },
+            clauses: ["", "", "", "", "", "", "", "", "", ""] // 📌 Cláusulas configurables
+        };
+
+        const opts = Object.assign({}, defaults, options);
+
+        // 📜 Construcción del encabezado del PDF con logo
+        const header = `
+        <div class="flex justify-end mb-4">
+            <img src="https://huubie.com.mx/alpha/src/img/logo/logo.ico" alt="Logo" class="h-16 p-1">
+        </div>
+        <div class="event-header text-sm text-gray-800">
+            <p><strong>CLIENTE:</strong> ${opts.data_header.contact}</p>
+            <p><strong>TELÉFONO:</strong> ${opts.data_header.phone}</p>
+            <p><strong>CORREO:</strong> ${opts.data_header.email}</p>
+            <p><strong>TIPO :</strong> ${opts.data_header.type_event}</p>
+        </div>`;
+
+        // 📜 Construcción del cuerpo del PDF
+        const template = `
+        <div class="event-details mt-6 text-sm text-gray-800">
+            <p>Agradecemos su preferencia por celebrar su evento con nosotros el día 
+            <strong>${opts.data_header.day}</strong>,
+            <strong>${opts.data_header.date_start} ${opts.data_header.date_start_hr}</strong> a 
+            <strong>${opts.data_header.date_end} ${opts.data_header.date_end_hr}</strong>, en el salón 
+            <strong>${opts.data_header.location}</strong>.</p>
+            <p>Estamos encantados de recibir a <strong>${opts.data_header.quantity_people}</strong> invitados y nos aseguraremos de que cada detalle esté a la altura de sus expectativas.</p>
+            <br>
+            ${opts.data_header.notes ? `<p><strong>NOTAS:</strong> ${opts.data_header.notes}</p>` : ""}
+        </div>`;
+
+
+        // 📜 Desgloze de Menu
+        let menu = opts.dataMenu.data;
+
+        const template_menu = `
+         <div class="text-gray-800 mt-4" id="containerMenu">
+            <div class=" text-sm font-bold mb-2">Menú</div>
+            <div class = "d-inline-flex gap-3">
+            <div>
+                <strong>Paquete:</strong>
+                <small>${menu.package_type}</small>
+            </div>
+            <div>
+            <strong> Cantidad:</strong>
+            <small>${menu.quantity}</small>
+            </div>
+            <div>
+            <strong> Precio:</strong>
+            <small>${formatPrice(menu.price)}</small>
+            </div>
+            
+            </div>
+        </div>
+        `;
+
+        console.log(opts.dataPayment)
+
+        let templatePayment = '';
+
+        opts.dataPayment.forEach((item) => {
+            templatePayment += `
+            <div class="flex justify-between ">
+                <p class="font-bold">${item.method_pay}</p>
+                <p> ${formatPrice(item.valor)}</p>
+            </div>
+            `;
+        });
+
+
+        // 📜 Estructura principal del documento
+        const docs = `
+        <div id="docEvent" class=" px-6 py-6 bg-white shadow-lg text-gray-800 rounded-lg">
+            ${header}
+            ${template}
+            ${template_menu}
+            <div class="text-gray-800 mt-4" id="containerEndFormat"></div>
+            
+            <!-- 📜 Sección de Totales (Subtotal, Total y Saldo) -->
+            <div class="mt-6 mb-2  text-sm text-gray-800 flex justify-end">
+                <div class="w-1/3">
+                    <div class="flex justify-between  pt-2">
+                        <p class="font-bold">Total</p>
+                        <p>${formatPrice(opts.data_header.total_pay)}</p>
+                    </div>
+                    <div class="flex justify-between">
+                        <p class="font-bold">Anticipo</p>
+                        <p>${formatPrice(opts.data_header.advance_pay)}</p>
+                    </div>
+                    <div class="flex justify-between ">
+                        <p class="font-bold"> Saldo</p>
+                        <p>${formatPrice(opts.data_header.total_pay - opts.data_header.advance_pay)}</p>
+                    </div>
+
+                    
+                </div>
+            </div>
+
+            <div class="flex text-sm justify-end">
+            <div class="w-1/3">
+                <p class="font-bold  border-t my-1"> Forma de pago </p>
+                ${templatePayment}
+            </div>
+            </div>
+
+            <!-- 📜 Cláusulas configurables -->
+
+            <div class="mt-8 mb-4 text-xs">
+                <p class="font-bold"> Cláusulas </p>
+                <ul class="list-decimal pl-5">
+                    ${opts.clauses.map(clause => `<li>${clause}</li>`).join('')}
+                </ul>
+            </div>
+        </div>`;
+
+        $('#' + opts.parent).append(docs);
+
+        // 📜 Aplicación del plugin rpt_json_table2 a la tabla del menú
+        $('#containerEndFormat').rpt_json_table2({
+            data: opts.dataMenu,
+            color_th: 'bg-gray-200 p-1 text-center uppercase text-xs',
+            class: 'w-full border-collapse  bg-white rounded-lg',
+            center: [1],
+            extends: true
+        });
+    }
+
+}
+
+
+>>>>>>> 4841b4a40bd12f7a8fa6e67768ab4bb25279e378
 class SubEvent extends App{
     constructor(link, div_modulo) {
         super(link, div_modulo);
@@ -235,7 +446,11 @@ class SubEvent extends App{
 
             const bodyWrapper = $('<div>', {
                 class: "bg-gray-800/30 px-4 py-4 hidden text-sm text-gray-300 accordion-body",
-                html: `<form novalidate class="" id="containerMenu${opt.id}" ></form>`,
+                id   : 'containerSubMenu' + opt.id,
+                html : `
+                    <form novalidate class="" id="containerMenu${opt.id}" ></form>
+                    <div class=" mt-2 " id="containerDishes${opt.id}"></div>
+                 `,
             });
 
             header.on("click", function (e) {
@@ -266,7 +481,7 @@ class SubEvent extends App{
                 if (typeof opts.onEdit === "function") {
                     opts.onEdit(opt, index);
                 } else {
-                    console.log("Editar:", opt);
+                 
                 }
             });
 
@@ -275,7 +490,7 @@ class SubEvent extends App{
                 if (typeof opts.onDelete === "function") {
                     opts.onDelete(opt, index);
                 } else {
-                    console.log("Eliminar:", opt);
+                    
                 }
             });
 
@@ -313,6 +528,10 @@ class SubEvent extends App{
     }
 
     newSubEvent() {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4841b4a40bd12f7a8fa6e67768ab4bb25279e378
         this.createModalForm({
             id: 'frmModalUser',
             title: 'Nuevo Usuario',
@@ -411,6 +630,11 @@ class SubEvent extends App{
 
         let data = await useFetch({ url: this._link, data: { opc: "getMenu", id_sub_event: idSubEvent } });
 
+<<<<<<< HEAD
+=======
+     
+
+>>>>>>> 4841b4a40bd12f7a8fa6e67768ab4bb25279e378
         this.createForm({
             parent: 'containerMenu'+idSubEvent,
             id: 'formMenu',
@@ -454,10 +678,7 @@ class SubEvent extends App{
             success: (result) => {
                 $("#formMenu #btnMenuSave").attr("disabled", "disabled");
 
-                $('<div>', {
-                    id: 'containerDishes' + idSubEvent,
-                    class: 'mt-2 border-t border-gray-600'
-                }).insertAfter('#containerMenu' + idSubEvent);
+            
 
                 sub.newDish(1, idSubEvent);
             }
@@ -465,12 +686,29 @@ class SubEvent extends App{
 
         if (data.status == 200) {
             $("#formMenu #btnMenuSave").attr("disabled", "disabled");
+<<<<<<< HEAD
             
             sub.newDish(1, idSubEvent);
         }
+=======
+            sub.newDish(data.menu.id, idSubEvent);
+        }
+
+
+     
+
+>>>>>>> 4841b4a40bd12f7a8fa6e67768ab4bb25279e378
     }
 
     newDish(idMenu, idEvent) {
+<<<<<<< HEAD
+=======
+
+        $( "containerDishes" + idEvent).html();
+        // Formulario de platillos
+
+
+>>>>>>> 4841b4a40bd12f7a8fa6e67768ab4bb25279e378
         this.createTableForm({
             parent: "containerDishes" + idEvent,
             title: "Agregar platillos",
@@ -485,7 +723,7 @@ class SubEvent extends App{
             },
             form: {
                 id: "formDish",
-                data: { opc: "addDish", id_event: idEvent, id_menu: idMenu },
+                data: { opc: "addDish", id_sub_event: idEvent, id_menu: idMenu },
                 json: [
                     {
                         opc: "input",
@@ -493,8 +731,9 @@ class SubEvent extends App{
                         id: "dish",
                         class: "col-12 mb-3",
                         tipo: "texto",
-                        required: true,
+                        required: true
                     },
+
                     {
                         opc: "input",
                         lbl: "Cantidad",
@@ -502,6 +741,7 @@ class SubEvent extends App{
                         class: "col-12 mb-3",
                         tipo: "numero",
                     },
+
                     {
                         opc: "select",
                         lbl: "Categoría",
@@ -513,6 +753,7 @@ class SubEvent extends App{
                             { id: "3", valor: "Extras" },
                         ],
                     },
+
                     {
                         opc: "select",
                         lbl: "Tiempo",
@@ -531,10 +772,14 @@ class SubEvent extends App{
                         class: "col-12",
                     },
                 ],
+
                 success: (response) => {
+
                     if (response.status == 200) {
+
                         alert({ icon: "success", text: response.message, timer: 1500 });
                         this.newDish(id, idEvent);
+
                     } else {
                         alert({
                             icon: "error",
@@ -547,9 +792,7 @@ class SubEvent extends App{
             },
         });
 
-        $("#prueba").children().first().each(function () {
-            $(this).removeClass("p-2");
-        });
+   
 
         $("#tableForm").addClass("mb-3");
     }
