@@ -2098,6 +2098,81 @@ class Components extends Complements {
         this.createTable(opts.table);
     }
 
+    createItemCard(options) {
+        let defaults = {
+            parent: 'cardGridContainer',
+            color:' bg-[#333D4C]',
+            json: [
+                {
+                    titulo: "Evento",
+                    descripcion: "Dar de alta un nuevo evento",
+                    imagen: "/alpha/src/img/eventos.svg",
+                    enlace: "/alpha/eventos/",
+                    padding: ""
+                },
+                {
+                    titulo: "Evento",
+                    descripcion: "Dar de alta un nuevo evento",
+                    imagen: "/alpha/src/img/eventos.svg",
+                    enlace: "/alpha/eventos/",
+                    padding: ""
+                }
+            ]
+        };
+
+        let opts = Object.assign({}, defaults, options);
+
+        // 📜 Título principal del grupo de tarjetas
+        let title = $('<h3>', {
+            class: 'text-lg font-semibold text-white mb-2 px-4',
+            text: opts.title || ''
+        });
+
+        // 📜 Contenedor principal del grid de tarjetas
+        let container = $('<div>', {
+            class: 'w-full flex gap-4 justify-start p-4'
+        });
+
+        // 🔄 Generar cada tarjeta a partir de la data
+        opts.json.forEach(item => {
+            let imgContent = '';
+
+            if (Array.isArray(item.img)) {
+                imgContent = '<div class="flex gap-2 mb-2">';
+                item.img.forEach(i => {
+                    imgContent += `<img class="w-14 h-14 bg-[#233876] rounded-lg" src="${i.src}" alt="${i.title}">`;
+                });
+                imgContent += '</div>';
+            } else if (item.imagen) {
+                imgContent = `<img class="w-14 h-14 ${item.padding} bg-[#233876] rounded-lg group-hover:scale-110 transition-transform mb-2" src="${item.imagen}" alt="${item.titulo}">`;
+            }
+
+
+            let card = $(
+                `<div class="group w-50 h-[200px] ${opts.color} rounded-lg shadow-lg overflow-hidden p-4 flex flex-col justify-between cursor-pointer transition-all hover:shadow-xl hover:scale-105">
+                  ${imgContent}
+                <div class="flex-grow flex flex-col justify-center">
+                    <h2 class="text-lg font-semibold text-white font-[Poppins] group-hover:text-blue-400">${item.titulo}</h2>
+                    ${item.descripcion ? `<p class="text-gray-400 font-[Poppins]">${item.descripcion}</p>` : ""}
+                </div>
+            </div>`
+            ).click(() => {
+                if (item.enlace)
+                    window.location.href = item.enlace;
+
+                if (item.onClick)
+                    item.onClick();
+
+
+            });
+
+            container.append(card);
+        });
+
+        // 🎯 Insertar el grid en el DOM
+        $('#' + opts.parent).append(title, container);
+    }
+
     // ADD COMMENTS
 
 
@@ -2304,7 +2379,7 @@ class Templates extends Components {
             data:[],
             card: {
                 name: "containerLayout",
-                class: "flex flex-col h-full",
+                class: "flex flex-col gap-3 h-full",
                 filterBar: { class: 'h-[10%] line', id: 'filterBar' + name },
                 container: { class: 'h-[90%] mt-2 line', id: 'container' + name }
             }

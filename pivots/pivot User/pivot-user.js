@@ -1,7 +1,7 @@
 let api = 'ctrl/ctrl-admin.php';
 let app;
 let rol, sucursal;
-
+// initial 
 $(function () {
 
     fn_ajax({ opc: "init" }, api).then((data) => {
@@ -34,9 +34,9 @@ class User extends Template {
             id: this.PROJECT_NAME,
             class: 'd-flex mx-2 my-2 h-100 mt-5 p-3',
             card: {
-                filterBar: { class: 'w-full my-3 ', id: 'filterBar' + this.PROJECT_NAME },
-                container: { class: 'w-full my-3 bg-[#1F2A37] rounded-lg  p-3', id: 'container' + this.PROJECT_NAME }
-            }
+                filterBar: { class: 'lg:h-[12%] line', id: "filterBar" + this.PROJECT_NAME },
+                container: { class: 'lg:h-[88%] line', id: "container" + this.PROJECT_NAME },
+            },
         });
 
         this.newUserLayout();
