@@ -1,7 +1,7 @@
 // let ctrl = "ctrl/app.php";
 const link = 'https://erp-varoch.com/DEV/costsys/ctrl/ctrl-costo-potencial-soft.php';
 
-const api = 'https://huubie.com.mx/alpha/eventos/ctrl/ctrl-sub-eventos.php';
+const api = 'https://huubie.com.mx/alpha/eventos/ctrl/ctrl-payment.php';
 
 // init vars.
 let app,sub;
@@ -10,7 +10,9 @@ let idEvent ;
 
 
 $(async () => {
-    // await fn_ajax({ opc: "init" }, api_alpha).then((data) => {
+
+    await fn_ajax({ opc: "init" }, link).then((request) => {
+        console.log(request)
     // vars.
     // instancias.
     app = new App(api, 'root');
@@ -19,7 +21,7 @@ $(async () => {
     sub = new subEvent(api,'');
     sub.init();
   
-    // });
+    });
 });
 
 class App extends Templates {
