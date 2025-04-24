@@ -1,20 +1,25 @@
 <?php
-if (empty($_POST['opc']))
-    exit(0);
+if (empty($_POST['opc'])) exit(0);
 
+setlocale(LC_TIME, 'es_ES.UTF-8');
+date_default_timezone_set('America/Mexico_City');
+
+header("Access-Control-Allow-Origin: *"); // Permite solicitudes de cualquier origen
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS"); // Métodos permitidos
+header("Access-Control-Allow-Headers: Content-Type"); // Encabezados permitidos
 // incluir tu modelo
 require_once ('../mdl/mdl.php');
 
 // sustituir 'mdl' extends de acuerdo al nombre que tiene el modelo 
 class ctrl extends mdl{
 
-    function ls(){
+    function list(){
         $instancia = 'app';
         # Declarar variables
         $__row = [];
 
         // #Consultar a la base de datos
-        $ls = $this->lsUDN();
+        $ls = $this->get();
 
         foreach ($ls as $key) {
             $a = [];
@@ -35,6 +40,7 @@ class ctrl extends mdl{
             $__row[] = array(
             'id'       => $key['id'],
             'nombre'   => $key['valor'],
+            'fecha'    => $key['date'],
 
             'a'  => $a
             );
