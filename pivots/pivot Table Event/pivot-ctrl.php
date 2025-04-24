@@ -9,7 +9,7 @@ require_once '../mdl/pivot-mdl.php';
 $encode = [];
 class ctrl extends mdl{
 
-    function ls() {
+    function list() {
 
         // 📜 Obtener parámetros de la solicitud
         $__row     = [];
@@ -19,7 +19,7 @@ class ctrl extends mdl{
         $ff        = $_POST['ff'];
 
         #Consultar a la base de datos
-        $ls = $this->lsEvents([
+        $ls = $this->getEvents([
             'subsidiaries_id' => $_SESSION['SUB'],
             'fi'              => $fi,
             'ff'              => $ff,

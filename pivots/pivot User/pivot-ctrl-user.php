@@ -11,9 +11,10 @@ class User extends MUser{
         ];
     }
 
-    function lsUsers(){
+    function list(){
         $__row = [];
-        $ls = $this->listUsers();
+        $ls    = $this->listUsers();
+
         foreach ($ls as $key) {
             $a = [];
             $a[] = [
@@ -34,16 +35,16 @@ class User extends MUser{
                 'a'        => $a,
             ];
         }
+        
         return [
             "row" => $__row,
-            'ls'  => $ls,
         ];
     }
 
     function getUser(){
         $status = 500;
         $message = 'Error al obtener los datos';
-        $lsUser = $this->getUserByID($_POST['id']);
+        $lsUser =  $this->getUserByID($_POST['id']);
         if ($lsUser) {
             $status = 200;
             $message = 'Datos obtenidos correctamente.';

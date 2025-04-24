@@ -97,7 +97,7 @@ class User extends Template {
         this.createTable({
             parent: "contentTableUsers",
             idFilterBar: "filterBarUser",
-            data: { opc: "lsUsers" },
+            data: { opc: "listUsers" },
             conf: { datatable: true, pag: 10 },
             attr: {
                 id: "tbUser",
