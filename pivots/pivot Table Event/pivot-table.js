@@ -1,11 +1,25 @@
 
 let status;
+let app;
 
-class Table extends App {
+const api = "ctrl/ctrl.php";
+
+$(() => {
+    app = new App(api, "root");
+    app.init();
+});
+
+
+
+class App extends Templates {
     constructor(link, div_modulo) {
         super(link, div_modulo);
         this.PROJECT_NAME = "";
 
+    }
+
+    init(){
+        this.render();
     }
 
     render() {
@@ -52,7 +66,7 @@ class Table extends App {
                     id       : "btnNuevoEvento",
                     text     : "Nuevo evento",
               
-                    onClick: () => this.newEvent()
+                    onClick: () => this.add()
                 },
             
             ],
@@ -80,25 +94,90 @@ class Table extends App {
         });
     }
 
-    ls(options) {
+    ls() {
         let rangePicker = getDataRangePicker("calendar" + this.PROJECT_NAME);
-        this._link = link;
-
+     
         this.createTable({
             parent: "container" + this.PROJECT_NAME,
             idFilterBar: "filterBar" + this.PROJECT_NAME,
-            data: { opc: "ls" + this.PROJECT_NAME, fi: rangePicker.fi, ff: rangePicker.ff },
+            data: { opc: "list" + this.PROJECT_NAME, fi: rangePicker.fi, ff: rangePicker.ff },
             conf: { datatable: true, pag: 10 },
             attr: {
-                id: "tb" + this.PROJECT_NAME,
-
-                center: [1],
-                right: [2],
+                id     : "tb" + this.PROJECT_NAME,
+                center : [1],
+                right  : [2],
                 extends: true,
             },
            
         });
     }
+
+    // Crud 
+
+    add() {
+        this.createModalForm({
+            id: 'formModal',
+            data: { opc: 'addPeriod' },
+            bootbox: {
+                title: '<strong>Nuevo Periodo</strong>',
+                // size: 'large'
+            },
+            json: [
+                { opc: 'input', lbl: 'Descripción', id: 'nombre', class: 'col-12', tipo: 'texto', required: true },
+                { opc: 'input', lbl: 'Fecha de inicio', id: 'fecha_inicio', type: 'date', class: 'col-6', required: true },
+                { opc: 'input', lbl: 'Fecha de fin', id: 'fecha_fin', type: 'date', class: 'col-6', required: true },
+                { opc: 'textarea', lbl: 'Observaciones', id: 'observaciones', class: 'col-12' },
+            ],
+            success: (response) => {
+                if (response.status == 200) {
+                    alert({ icon: "success", text: response.message });
+                    this.ls();
+                } else {
+                    alert({ icon: "error", text: response.message });
+                }
+            }
+        });
+    }
+
+    async edit(id) {
+
+        let request = useFetch({
+            url: this._link,
+            data: { opc: 'getPeriod', id: id }
+        });
+
+        this.createModalForm({
+            id: 'formModalEdit',
+            data: { opc: 'editPeriodo', id: id },
+            bootbox: {
+                title: '<strong>Editar </strong>'
+            },
+            
+            autofill: request.data,
+            
+            json: [
+                { opc: 'input', lbl: 'Descripción', id: 'nombre', class: 'col-12', tipo: 'texto', required: true },
+                { opc: 'input', lbl: 'Fecha de inicio', id: 'fecha_inicio', type: 'date', class: 'col-6', required: true },
+                { opc: 'input', lbl: 'Fecha de fin', id: 'fecha_fin', type: 'date', class: 'col-6', required: true },
+                { opc: 'textarea', lbl: 'Observaciones', id: 'observaciones', class: 'col-12' },
+            ],
+
+            success: (response) => {
+                if (response.status == 200) {
+                    alert({ icon: "success", text: response.message });
+                    this.ls();
+                } else {
+                    alert({ icon: "error", text: response.message });
+                }
+            }
+        });
+      
+    }
+
+
+
+
+
 
     async show(id) {
 
