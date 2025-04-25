@@ -18,7 +18,7 @@ class ctrl extends mdl{
         $ff        = $_POST['ff'];
 
         #Consultar a la base de datos
-        $ls = $this->get([
+        $ls = $this->getEntities([
             'subsidiaries_id' => $_SESSION['SUB'],
             'fi'              => $fi,
             'ff'              => $ff,
@@ -77,7 +77,6 @@ class ctrl extends mdl{
         ];
     }
 
-
     function get(){
         $status  = 500;
         $message = 'Error al obtener los datos';
@@ -130,10 +129,6 @@ class ctrl extends mdl{
     }
 
   
-
-
-    
-
 
 }
 
