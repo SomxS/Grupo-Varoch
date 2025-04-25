@@ -9,13 +9,11 @@ $(() => {
     app.init();
 });
 
-
-
 class App extends Templates {
+    
     constructor(link, div_modulo) {
         super(link, div_modulo);
         this.PROJECT_NAME = "";
-
     }
 
     init(){
