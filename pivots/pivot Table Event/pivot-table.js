@@ -10,12 +10,11 @@ $(() => {
 });
 
 
-
 class App extends Templates {
+    
     constructor(link, div_modulo) {
         super(link, div_modulo);
         this.PROJECT_NAME = "";
-
     }
 
     init(){
@@ -173,11 +172,6 @@ class App extends Templates {
         });
       
     }
-
-
-
-
-
 
     async show(id) {
 
