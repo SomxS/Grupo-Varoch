@@ -178,8 +178,6 @@ class App extends Templates {
         
     }
 
-<<<<<<< HEAD
-=======
     cancel(id) {
         let tr = $(event.target).closest("tr");
         let title = tr.find("td").eq(1).text();
@@ -210,7 +208,6 @@ class App extends Templates {
         });
     }
 
->>>>>>> 9d5ccf81f0be68288c5ce98d7ddcbf405b7aafef
     async show(id) {
 
         let data = await useFetch({ url: link, data: { opc: "get", id: id } });
