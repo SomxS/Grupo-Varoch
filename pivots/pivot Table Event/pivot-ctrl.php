@@ -13,13 +13,12 @@ class ctrl extends mdl{
 
         // 📜 Obtener parámetros de la solicitud
         $__row     = [];
-
         $idEstatus = $_POST['status'];
         $fi        = $_POST['fi'];
         $ff        = $_POST['ff'];
 
         #Consultar a la base de datos
-        $ls = $this->getEvents([
+        $ls = $this->getEntities([
             'subsidiaries_id' => $_SESSION['SUB'],
             'fi'              => $fi,
             'ff'              => $ff,
@@ -27,21 +26,15 @@ class ctrl extends mdl{
         ]);
         
         foreach ($ls as $key) {
-
-           // 🔵 Variables (ajusta según tus necesidades)
-           $folio = "T-" . $this->util->zeroFill($key['id']);
-           
-
+       
             // 🔵 Formateo de datos
             $date_creation = formatSpanishDate($key['date_creation'],'normal');
-             
-               
-           
+                       
             $__row[] = [
 
                 'id'       => $key['id'],
-                'folio'    => $folio,
-                'Nombre'   => $key['name_event'],
+                'folio'    => $key['id'],
+                'Nombre'   => $key['name'],
                 'Fecha'    => $date_creation,
 
                 'Total'     => [
@@ -64,21 +57,67 @@ class ctrl extends mdl{
 
     }
 
-    function get(){
-        
-        $list = $this -> getTableByID([ $_POST['id'] ]);
+    function add(){
 
-        return ['data' => $list ];
-      
+        $status = 500;
+        $message = 'No se pudo insertar correctamente';
+
+        $_POST['date_creation']     = date('Y-m-d H:i:s');
+        $_POST['status_process_id'] = 1;
+        $create                     = $this->create($this->util->sql($_POST));
+
+        if ($create) {
+            $status  = 200;
+            $message = 'Se agregó correctamente.';
+        }
+
+        return [
+            'status' => $status,
+            'message' => $message,
+        ];
+    }
+
+    function get(){
+        $status  = 500;
+        $message = 'Error al obtener los datos';
+        $get     = $this->getById([$_POST['id']]);
+
+        if ($get) {
+            $status = 200;
+            $message = 'Datos obtenidos correctamente.';
+        }
+        return [
+            'status'  => $status,
+            'message' => $message,
+            'data'    => $get[0],
+        ];
+
+    }
+
+    function edit(){
+
+        $status  = 500;
+        $message = 'Error al editar';
+        $edit    = $this->update($this->util->sql($_POST, 1));
+
+        if ($edit) {
+
+            $status  = 200;
+            $message = 'Se ha editado correctamente';
+        }
+        return [
+            'status'  => $status,
+            'message' => $message
+        ];
+
     }
 
     function cancel() {
         $status = 500;
         $message = 'Error al eliminar registro.';
-        // Eliminar platillos
-        $delete = $this->delete($this->util->sql($_POST, 1));
+        $update = $this->update($this->util->sql($_POST, 1));
 
-        if ($delete == true) {
+        if ($update == true) {
             $status  = 200;
             $message = 'Se ha eliminado correctamente';
         }
@@ -89,8 +128,7 @@ class ctrl extends mdl{
         ];
     }
 
-    
-
+  
 
 }
 

@@ -9,7 +9,10 @@ $(() => {
     app.init();
 });
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9d5ccf81f0be68288c5ce98d7ddcbf405b7aafef
 class App extends Templates {
     
     constructor(link, div_modulo) {
@@ -41,34 +44,41 @@ class App extends Templates {
     filterBar() {
         this.createfilterBar({
             parent: "filterBarEventos",
+
             data: [
+
                 {
-                    opc: "input-calendar",
+                    opc  : "input-calendar",
                     class: "col-sm-2",
-                    id: "calendar" + this.PROJECT_NAME,
-                    lbl: "Consultar fecha: ",
+                    id   : "calendar" + this.PROJECT_NAME,
+                    lbl  : "Consultar fecha: ",
                 },
+
                 {
-                    opc: "select",
-                    class: "col-sm-2",
-                    id: "status",
-                    lbl: "Seleccionar estados: ",
-                    data: status,
+                    opc     : "select",
+                    class   : "col-sm-2",
+                    id      : "status",
+                    lbl     : "Seleccionar estados: ",
+                    data    : status,
                     onchange: "app.ls()",
                 },
                 
                 {
+
                     opc      : "button",
                     className: "w-100",
                     class    : "col-sm-2",
                     color_btn: "primary",
                     id       : "btnNuevoEvento",
                     text     : "Nuevo evento",
-              
-                    onClick: () => this.add()
+
+                    onClick  : () =>{
+
+                        this.add()
+                    } 
                 },
-            
             ],
+
         });
 
         // initialized.
@@ -79,12 +89,13 @@ class App extends Templates {
                 startDate: moment().startOf("month"), 
                 endDate: moment().endOf("month"), 
                 showDropdowns: true,
+
                 ranges: {
-                    "Mes actual": [moment().startOf("month"), moment().endOf("month")],
-                    "Semana actual": [moment().startOf("week"), moment().endOf("week")],
+                    "Mes actual"    : [moment().startOf("month"), moment().endOf("month")],
+                    "Semana actual" : [moment().startOf("week"), moment().endOf("week")],
                     "Proxima semana": [moment().add(1, "week").startOf("week"), moment().add(1, "week").endOf("week")],
-                    "Proximo mes": [moment().add(1, "month").startOf("month"), moment().add(1, "month").endOf("month")],
-                    "Mes anterior": [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")]
+                    "Proximo mes"   : [moment().add(1, "month").startOf("month"), moment().add(1, "month").endOf("month")],
+                    "Mes anterior"  : [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")]
                 },
             },
             onSelect: (start, end) => {
@@ -111,7 +122,7 @@ class App extends Templates {
         });
     }
 
-    // Crud 
+    // Crud interface
 
     add() {
         this.createModalForm({
@@ -140,27 +151,21 @@ class App extends Templates {
 
     async edit(id) {
 
-        let request = useFetch({
-            url: this._link,
-            data: { opc: 'getPeriod', id: id }
-        });
+        let request = useFetch({ url: this._link,data: { opc: 'get', id: id } });
 
         this.createModalForm({
             id: 'formModalEdit',
-            data: { opc: 'editPeriodo', id: id },
+            data: { opc: 'edit', id: id },
             bootbox: {
                 title: '<strong>Editar </strong>'
             },
-            
             autofill: request.data,
-            
             json: [
                 { opc: 'input', lbl: 'Descripción', id: 'nombre', class: 'col-12', tipo: 'texto', required: true },
                 { opc: 'input', lbl: 'Fecha de inicio', id: 'fecha_inicio', type: 'date', class: 'col-6', required: true },
                 { opc: 'input', lbl: 'Fecha de fin', id: 'fecha_fin', type: 'date', class: 'col-6', required: true },
                 { opc: 'textarea', lbl: 'Observaciones', id: 'observaciones', class: 'col-12' },
             ],
-
             success: (response) => {
                 if (response.status == 200) {
                     alert({ icon: "success", text: response.message });
@@ -170,9 +175,42 @@ class App extends Templates {
                 }
             }
         });
-      
+        
     }
 
+<<<<<<< HEAD
+=======
+    cancel(id) {
+        let tr = $(event.target).closest("tr");
+        let title = tr.find("td").eq(1).text();
+
+        this.swalQuestion({
+            opts: {
+                title: `¿Esta seguro?`,
+                text: "Esta apunto de cancelar el registro ",
+            },
+            data: { opc: "cancel" + this.PROJECT_NAME, status: 3, id: id },
+            methods: {
+                request: (response) => {
+                    if (response.status == 200) {
+
+                        alert({
+                            icon: "success", text: response.message,
+                        });
+
+                        this.ls();
+                    } else {
+                        alert({
+                            icon: "error", text: response.message,
+                        });
+
+                    }
+                },
+            },
+        });
+    }
+
+>>>>>>> 9d5ccf81f0be68288c5ce98d7ddcbf405b7aafef
     async show(id) {
 
         let data = await useFetch({ url: link, data: { opc: "get", id: id } });
@@ -192,34 +230,5 @@ class App extends Templates {
 
     }
 
-    cancel(id) {
-        let tr = $(event.target).closest("tr");
-        let title = tr.find("td").eq(1).text();
-        
-        this.swalQuestion({
-            opts: {
-                title: `¿Esta seguro?`,
-                text: "Esta apunto de cancelar el registro ",
-            },
-            data: { opc: "cancel"+this.PROJECT_NAME, status: 3, id: id },
-            methods: {
-                request: (response) => {
-                    if (response.status == 200) {
-                       
-                        alert({
-                            icon: "success", text: response.message,
-                        });
-
-                        this.ls();
-                    } else{
-                        alert({
-                            icon: "error", text: response.message,
-                        });
-
-                    }
-                },
-            },
-        });
-    }
-
+   
 }
