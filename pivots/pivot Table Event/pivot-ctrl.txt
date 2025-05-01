@@ -2,6 +2,7 @@
 session_start();
 if (empty($_POST['opc'])) exit(0);
 
+
 setlocale(LC_TIME, 'es_ES.UTF-8');
 date_default_timezone_set('America/Mexico_City');
 

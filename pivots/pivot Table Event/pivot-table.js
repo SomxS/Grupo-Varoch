@@ -9,10 +9,6 @@ $(() => {
     app.init();
 });
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 9d5ccf81f0be68288c5ce98d7ddcbf405b7aafef
 class App extends Templates {
     
     constructor(link, div_modulo) {
@@ -152,6 +148,8 @@ class App extends Templates {
     async edit(id) {
 
         let request = useFetch({ url: this._link,data: { opc: 'get', id: id } });
+
+   
 
         this.createModalForm({
             id: 'formModalEdit',
