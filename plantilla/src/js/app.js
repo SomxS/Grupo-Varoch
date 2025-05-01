@@ -53,10 +53,6 @@ class App extends Templates {
                 }
             ]
         });
-<<<<<<< HEAD
-=======
-
->>>>>>> 4841b4a40bd12f7a8fa6e67768ab4bb25279e378
     }
 
     filterBar(options) {
