@@ -149,6 +149,8 @@ class App extends Templates {
 
         let request = useFetch({ url: this._link,data: { opc: 'get', id: id } });
 
+   
+
         this.createModalForm({
             id: 'formModalEdit',
             data: { opc: 'edit', id: id },
