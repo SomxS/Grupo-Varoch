@@ -2,24 +2,24 @@
 const link = 'https://erp-varoch.com/DEV/costsys/ctrl/ctrl-costo-potencial-soft.php';
 
 
-const api_subEvent = 'https://huubie.com.mx/dev/eventos/ctrl/ctrl-sub-eventos.php';
-const api_payment  = 'https://huubie.com.mx/alpha/eventos/ctrl/ctrl-payment.php';
+const api_subEvent = 'https://huubie.com.mx/alpha/eventos/ctrl/ctrl-sub-eventos.php';
+const api_payment = 'https://huubie.com.mx/alpha/eventos/ctrl/ctrl-payment.php';
 // init vars.
-let app,sub;
+let app, sub;
 
 let idEvent = 34;
 
 
 $(async () => {
-   
+
     // instancias.
     app = new App(api_subEvent, 'root');
 
-    sub = new Payment(api_payment,'root');
-    sub.render();
+    app.init();
 
-    
-   
+
+
+
 });
 
 class App extends Templates {
@@ -45,14 +45,17 @@ class App extends Templates {
                 {
                     tab: "Eventos",
                     id: "gestorEventos",
+                    onClick: ()=> this.showSubEvent() ,
                     contenedor: [
-                        { class: "min-h-[10%] line", id: "filterBarEventos" },
-                        { class: "h-[83%] flex-grow line mt-2", id: "containerEventos" },
+                        { class: "lg:h-[10%] ", id: "filterBar" },
+                        { class: "lg:h-[83%] flex-grow  mt-2", id: "container"},
                     ],
                     active: true,
                 }
             ]
         });
+
+        this.showSubEvent();
     }
 
     filterBar(options) {
@@ -89,245 +92,170 @@ class App extends Templates {
         });
     }
 
-    async groupCard(options) {
-        let group = await useFetch({ url: api, data: { opc: "getGroup" } });
+    async showSubEvent() {
 
-        this.createGroups({
-            parent: "groups",
-            title: "Evaluados",
-            data: [
-                { id: 1, valor: "SERGIO OSORIO MENDEZ", items: 2, result: 5, },
-                { id: 2, valor: "ROSA ANGELICA PEREZ VELASQUEZ", items: 2, result: 8, },
-                { id: 3, valor: "LEONARDO D J. MARTINEZ DE LA CRUZ", items: 8, result: 8, }
-            ],
-            onclick: (id) => {
-                this.initEvaluation(options, id);
+        let subEvents = await useFetch({
+            url: this._link,
+            data: {
+                opc: "getSubEvento",
+                id: 115
             }
         });
-    }
+        console.log(subEvents)
 
-    // Evaluation
-}
-
-<<<<<<< HEAD
-=======
-class Payment extends App {
-    constructor(link, div_modulo) {
-        super(link, div_modulo);
-        this.PROJECT_NAME = "Payment";
-    }
-
-    render() {
-        this.layout();
-    }
-
-    layout() {
-        this.tabsLayout({
-            parent: "root",
-            json: [
-                {
-                    tab: "Creados",
-                    id: "gestorCreados",
-                    contenedor: [
-                        { class: " min-h-[10%] line", id: "filterBarGestorCreados" },
-                        { class: "h-[83%] flex-grow line mt-2", id: "containerPayment" },
-                    ],
-                    active: true,
-                },
-            ],
+        this.accordingMenu({
+            parent: 'container',
+            data: subEvents.data,
         });
 
-        this.createNote();
-       
     }
 
-    async createNote(){
-        let data = await useFetch({ url: this._link, data: { opc: 'getEvent', idEvent: 104 }  });
-
-        this.createPDF({ 
-            parent: 'containerPayment',
-            data_header: data.Event,
-            dataMenu: data.Menu,
-            dataPayment: data.Payment
-        
-        });
-      
-    }
-
-
-   
-    // Components. 
-    createPDF(options) {
-
+    accordingMenu(options) {
         const defaults = {
-            parent: 'containerNote',
-            dataPackage: [],
-            dataMenu   : [],
-            dataPayment: [],
-            data_header: {
-                email          : "[email]",
-                phone          : "[phone]",
-                contact        : "[contact]",
-                idEvent        : "[idEvent]",
-                location       : "[location]",
-                date_creation  : "[date_creation]",
-                date_start     : "[date_start]",
-                date_start_hr  : "[date_start_hr]",
-                date_end       : "[date_end]",
-                date_end_hr    : "[date_end_hr]",
-                day            : "[day]",
-                quantity_people: "[quantity_people]",
-                advance_pay    : "[advance_pay]",
-                total_pay      : "[total_pay]",
-                notes          : "[notes]",
-                type_event     : "[type_event]"
-            },
-            clauses: ["", "", "", "", "", "", "", "", "", ""] // 📌 Cláusulas configurables
+            parent       : "tab-sub-event",
+            id           : "accordionTable",
+            title        : 'Titulo',
+            color_primary: 'bg-[#1F2A37]',
+            data         : [],
+            center : [1,2,5],
+            right:[3,4],
+            onShow     : () => { },          // ✅ por si no lo pasan
         };
 
-        const opts = Object.assign({}, defaults, options);
-
-        // 📜 Construcción del encabezado del PDF con logo
-        const header = `
-        <div class="flex justify-end mb-4">
-            <img src="https://huubie.com.mx/alpha/src/img/logo/logo.ico" alt="Logo" class="h-16 p-1">
-        </div>
-        <div class="event-header text-sm text-gray-800">
-            <p><strong>CLIENTE:</strong> ${opts.data_header.contact}</p>
-            <p><strong>TELÉFONO:</strong> ${opts.data_header.phone}</p>
-            <p><strong>CORREO:</strong> ${opts.data_header.email}</p>
-            <p><strong>TIPO :</strong> ${opts.data_header.type_event}</p>
-        </div>`;
-
-        // 📜 Construcción del cuerpo del PDF
-        const template = `
-        <div class="event-details mt-6 text-sm text-gray-800">
-            <p>Agradecemos su preferencia por celebrar su evento con nosotros el día 
-            <strong>${opts.data_header.day}</strong>,
-            <strong>${opts.data_header.date_start} ${opts.data_header.date_start_hr}</strong> a 
-            <strong>${opts.data_header.date_end} ${opts.data_header.date_end_hr}</strong>, en el salón 
-            <strong>${opts.data_header.location}</strong>.</p>
-            <p>Estamos encantados de recibir a <strong>${opts.data_header.quantity_people}</strong> invitados y nos aseguraremos de que cada detalle esté a la altura de sus expectativas.</p>
-            <br>
-            ${opts.data_header.notes ? `<p><strong>NOTAS:</strong> ${opts.data_header.notes}</p>` : ""}
-        </div>`;
-
-
-        // 📜 Desgloze de Menu
-        let menu = opts.dataMenu.data;
-
-        const template_menu = `
-         <div class="text-gray-800 mt-4" id="containerMenu">
-            <div class=" text-sm font-bold mb-2">Menú</div>
-            <div class = "d-inline-flex gap-3">
-            <div>
-                <strong>Paquete:</strong>
-                <small>${menu.package_type}</small>
-            </div>
-            <div>
-            <strong> Cantidad:</strong>
-            <small>${menu.quantity}</small>
-            </div>
-            <div>
-            <strong> Precio:</strong>
-            <small>${formatPrice(menu.price)}</small>
-            </div>
-            
-            </div>
-        </div>
-        `;
-
-        console.log(opts.dataPayment)
-
-        let templatePayment = '';
-
-        opts.dataPayment.forEach((item) => {
-            templatePayment += `
-            <div class="flex justify-between ">
-                <p class="font-bold">${item.method_pay}</p>
-                <p> ${formatPrice(item.valor)}</p>
-            </div>
-            `;
+        const opts = Object.assign(defaults, options);
+        const container = $('<div>', {
+            id: opts.id,
+            class: `${opts.color_primary} rounded-lg my-5 border border-gray-700 overflow-hidden`
         });
 
+        const titleRow = $(`
+            <div class="flex justify-between items-center px-4 py-4 border-b border-gray-800">
+            <h2 class="text-lg font-semibold text-white">${opts.title}</h2>
+            <button id="btn-new-sub-event" class="bg-gray-600 hover:bg-gray-700 text-white text-sm px-4 py-2 rounded flex items-center gap-2">
+            <span class="text-lg">＋</span> Nuevo Sub-evento
+            </button>
+            </div>
+        `);
 
-        // 📜 Estructura principal del documento
-        const docs = `
-        <div id="docEvent" class=" px-6 py-6 bg-white shadow-lg text-gray-800 rounded-lg">
-            ${header}
-            ${template}
-            ${template_menu}
-            <div class="text-gray-800 mt-4" id="containerEndFormat"></div>
-            
-            <!-- 📜 Sección de Totales (Subtotal, Total y Saldo) -->
-            <div class="mt-6 mb-2  text-sm text-gray-800 flex justify-end">
-                <div class="w-1/3">
-                    <div class="flex justify-between  pt-2">
-                        <p class="font-bold">Total</p>
-                        <p>${formatPrice(opts.data_header.total_pay)}</p>
-                    </div>
-                    <div class="flex justify-between">
-                        <p class="font-bold">Anticipo</p>
-                        <p>${formatPrice(opts.data_header.advance_pay)}</p>
-                    </div>
-                    <div class="flex justify-between ">
-                        <p class="font-bold"> Saldo</p>
-                        <p>${formatPrice(opts.data_header.total_pay - opts.data_header.advance_pay)}</p>
-                    </div>
+        titleRow.find("#btn-new-sub-event").on("click", () => {
+            if (typeof opts.onAdd === "function") opts.onAdd();
+        });
 
-                    
+        container.append(titleRow);
+
+        const firstItem = opts.data[0] || {};
+        const keys = Object.keys(firstItem).filter(k => k !== 'body' && k !== 'id');
+
+        const headerRow = $('<div>', {
+            class: "flex justify-between items-center px-4 py-2 font-medium text-gray-400 border-b border-gray-700 text-sm"
+        });
+
+        keys.forEach(key => {
+            headerRow.append(`<div class="flex-1 text-center truncate">${key.charAt(0).toUpperCase() + key.slice(1)}</div>`);
+        });
+
+        headerRow.append(`<div class="flex-none text-right">Acciones</div>`);
+        container.append(headerRow);
+
+
+        // 🔁 Render de cada fila
+        opts.data.forEach((opt, index) => {
+            console.log(opt)
+            const row = $('<div>', { class: " border-gray-700" });
+
+            const header = $(`<div class="flex justify-between items-center px-3 py-2 hover:bg-[#18212F] bg-[#313D4F] cursor-pointer"></div>`);
+            keys.forEach((key, i) => {
+
+                let align = "text-left";
+                if (opts.center.includes(i)) align = "text-center";
+                if (opts.right.includes(i)) align = "text-end";
+
+
+                header.append(`<div class="flex-1 px-3  text-gray-300 truncate ${align}">${opt[key]}</div>`);
+            });
+
+            const actions = $(`
+                <div class="flex-none flex gap-2 mx-2">
+                    <button class="btn-edit bg-gray-700 text-white text-sm px-2 py-1 rounded" title="Editar">✏️</button>
+                    <button class="btn-delete bg-gray-700 text-red-500 text-sm px-2 py-1 rounded" title="Eliminar">🗑️</button>
                 </div>
-            </div>
+            `);
+            header.append(actions);
 
-            <div class="flex text-sm justify-end">
-            <div class="w-1/3">
-                <p class="font-bold  border-t my-1"> Forma de pago </p>
-                ${templatePayment}
-            </div>
-            </div>
+            // Container collapsed
+            const bodyWrapper = $('<div>', {
+                class: "bg-gray-500 hidden px-4 py-4 text-sm text-gray-300 accordion-body",
+                id: 'containerInfo' + opt.id,
 
-            <!-- 📜 Cláusulas configurables -->
+                html: `
+                 ${opt.id}
+                `
+            });
 
-            <div class="mt-8 mb-4 text-xs">
-                <p class="font-bold"> Cláusulas </p>
-                <ul class="list-decimal pl-5">
-                    ${opts.clauses.map(clause => `<li>${clause}</li>`).join('')}
-                </ul>
-            </div>
-        </div>`;
 
-        $('#' + opts.parent).append(docs);
+            // Logic Components.
 
-        // 📜 Aplicación del plugin rpt_json_table2 a la tabla del menú
-        $('#containerEndFormat').rpt_json_table2({
-            data: opts.dataMenu,
-            color_th: 'bg-gray-200 p-1 text-center uppercase text-xs',
-            class: 'w-full border-collapse  bg-white rounded-lg',
-            center: [1],
-            extends: true
+            // ✅ Evita colapsar si haces clic en botón
+            header.on("click", function (e) {
+                const target = $(e.target);
+                if (target.closest(".btn-edit").length || target.closest(".btn-delete").length) return;
+
+                $(".accordion-body").slideUp(); // Oculta los demás
+                const isVisible = bodyWrapper.is(":visible");
+                if (!isVisible) {
+                    bodyWrapper.slideDown(200);
+                    if (typeof opts.onShow === 'function') opts.onShow(opt.id);
+                }
+            });
+
+            header.find(".btn-edit").on("click", e => {
+                e.stopPropagation();
+                if (typeof opts.onEdit === "function") opts.onEdit(opt, index);
+            });
+
+            header.find(".btn-delete").on("click", e => {
+                e.stopPropagation();
+                if (typeof opts.onDelete === "function") opts.onDelete(opt, index);
+            });
+
+
+            // add interfaces.
+            row.append(header, bodyWrapper);
+            container.append(row);
+
         });
+
+
+
+        container.append(`
+        <div class="flex justify-end items-center px-4 py-4 mt-3 border-b border-gray-800">
+        <button type="button" class="btn bg-[#374151] hover:bg-[#4b5563] text-[#fff] px-4 py-2 text-sm" onclick="eventos.closeEvent()">Cerrar</button>
+        </div>
+        `);
+
+        $(`#${opts.parent}`).html(container);
     }
+
+
 
 }
 
-
->>>>>>> 4841b4a40bd12f7a8fa6e67768ab4bb25279e378
-class SubEvent extends App{
+class SubEvent extends App {
     constructor(link, div_modulo) {
         super(link, div_modulo);
         this.PROJECT_NAME = "SubEvent";
     }
 
-    render(){
+    render() {
         this.layout({
-            parent:'root'
+            parent: 'root'
         });
     }
 
     async layout(options) {
         let subEvents = await useFetch({ url: this._link, data: { opc: "getSubEvento", id: idEvent } });
 
-        if(subEvents.status == 200) {
+        if (subEvents.status == 200) {
             this.accordingMenu({
                 parent: 'root',
                 title: 'Evento  : ' + subEvents.data[0].event,
@@ -339,13 +267,13 @@ class SubEvent extends App{
                     this.cancelSubEvent(item)
                 },
             });
-        }else{
+        } else {
             let defaults = {
                 parent: "root",
             };
 
             let opts = Object.assign(defaults, options);
-         
+
             const emptySubEvent = $(`
                 <div class="flex flex-col items-center justify-content-start py-12 text-center h-full  bg-[#1F2A37] rounded-lg">
                     <i class="icon-calendar-1 text-[52px] text-gray-100"></i>
@@ -370,7 +298,7 @@ class SubEvent extends App{
         const defaults = {
             parent: "tab-sub-event",
             id: "accordionTable",
-            title:'SubEventos',
+            title: 'SubEventos',
             data: [
                 {
                     id: 1,
@@ -442,8 +370,8 @@ class SubEvent extends App{
 
             const bodyWrapper = $('<div>', {
                 class: "bg-gray-800/30 px-4 py-4 hidden text-sm text-gray-300 accordion-body",
-                id   : 'containerSubMenu' + opt.id,
-                html : `
+                id: 'containerSubMenu' + opt.id,
+                html: `
                     <form novalidate class="" id="containerMenu${opt.id}" ></form>
                     <div class=" mt-2 " id="containerDishes${opt.id}"></div>
                  `,
@@ -477,7 +405,7 @@ class SubEvent extends App{
                 if (typeof opts.onEdit === "function") {
                     opts.onEdit(opt, index);
                 } else {
-                 
+
                 }
             });
 
@@ -486,7 +414,7 @@ class SubEvent extends App{
                 if (typeof opts.onDelete === "function") {
                     opts.onDelete(opt, index);
                 } else {
-                    
+
                 }
             });
 
@@ -524,10 +452,6 @@ class SubEvent extends App{
     }
 
     newSubEvent() {
-<<<<<<< HEAD
-=======
-
->>>>>>> 4841b4a40bd12f7a8fa6e67768ab4bb25279e378
         this.createModalForm({
             id: 'frmModalUser',
             title: 'Nuevo Usuario',
@@ -575,11 +499,11 @@ class SubEvent extends App{
         $("#date_end").val(new Date().toISOString().split("T")[0]);
     }
 
-    async editSubEvent(item){
+    async editSubEvent(item) {
         this.createModalForm({
             id: 'frmEdit',
             title: 'Editar Sub Evento',
-            autofill:item,
+            autofill: item,
             data: { opc: 'editSubEvent', id: item.id },
             bootbox: {
                 title: 'Editar sub Evento',
@@ -621,23 +545,20 @@ class SubEvent extends App{
         });
     }
 
-    async layoutMenu(idSubEvent){
+    async layoutMenu(idSubEvent) {
         $('#containerMenu' + idSubEvent).empty();
 
         let data = await useFetch({ url: this._link, data: { opc: "getMenu", id_sub_event: idSubEvent } });
 
-<<<<<<< HEAD
-=======
-     
 
->>>>>>> 4841b4a40bd12f7a8fa6e67768ab4bb25279e378
+
         this.createForm({
-            parent: 'containerMenu'+idSubEvent,
+            parent: 'containerMenu' + idSubEvent,
             id: 'formMenu',
             class: 'row',
-            autofill:data.menu,
+            autofill: data.menu,
             autovalidation: true,
-            data: { opc: 'addMenu', id_sub_event: idSubEvent }, 
+            data: { opc: 'addMenu', id_sub_event: idSubEvent },
             json: [
                 {
                     opc: 'input',
@@ -666,15 +587,15 @@ class SubEvent extends App{
                     opc: 'btn-submit',
                     id: 'btnMenuSave',
                     tipo: 'cifra',
-                    btn_color:'primary',
-                    text:'Agregar',
+                    btn_color: 'primary',
+                    text: 'Agregar',
                     class: 'col-12 col-sm-4 col-lg-3',
                 },
             ],
             success: (result) => {
                 $("#formMenu #btnMenuSave").attr("disabled", "disabled");
 
-            
+
 
                 sub.newDish(1, idSubEvent);
             }
@@ -682,29 +603,20 @@ class SubEvent extends App{
 
         if (data.status == 200) {
             $("#formMenu #btnMenuSave").attr("disabled", "disabled");
-<<<<<<< HEAD
-            
-            sub.newDish(1, idSubEvent);
-        }
-=======
             sub.newDish(data.menu.id, idSubEvent);
         }
 
 
-     
 
->>>>>>> 4841b4a40bd12f7a8fa6e67768ab4bb25279e378
+
     }
 
     newDish(idMenu, idEvent) {
-<<<<<<< HEAD
-=======
 
-        $( "containerDishes" + idEvent).html();
+        $("containerDishes" + idEvent).html();
         // Formulario de platillos
 
 
->>>>>>> 4841b4a40bd12f7a8fa6e67768ab4bb25279e378
         this.createTableForm({
             parent: "containerDishes" + idEvent,
             title: "Agregar platillos",
@@ -788,7 +700,7 @@ class SubEvent extends App{
             },
         });
 
-   
+
 
         $("#tableForm").addClass("mb-3");
     }
@@ -830,9 +742,9 @@ class Evento extends Templates {
             parent: "containerEventos",
             idFilterBar: "filterBarEventos",
             data: { opc: "lsEvents" },
-            conf: { 
-                datatable: true, 
-                pag: 15 
+            conf: {
+                datatable: true,
+                pag: 15
             },
             attr: {
                 class_table: "table table-bordered table-sm table-striped text-uppercase",
