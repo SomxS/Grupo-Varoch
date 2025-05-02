@@ -163,7 +163,7 @@ class App extends Templates {
             console.log(opt)
             const row = $('<div>', { class: " border-gray-700" });
 
-            const header = $(`<div class="flex justify-between items-center px-3 py-2 hover:bg-[#18212F] bg-[#313D4F] cursor-pointer"></div>`);
+            const header = $(`<div class="flex justify-between items-center px-3 py-2 border-y border-gray-700 hover:bg-[#18212F] bg-[#313D4F] cursor-pointer"></div>`);
             keys.forEach((key, i) => {
 
                 let align = "text-left";
