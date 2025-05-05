@@ -7,34 +7,53 @@ Crear una clase `ctrl` que extienda la clase del modelo.
 
 Implementar los métodos siguientes dentro de la clase `ctrl`:
 
-1. **list()**
-   - Recibe fechas `fi` y `ff`.
+1. ** init() **
+- Este método solo se crea si el frontend utiliza filtros dinámicos (como `select`, `radio`, etc.).
+- Cada lista se debe obtener mediante métodos del modelo, como `lsUDN()`, `lsStatus()`, `lsTipos()`, etc.
+- Si el perfil del usuario requiere condiciones especiales (como admin), se deben aplicar en este método.
+- El resultado debe retornarse como un arreglo asociativo, listo para ser consumido por JavaScript.
+
+   ```php ejemplo
+    public function init() {
+        $lsUDN    = $this->lsUDN();
+        $lsStatus = $this->lsStatus();
+
+        return [
+            'udn'    => $lsUDN,
+            'status' => $lsStatus
+        ];
+       }
+
+2. **list()**
+   - Si la filterBar tiene calendar Recibe fechas `fi` y `ff`.
    - Llama al método `getEntities()`.
    - Formatea el resultado en arreglo `__row` para tabla.
    - Agrega `dropdown` para cada fila con opciones de acciones (`editar`, `eliminar`, etc.).
+   - Agrega `a` a la ultima fila de row si , solo es editar y eliminar. 
 
-2. **get()**
+3. **get()**
    - Recibe `id` por POST.
    - Ejecuta `getById(id)`.
    - Retorna `status`, `message` y `data`.
 
-3. **add()** *(si aplica)*
+4. **add()** *(si aplica)*
    - Recibe datos por POST.
    - Ejecuta `create()`.
    - Retorna `status` y `message` de inserción.
 
-4. **edit()**
+5. **edit()**
    - Recibe datos por POST.
    - Ejecuta `update()`.
    - Retorna `status` y `message` de actualización.
 
-5. **cancel() / finalize()** *(según flujo)*
+6. **cancel() / finalize()** *(según flujo)*
    - Cambia estatus de registros con `update()`.
 
 Funciones extra:
 
 - **dropdown($id)**: Construye opciones de acciones disponibles según el estado del registro.
 - **getEstatus($idStatus)**: Devuelve el texto correspondiente al estado (opcional).
+- **a**: arreglo dentro de row para crear botones
 
 Formato de salida:
 - Al final instanciar `$obj = new ctrl();`
@@ -43,3 +62,13 @@ Formato de salida:
   $fn = $_POST['opc'];
   $encode = $obj->$fn();
   echo json_encode($encode);
+
+
+
+
+
+
+
+
+
+    
