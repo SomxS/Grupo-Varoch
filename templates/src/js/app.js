@@ -13,10 +13,13 @@ let idEvent = 34;
 $(async () => {
     // await fn_ajax({ opc: "init" }, api_alpha).then((data) => {
     // vars.
+
     // instancias.
     app = new App(api, 'root');
     sub = new SubEvent(api_subEvent, 'root');
     sub.init();
+    sub.accordingMenu();
+
     // });
 });
 
@@ -27,7 +30,7 @@ class App extends Templates {
     }
 
     init() {
-        this.render();
+        // this.render();
     }
 
     render(options) {
@@ -103,6 +106,10 @@ class App extends Templates {
     }
 
     // Evaluation
+
+
+
+
 }
 
 class SubEvent extends App{
