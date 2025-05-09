@@ -269,10 +269,13 @@ class App extends Templates {
     createPDF(options) {
 
         const defaults = {
+            
             parent     : 'containerprimaryLayout',
+
             dataPackage: [],
             dataMenu   : [],
             dataPayment: [],
+
             data_header: {
                 email          : "[email]",
                 phone          : "[phone]",
@@ -359,7 +362,7 @@ class App extends Templates {
 }
 
 class SubEvent extends App {
-    
+
     constructor(link, div_modulo) {
         super(link, div_modulo);
         this.PROJECT_NAME = "SubEvent";
