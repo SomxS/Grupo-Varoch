@@ -3,7 +3,8 @@ const link = 'https://erp-varoch.com/DEV/costsys/ctrl/ctrl-costo-potencial-soft.
 
 
 const api_subEvent = 'https://huubie.com.mx/alpha/eventos/ctrl/ctrl-sub-eventos.php';
-const api_payment = 'https://huubie.com.mx/alpha/eventos/ctrl/ctrl-payment.php';
+
+const api = 'https://huubie.com.mx/alpha/eventos/ctrl/ctrl-payment.php';
 // init vars.
 let app, sub;
 
@@ -11,31 +12,31 @@ let idEvent = 34;
 
 
 $(async () => {
-
+    
     // instancias.
-    app = new App(api_subEvent, 'root');
-
+    app = new App(api, 'root');
     app.init();
-
-
-
 
 });
 
 class App extends Templates {
     constructor(link, div_modulo) {
         super(link, div_modulo);
-        this.PROJECT_NAME = "Survey";
+        this.PROJECT_NAME = "";
     }
 
     init() {
         this.render();
     }
 
-
-
     render(options) {
-        this.layout();
+        this.primaryLayout({
+            parent: 'root',
+        })
+
+        this.filterBar()
+        this.onShow()
+        // this.layout();
     }
 
     layout() {
@@ -58,21 +59,29 @@ class App extends Templates {
         this.showSubEvent();
     }
 
-    filterBar(options) {
+    filterBar() {
+
         this.createfilterBar({
-            parent: "filterBar",
+            parent: "filterBarprimaryLayout",
             data: [
-                { opc: "select", class: "col-3", id: "UDNs", lbl: "Seleccionar UDN: ", data: [{ id: 4, valor: 'BAOS' }] },
-                { opc: "input-calendar", class: "col-3", id: "calendar", lbl: "Consultar fecha: " },
+                {   
+                    opc      : "button",
+                    color_btn: 'danger',
+                    class    : "col-3",
+                    className: 'w-full',
+                    id       : "btn",
+                    text     : 'PDF',
+
+                    onClick: () => {
+                      
+                        this.onShow();
+                    }
+                },
             ],
+
         });
-        // initialized.
-        dataPicker({
-            parent: "calendar",
-            onSelect: (start, end) => {
-                // this.ls();
-            },
-        });
+
+       
     }
 
     ls() {
@@ -131,7 +140,8 @@ class App extends Templates {
         const titleRow = $(`
             <div class="flex justify-between items-center px-4 py-4 border-b border-gray-800">
             <h2 class="text-lg font-semibold text-white">${opts.title}</h2>
-            <button id="btn-new-sub-event" class="bg-gray-600 hover:bg-gray-700 text-white text-sm px-4 py-2 rounded flex items-center gap-2">
+            <button id="btn-new-sub-event" class="bg-gray-600 hover:bg-gray-700 text-white text-sm px-4 py-2 rounded 
+            flex items-center gap-2">
             <span class="text-lg">＋</span> Nuevo Sub-evento
             </button>
             </div>
@@ -236,11 +246,123 @@ class App extends Templates {
         $(`#${opts.parent}`).html(container);
     }
 
+    async onShow(){
+
+        let subEvents = await useFetch({
+            url: this._link,
+
+            data: {
+                opc: "getFormatedEvent",
+                idEvent: 120
+            }
+
+        });
+
+        
+        this.createPDF({
+            parent: 'containerprimaryLayout',
+            data_header: subEvents.Event,
+        })
+
+    }
+
+    createPDF(options) {
+
+        const defaults = {
+            
+            parent     : 'containerprimaryLayout',
+
+            dataPackage: [],
+            dataMenu   : [],
+            dataPayment: [],
+
+            data_header: {
+                email          : "[email]",
+                phone          : "[phone]",
+                contact        : "[contact]",
+                idEvent        : "[idEvent]",
+                location       : "[location]",
+                date_creation  : "[date_creation]",
+                date_start     : "[date_start]",
+                date_start_hr  : "[date_start_hr]",
+                date_end       : "[date_end]",
+                date_end_hr    : "[date_end_hr]",
+                day            : "[day]",
+                quantity_people: "[quantity_people]",
+                advance_pay    : "[advance_pay]",
+                total_pay      : "[total_pay]",
+                notes          : "[notes]",
+                type_event     : "[type_event]"
+            },
+            clauses: ["", "", "", "", "", "", "", "", "", ""]
+        };
+
+        const opts = Object.assign({}, defaults, options);
+
+        const header = `
+            <div class="flex justify-end mb-4">
+            <p> Tapachula Chiapas a ${opts.data_header.date_creation}</p>
+            </div>
+            <div class="event-header text-sm text-gray-800 mb-4">
+            <p class="font-bold uppercase">${opts.data_header.type_event}</p>
+            <p>${opts.data_header.date_start} ${opts.data_header.date_start_hr}</p>
+            <p>${opts.data_header.location}</p>
+            </div>
+            <div class="mb-6 text-justify">
+            <p>
+            En el Club Campestre, estamos trabajando día a día en renovarnos y de esta forma hacer sus eventos un éxito total,
+            por lo que es un verdadero honor para nosotros presentar opciones para la realización de su evento. Por medio de la
+            presente tengo a bien enviarle la cotización del evento que tan amablemente nos solicitó, constante de:
+            </p>
+            </div>`;
+
+
+        let templateClauses = `
+        <div class="mt-[300px] mb-4 text-xs">
+            <p class="font-bold"> Cláusulas </p>
+            <ul class="list-decimal pl-5">
+        `;
+
+        opts.clauses.forEach((clause, index) => {
+            templateClauses += `<li>${clause}</li>`;
+            if ((index + 1) % 5 === 0 && index + 1 < opts.clauses.length) {
+                templateClauses += `</ul><div style="page-break-after: always;"></div><ul class='list-decimal pl-5'>`;
+            }
+        });
+
+        templateClauses += `</ul></div>`;
+
+
+      
+        const docs = `
+        <div id="docEvent" 
+            class="relative flex px-12 py-10 bg-white text-gray-800 shadow-lg rounded-lg" 
+            style="
+                background-image: url('src/img/background.png');
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: left top;">
+
+
+        <div class="w-full ml-52 ">
+            ${header}
+            ${templateClauses}
+        </div>
+
+
+        </div>`;
+
+         
+
+        $('#' + opts.parent).append(docs);
+
+    }
 
 
 }
 
 class SubEvent extends App {
+
     constructor(link, div_modulo) {
         super(link, div_modulo);
         this.PROJECT_NAME = "SubEvent";
