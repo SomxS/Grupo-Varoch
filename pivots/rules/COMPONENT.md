@@ -1,7 +1,7 @@
 # Prompt para construir un componente jQuery con Tailwind
 
 **Compilar información**
-- Se activa con el boton de componente.
+- Se activa con la frase para iniciar una conversación new-component.
 - Reúne toda la documentación, diagramas, fotos o descripciones del componente.
 - Abre un lienzo para mostrar el desarrollo del componente.
 
@@ -22,7 +22,45 @@ Quiero que generes un **componente jQuery personalizado** cuyo propósito sea cr
 -Todo lo que se envia al backend debe ser data.
  El componente debe inyectarse en el DOM bajo el `id` del contenedor padre definido por `opts.parent`.
 
-## 🖼️ 3. Formato de salida esperado (ejemplo base):
+
+1. **Consulta de Datos (GET)**:
+
+   - Si un componente requiere `json`, **debe hacer una consulta al Backend** obligatoriamente.
+   - La llamada debe realizarse mediante `fetch()` siguiendo el estándar del método `get`.
+
+2. **Eventos por Tipo de Acción**:
+
+   - **Eliminar (Delete)**: Se debe implementar un evento `onDelete` que realice la acción correspondiente en el backend.
+   - **Agregar (Add)**: Se debe implementar un evento `onAdd` conectado al backend.
+   - **Modificar (Update)**: También se usará el evento `onAdd` para modificaciones, conectándose al backend (📌 considerar renombrar a `onSave` si hay ambigüedad entre agregar/modificar).
+
+3. **Estructura de Soporte (MVC)**:
+   - Cualquier evento definido (`onAdd`, `onDelete`, etc.) **debe crear automáticamente**:
+     - Un **Controlador (ctrl)**.
+     - Un **Modelo (mdl)**.
+   - Estos deben adherirse a las **reglas de pivotes y templates estándar del proyecto**.
+
+```js
+// Consulta al backend
+  async onShow() {
+      let request = await useFetch({
+        url: this._link,
+        data: {
+          opc: "get",
+          id: 1
+        },
+      });
+
+      this.NombreComponente({
+        parent:'root',
+        json: request.data
+      });
+
+```
+
+
+
+## 🖼️ 4. Formato de salida esperado (ejemplo base):
 ```js
 function NombreComponente(options) {
   // 📌 Configuración por defecto

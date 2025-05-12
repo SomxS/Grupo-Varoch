@@ -17,16 +17,16 @@
     <link rel="stylesheet" href="https://erp-varoch.com/ERP24/src/plugin/select2/bootstrap/select2.min.css">
     <link rel="stylesheet"
         href="https://erp-varoch.com/ERP24/src/plugin/select2/bootstrap/select2-bootstrap-5-theme.min.css">
-    
+
     <!-- datarange picker -->
     <link rel="stylesheet" href="https://erp-varoch.com/DEV/src/plugin/daterangepicker/daterangepicker.css">
-    
+
     <!-- sweet alert -->
     <link rel="stylesheet" href="https://erp-varoch.com/DEV/src/plugin/sweetalert2/sweetalert2.min.css">
-    
+
     <!-- CDN TAILWIND -->
     <script src="https://cdn.tailwindcss.com"></script>
- 
+
     <!-- Incluye jsPDF desde CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
@@ -36,7 +36,16 @@
         .main-container {
             min-height: calc(100vh - calc(4rem + 1px) - calc(4rem + 1px));
         }
-       
+
+        @media print {
+    .page-break-before {
+        page-break-before: always;
+    }
+    .page-avoid-break {
+        page-break-inside: avoid;
+    }
+        }
+
     </style>
 
 </head>
@@ -54,15 +63,15 @@
 </html>
     <main>
         <section id="sidebar"></section>
-        
+
         <div class="" id="main__content">
             <div class="main-container  " id="root">
- 
+
             </div>
         </div>
     </main>
- 
-  
+
+
 
 </body>
 
