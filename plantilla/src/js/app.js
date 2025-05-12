@@ -8,11 +8,11 @@ const api = 'https://huubie.com.mx/alpha/eventos/ctrl/ctrl-payment.php';
 // init vars.
 let app, sub;
 
-let idEvent = 34;
+
 
 
 $(async () => {
-    
+
     // instancias.
     app = new App(api, 'root');
     app.init();
@@ -35,7 +35,8 @@ class App extends Templates {
         })
 
         this.filterBar()
-        this.onShow()
+        this.TabsComponent();
+        // this.onShow()
         // this.layout();
     }
 
@@ -64,7 +65,7 @@ class App extends Templates {
         this.createfilterBar({
             parent: "filterBarprimaryLayout",
             data: [
-                {   
+                {
                     opc      : "button",
                     color_btn: 'danger',
                     class    : "col-2",
@@ -72,18 +73,7 @@ class App extends Templates {
                     id       : "btn",
                     text     : 'PDF',
                     onClick: () => {
-                        this.onShow();
-                    }
-                },
 
-                {
-                    opc: "button",
-                    color_btn: 'primary',
-                    class: "col-2",
-                    className: 'w-full',
-                    id: "btn",
-                    text: 'Imprimir',
-                    onClick: () => {
                         this.onShow();
                     }
                 },
@@ -93,7 +83,7 @@ class App extends Templates {
 
         });
 
-       
+
     }
 
     ls() {
@@ -153,7 +143,7 @@ class App extends Templates {
         const titleRow = $(`
             <div class="flex justify-between items-center px-4 py-4 border-b border-gray-800">
             <h2 class="text-lg font-semibold text-white">${opts.title}</h2>
-            <button id="btn-new-sub-event" class="bg-gray-600 hover:bg-gray-700 text-white text-sm px-4 py-2 rounded 
+            <button id="btn-new-sub-event" class="bg-gray-600 hover:bg-gray-700 text-white text-sm px-4 py-2 rounded
             flex items-center gap-2">
             <span class="text-lg">＋</span> Nuevo Sub-evento
             </button>
@@ -265,89 +255,109 @@ class App extends Templates {
             data: {
                 opc: "getFormatedEvent",
                 idEvent: 120
-            }
+            },
+
+
         });
-        
+
+
         this.createPDF({
             parent: 'containerprimaryLayout',
-            data_header: subEvents.Event,
-
-            clauses: [
-                "El Horario de Inicio y Finalización estipulado en la orden de servicio deberá ser respetado.",
-                "Concluidas las 5 horas del servicio este se suspende teniendo como máximo 30 minutos para desalojar el salón.",
-                // "No se pueden introducir alimentos ni bebidas (snacks, antojitos, pan dulce o cualquier bebida).",
-                // "En caso de adquirir un paquete de buffet (niños o padres) se deberá pagar el evento.",
-                // "En caso de haber ingresado bebidas alcohólicas los invitados deberán tener mínimo 18 años cumplidos.",
-                // "En caso de cancelación el evento se realizará a través de eventos o vales de consumo dentro del restaurante con una penalización del 10%.",
-                // "Cualquier cambio en la logística del evento quedará sujeto a disponibilidad de espacios y áreas involucradas para su realización.",
-                // "El restaurant no se hace responsable por objetos olvidados dentro del evento.",
-                // "No se permite el uso de fuegos artificiales, confeti o cualquier tipo de papel que afecte al medio ambiente.",
-                // "La empresa solo se hace responsable con la paquetería en este orden de servicio."
-            ]
+            dataEvent: subEvents.Event,
+            dataSubEvent: subEvents.SubEvent
         })
+
+
     }
 
     createPDF(options) {
-
+        // 📜 Configuración por defecto
         const defaults = {
-            
-            parent     : 'containerprimaryLayout',
-
+            parent: 'containerprimaryLayout',
             dataPackage: [],
-            dataMenu   : [],
+            dataMenu: [],
             dataPayment: [],
-
-            data_header: {
-                email          : "[email]",
-                phone          : "[phone]",
-                contact        : "[contact]",
-                idEvent        : "[idEvent]",
-                location       : "[location]",
-                date_creation  : "[date_creation]",
-                date_start     : "[date_start]",
-                date_start_hr  : "[date_start_hr]",
-                date_end       : "[date_end]",
-                date_end_hr    : "[date_end_hr]",
-                day            : "[day]",
+            dataSubEvent: [],
+            dataEvent: {
+                email: "[email]",
+                phone: "[phone]",
+                contact: "[contact]",
+                idEvent: "[idEvent]",
+                location: "[location]",
+                date_creation: "[date_creation]",
+                date_start: "[date_start]",
+                date_start_hr: "[date_start_hr]",
+                date_end: "[date_end]",
+                date_end_hr: "[date_end_hr]",
+                day: "[day]",
                 quantity_people: "[quantity_people]",
-                advance_pay    : "[advance_pay]",
-                total_pay      : "[total_pay]",
-                notes          : "[notes]",
-                type_event     : "[type_event]"
+                advance_pay: "[advance_pay]",
+                total_pay: "[total_pay]",
+                notes: "[notes]",
+                type_event: "[type_event]"
             },
-            clauses: ["", "", "", "", "", "", "", "", "", ""]
+            clauses: ["", "", "", ""]
         };
 
+        // 🔵 Fusión de opciones externas
         const opts = Object.assign({}, defaults, options);
 
+        // 📏 Encabezado del documento
         const header = `
-        <div class="flex justify-end mb-4">
-            <p> Tapachula Chiapas, a ${opts.data_header.date_creation}</p>
+            <div class="flex justify-end mb-4">
+                <p> Tapachula Chiapas, a ${opts.dataEvent.date_creation}</p>
             </div>
             <div class="event-header text-sm text-gray-800 mb-4">
-                <p class="font-bold uppercase">${opts.data_header.type_event}</p>
-                <p>${opts.data_header.date_start} ${opts.data_header.date_start_hr}</p>
-                <p>${opts.data_header.location}</p>
+                <p class="font-bold uppercase"> ${opts.dataEvent.name}</p>
+                <p class="uppercase">TIPO: ${opts.dataEvent.type_event}</p>
+                <p>${opts.dataEvent.date_start} ${opts.dataEvent.date_start_hr}</p>
+                <p>${opts.dataEvent.location}</p>
             </div>
             <div class="mb-6 text-justify">
-            <p>
-               <p>Agradecemos su preferencia por celebrar su evento con nosotros el día
-            <strong>${opts.data_header.day}</strong>,
-            <strong>${opts.data_header.date_start} ${opts.data_header.date_start_hr}</strong> a 
-            <strong>${opts.data_header.date_end} ${opts.data_header.date_end_hr}</strong>, en el salón 
-            <strong>${opts.data_header.location}</strong>.</p>
-            <p>Estamos encantados de recibir a <strong>${opts.data_header.quantity_people}</strong> invitados y nos aseguraremos de que cada detalle esté a la altura de sus expectativas.</p>
-            <br>
-            ${opts.data_header.notes ? `<p><strong>NOTAS:</strong> ${opts.data_header.notes}</p>` : ""}
-            </p>
+                <p>Agradecemos su preferencia por celebrar su evento con nosotros el día
+                <strong>    ${opts.dataEvent.day} </strong>,
+                <strong>    ${opts.dataEvent.date_start} ${  opts.dataEvent.date_start_hr   } </strong>
+                 a <strong> ${opts.dataEvent.date_end} ${
+                     opts.dataEvent.date_end_hr
+            }</strong>, en el salón
+                <strong>${opts.dataEvent.location}</strong>.</p>
+                <p>Estamos encantados de recibir a <strong>${
+                opts.dataEvent.quantity_people
+                }</strong> invitados y nos aseguraremos de que cada detalle esté a la altura de sus expectativas.</p>
+                <br>
+                ${
+                opts.dataEvent.notes
+                    ? `<p><strong>NOTAS:</strong> ${opts.dataEvent.notes}</p>`
+                    : ""
+                }
+            </div>`;
+
+        // 📦 Sub-eventos (con platillos)
+        let subEvents = '';
+
+        opts.dataSubEvent?.forEach(sub => {
+            const dishItems = sub.dishes?.map(d => `<li class="text-gray-700 text-[12px]"> - ${d.dish}</li>`).join("") || "";
+
+            subEvents += `
+            <div class="mb-6 text-sm leading-6">
+                <p><strong>${sub.name_subevent} para ${sub.quantity_people} personas</strong> (${sub.time_start} a ${sub.time_end} horas)</p>
+                <p>${sub.location}</p>
+                ${dishItems ? `<ul class="list-none pl-8 mt-1">${dishItems}</ul>` : ''}
+                <p class="mt-2"><strong>Costo:</strong> $${parseFloat(sub.total_pay).toLocaleString('es-MX')}</p>
+            </div>`;
+        });
+
+        // 💰 Total del evento
+        const totalEventCost = `
+        <div class="mb-6 text-sm text-end">
+            <p class="font-bold">Total del evento: $${parseFloat(opts.dataEvent.total_pay).toLocaleString('es-MX')}</p>
         </div>`;
 
-
+        // 📜 Cláusulas
         let templateClauses = `
-        <div class="mt-[300px] mb-4 text-xs">
-            <p class="font-bold"> Cláusulas </p>
-            <ul class="list-decimal pl-5">
-        `;
+        <div class=" mb-4 text-xs">
+            <p class="font-bold">Cláusulas</p>
+            <ul class="list-decimal pl-5">`;
 
         opts.clauses.forEach((clause, index) => {
             
@@ -359,38 +369,78 @@ class App extends Templates {
 
         templateClauses += `</ul></div>`;
 
-
-      
         const docs = `
-        <div id="docEvent" 
-            class="relative flex px-12 py-10 bg-white text-gray-800 shadow-lg rounded-lg" 
+        <div id="docEvent"
+            class="flex flex-col justify-between px-12 py-10 bg-white text-gray-800 shadow-lg rounded-lg"
             style="
-                width: 816px;
-                height: 1056px;
-                background-image: url('src/img/background.png');
-                background-repeat: no-repeat;
-                background-size: 90% 100%; /* 🎯 Ajustamos a una columna lateral */
+                width              : 816px;
+                min-height         : 1056px;
+                background-image   : url('src/img/background.png');
+                background-repeat  : no-repeat;
+                background-size    : 90% 100%;
                 background-position: left top;
-                
             ">
 
+            <!-- 🧠 Contenido principal (header + subeventos) -->
+            <div class="w-full pl-[120px] grow">
+                ${header}
+                ${subEvents}
+            </div>
 
-        <div class="w-full pl-[120px]">
-            ${header}
-            ${templateClauses}
-        </div>
-
-
+            <!-- ✅ Footer fijo al final -->
+            <div class="w-full pl-[120px] mt-10">
+                ${totalEventCost}
+                ${templateClauses}
+            </div>
         </div>`;
 
-         
-
+        // 🧩 Renderizamos en el contenedor definido
         $('#' + opts.parent).append(docs);
+    }
 
+    TabsComponent(options) {
+        const defaults = {
+            parent: "root",
+            id: "TabsComponent",
+            class: "flex w-50 gap-2 bg-[#1e293b] p-1 rounded-lg",
+            json: [{ id: "dashboard", label: "Dashboard", icon: "icon-grid" },
+                { id: "list", label: "Lista", icon: "icon-list" },
+                { id: "calendar", label: "Calendario", icon: "icon-calendar" }],
+            onClick: (id) => { }
+        };
+
+        const opts = Object.assign({}, defaults, options);
+
+        const container = $("<div>", {
+            id: opts.id,
+            class: opts.class
+        });
+
+        opts.json.forEach((tab, index) => {
+            const tabBtn = $("<button>", {
+                class: `flex items-center gap-2 px-4 py-1.5 rounded-md text-sm font-medium ${index === 0
+                        ? "bg-blue-600 text-white"
+                        : "text-gray-400 hover:text-white hover:bg-gray-700"
+                    }`,
+                html: `<i class="${tab.icon}"></i><span>${tab.label}</span>`,
+                click: () => {
+                    $(`#${opts.id} button`).removeClass("bg-blue-600 text-white").addClass("text-gray-400 hover:text-white hover:bg-gray-700");
+                    tabBtn.removeClass("text-gray-400 hover:text-white hover:bg-gray-700").addClass("bg-blue-600 text-white");
+                    opts.onClick(tab.id);
+                }
+            });
+
+            container.append(tabBtn);
+        });
+
+        $(`#${opts.parent}`).html(container);
     }
 
 
+
 }
+
+
 
 class SubEvent extends App {
 
