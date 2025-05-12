@@ -67,16 +67,28 @@ class App extends Templates {
                 {   
                     opc      : "button",
                     color_btn: 'danger',
-                    class    : "col-3",
+                    class    : "col-2",
                     className: 'w-full',
                     id       : "btn",
                     text     : 'PDF',
-
                     onClick: () => {
-                      
                         this.onShow();
                     }
                 },
+
+                {
+                    opc: "button",
+                    color_btn: 'primary',
+                    class: "col-2",
+                    className: 'w-full',
+                    id: "btn",
+                    text: 'Imprimir',
+                    onClick: () => {
+                        this.onShow();
+                    }
+                },
+
+
             ],
 
         });
@@ -126,15 +138,16 @@ class App extends Templates {
             title        : 'Titulo',
             color_primary: 'bg-[#1F2A37]',
             data         : [],
-            center : [1,2,5],
-            right:[3,4],
-            onShow     : () => { },          // ✅ por si no lo pasan
+            center       : [1,2,5],
+            right        : [3,4],
+            onShow       : () => { },          // ✅ por si no lo pasan
         };
 
         const opts = Object.assign(defaults, options);
         const container = $('<div>', {
             id: opts.id,
-            class: `${opts.color_primary} rounded-lg my-5 border border-gray-700 overflow-hidden`
+            class: `${opts.color_primary} rounded-lg my-5 border border-gray-700 overflow-hidden`,
+           
         });
 
         const titleRow = $(`
@@ -247,23 +260,31 @@ class App extends Templates {
     }
 
     async onShow(){
-
         let subEvents = await useFetch({
             url: this._link,
-
             data: {
                 opc: "getFormatedEvent",
                 idEvent: 120
             }
-
         });
-
         
         this.createPDF({
             parent: 'containerprimaryLayout',
             data_header: subEvents.Event,
-        })
 
+            clauses: [
+                "El Horario de Inicio y Finalización estipulado en la orden de servicio deberá ser respetado.",
+                "Concluidas las 5 horas del servicio este se suspende teniendo como máximo 30 minutos para desalojar el salón.",
+                // "No se pueden introducir alimentos ni bebidas (snacks, antojitos, pan dulce o cualquier bebida).",
+                // "En caso de adquirir un paquete de buffet (niños o padres) se deberá pagar el evento.",
+                // "En caso de haber ingresado bebidas alcohólicas los invitados deberán tener mínimo 18 años cumplidos.",
+                // "En caso de cancelación el evento se realizará a través de eventos o vales de consumo dentro del restaurante con una penalización del 10%.",
+                // "Cualquier cambio en la logística del evento quedará sujeto a disponibilidad de espacios y áreas involucradas para su realización.",
+                // "El restaurant no se hace responsable por objetos olvidados dentro del evento.",
+                // "No se permite el uso de fuegos artificiales, confeti o cualquier tipo de papel que afecte al medio ambiente.",
+                // "La empresa solo se hace responsable con la paquetería en este orden de servicio."
+            ]
+        })
     }
 
     createPDF(options) {
@@ -300,21 +321,26 @@ class App extends Templates {
         const opts = Object.assign({}, defaults, options);
 
         const header = `
-            <div class="flex justify-end mb-4">
-            <p> Tapachula Chiapas a ${opts.data_header.date_creation}</p>
+        <div class="flex justify-end mb-4">
+            <p> Tapachula Chiapas, a ${opts.data_header.date_creation}</p>
             </div>
             <div class="event-header text-sm text-gray-800 mb-4">
-            <p class="font-bold uppercase">${opts.data_header.type_event}</p>
-            <p>${opts.data_header.date_start} ${opts.data_header.date_start_hr}</p>
-            <p>${opts.data_header.location}</p>
+                <p class="font-bold uppercase">${opts.data_header.type_event}</p>
+                <p>${opts.data_header.date_start} ${opts.data_header.date_start_hr}</p>
+                <p>${opts.data_header.location}</p>
             </div>
             <div class="mb-6 text-justify">
             <p>
-            En el Club Campestre, estamos trabajando día a día en renovarnos y de esta forma hacer sus eventos un éxito total,
-            por lo que es un verdadero honor para nosotros presentar opciones para la realización de su evento. Por medio de la
-            presente tengo a bien enviarle la cotización del evento que tan amablemente nos solicitó, constante de:
+               <p>Agradecemos su preferencia por celebrar su evento con nosotros el día
+            <strong>${opts.data_header.day}</strong>,
+            <strong>${opts.data_header.date_start} ${opts.data_header.date_start_hr}</strong> a 
+            <strong>${opts.data_header.date_end} ${opts.data_header.date_end_hr}</strong>, en el salón 
+            <strong>${opts.data_header.location}</strong>.</p>
+            <p>Estamos encantados de recibir a <strong>${opts.data_header.quantity_people}</strong> invitados y nos aseguraremos de que cada detalle esté a la altura de sus expectativas.</p>
+            <br>
+            ${opts.data_header.notes ? `<p><strong>NOTAS:</strong> ${opts.data_header.notes}</p>` : ""}
             </p>
-            </div>`;
+        </div>`;
 
 
         let templateClauses = `
@@ -324,6 +350,7 @@ class App extends Templates {
         `;
 
         opts.clauses.forEach((clause, index) => {
+            
             templateClauses += `<li>${clause}</li>`;
             if ((index + 1) % 5 === 0 && index + 1 < opts.clauses.length) {
                 templateClauses += `</ul><div style="page-break-after: always;"></div><ul class='list-decimal pl-5'>`;
@@ -338,13 +365,17 @@ class App extends Templates {
         <div id="docEvent" 
             class="relative flex px-12 py-10 bg-white text-gray-800 shadow-lg rounded-lg" 
             style="
+                width: 816px;
+                height: 1056px;
                 background-image: url('src/img/background.png');
                 background-repeat: no-repeat;
-                background-size: cover;
-                background-position: left top;">
+                background-size: 90% 100%; /* 🎯 Ajustamos a una columna lateral */
+                background-position: left top;
+                
+            ">
 
 
-        <div class="w-full ml-52 ">
+        <div class="w-full pl-[120px]">
             ${header}
             ${templateClauses}
         </div>
