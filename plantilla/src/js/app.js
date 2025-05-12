@@ -1,10 +1,4 @@
-// let ctrl = "ctrl/app.php";
-const link = 'https://erp-varoch.com/DEV/costsys/ctrl/ctrl-costo-potencial-soft.php';
 
-
-const api_subEvent = 'https://huubie.com.mx/alpha/eventos/ctrl/ctrl-sub-eventos.php';
-
-const api = 'https://huubie.com.mx/alpha/eventos/ctrl/ctrl-payment.php';
 // init vars.
 let app, sub;
 
@@ -397,44 +391,107 @@ class App extends Templates {
         $('#' + opts.parent).append(docs);
     }
 
-    TabsComponent(options) {
-        const defaults = {
-            parent: "root",
-            id: "TabsComponent",
-            class: "flex w-50 gap-2 bg-[#1e293b] p-1 rounded-lg",
-            json: [{ id: "dashboard", label: "Dashboard", icon: "icon-grid" },
-                { id: "list", label: "Lista", icon: "icon-list" },
-                { id: "calendar", label: "Calendario", icon: "icon-calendar" }],
-            onClick: (id) => { }
-        };
-
-        const opts = Object.assign({}, defaults, options);
-
-        const container = $("<div>", {
-            id: opts.id,
-            class: opts.class
+    async onShowActivity(id) {
+        let tareas = await useFetch({
+            url: this._link,
+            data: { opc: 'getActivity', id: id }
         });
-
-        opts.json.forEach((tab, index) => {
-            const tabBtn = $("<button>", {
-                class: `flex items-center gap-2 px-4 py-1.5 rounded-md text-sm font-medium ${index === 0
-                        ? "bg-blue-600 text-white"
-                        : "text-gray-400 hover:text-white hover:bg-gray-700"
-                    }`,
-                html: `<i class="${tab.icon}"></i><span>${tab.label}</span>`,
-                click: () => {
-                    $(`#${opts.id} button`).removeClass("bg-blue-600 text-white").addClass("text-gray-400 hover:text-white hover:bg-gray-700");
-                    tabBtn.removeClass("text-gray-400 hover:text-white hover:bg-gray-700").addClass("bg-blue-600 text-white");
-                    opts.onClick(tab.id);
-                }
-            });
-
-            container.append(tabBtn);
+        // --
+        let modal = bootbox.dialog({
+            title: "",
+            closeButton: true,
+            size: "xl",
+            message: `<div id="containerActivity"></div>`,
+            id: "modal",
+        }); // Crear componente modal.
+        this.createTaskDetail({
+            parent: 'containerActivity',
+            data: tareas.data
         });
-
-        $(`#${opts.parent}`).html(container);
     }
 
+    createTaskDetail(options) {
+        // 📜 Configuración por defecto
+        const defaults = {
+            parent: 'containerprimaryLayout',
+            data: [] // Array de objetos con cualquier estructura
+        };
+
+        // 🔵 Fusión de opciones externas
+        const opts = Object.assign({}, defaults, options);
+        const list = opts.data;
+
+        // 🎨 Diccionario de íconos por campo (opcional)
+        const icons = {
+            fecha_inicio: "📅",
+            fecha_fin: "📅",
+            prioridad: "🔥",
+            actividad: "📝",
+            encargado: "👤",
+            area: "🏢",
+            avance: "📌",
+            dias: "📊",
+            estado: "📍"
+        };
+
+        //  Mapeo visual específico (solo si se reconoce el campo)
+        const estadoIcon = {
+            "FINALIZADO": `<i class="fa-solid fa-check-square text-green-500"></i>`,
+            "EN PROCESO": `<i class="fa-solid fa-hourglass-half text-yellow-500"></i>`
+        };
+
+        const prioridadBadge = {
+            "Alta": `<span class="text-red-500 font-bold"><i class="fa-solid fa-circle mr-1"></i>Alta</span>`,
+            "Media": `<span class="text-yellow-400 font-bold"><i class="fa-solid fa-circle mr-1"></i>Media</span>`,
+            "Baja": `<span class="text-green-400 font-bold"><i class="fa-solid fa-circle mr-1"></i>Baja</span>`
+        };
+
+        //  Contenedor principal
+        const $root = $('<div class="space-y-4"></div>');
+
+        //  Recorrer cada registro
+        console.log(opts.data)
+
+        list.map(item => {
+
+            const $card = $('<div class="p-4 bg-white rounded-lg  space-y-2 text-sm"></div>');
+            const $grid = $('<div class="grid grid-cols-2 gap-4"></div>');
+
+
+            Object.entries(item).forEach(([key, value]) => {  // 🔁 Recorremos dinámicamente cada key/value
+
+                // 🎯 Render visual personalizado
+                let content = value;
+
+                if (key === "prioridad" && prioridadBadge[value]) {
+                    content = prioridadBadge[value];
+                }
+
+                if (key === "estado" && estadoIcon[value]) {
+                    content = `${estadoIcon[value]} <span class="ml-2 font-semibold">${value}</span>`;
+                }
+
+                const icon = icons[key] || "-";
+
+                const $field = $(`
+                <div>
+                    <p><strong>${icon} ${key.replace(/_/g, ' ').toUpperCase()}:</strong> ${content || '-'}</p>
+                </div>
+                `);
+                $grid.append($field);
+            });
+
+            $card.append($grid);
+            $root.append($card);
+        });
+
+        // 🧩 Inyección DOM
+        $(`#${opts.parent}`).html($root);
+    }
+
+
+
+  
 
 
 }
