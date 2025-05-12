@@ -35,7 +35,8 @@ class App extends Templates {
         })
 
         this.filterBar()
-        this.onShow()
+        this.TabsComponent();
+        // this.onShow()
         // this.layout();
     }
 
@@ -394,6 +395,44 @@ class App extends Templates {
 
         // 🧩 Renderizamos en el contenedor definido
         $('#' + opts.parent).append(docs);
+    }
+
+    TabsComponent(options) {
+        const defaults = {
+            parent: "root",
+            id: "TabsComponent",
+            class: "flex w-50 gap-2 bg-[#1e293b] p-1 rounded-lg",
+            json: [{ id: "dashboard", label: "Dashboard", icon: "icon-grid" },
+                { id: "list", label: "Lista", icon: "icon-list" },
+                { id: "calendar", label: "Calendario", icon: "icon-calendar" }],
+            onClick: (id) => { }
+        };
+
+        const opts = Object.assign({}, defaults, options);
+
+        const container = $("<div>", {
+            id: opts.id,
+            class: opts.class
+        });
+
+        opts.json.forEach((tab, index) => {
+            const tabBtn = $("<button>", {
+                class: `flex items-center gap-2 px-4 py-1.5 rounded-md text-sm font-medium ${index === 0
+                        ? "bg-blue-600 text-white"
+                        : "text-gray-400 hover:text-white hover:bg-gray-700"
+                    }`,
+                html: `<i class="${tab.icon}"></i><span>${tab.label}</span>`,
+                click: () => {
+                    $(`#${opts.id} button`).removeClass("bg-blue-600 text-white").addClass("text-gray-400 hover:text-white hover:bg-gray-700");
+                    tabBtn.removeClass("text-gray-400 hover:text-white hover:bg-gray-700").addClass("bg-blue-600 text-white");
+                    opts.onClick(tab.id);
+                }
+            });
+
+            container.append(tabBtn);
+        });
+
+        $(`#${opts.parent}`).html(container);
     }
 
 

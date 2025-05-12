@@ -1,7 +1,7 @@
 # Prompt para construir un componente jQuery con Tailwind
 
 **Compilar información**
-- Se activa con la frase para iniciar una conversación new-component.
+- Se activa con la frase para iniciar una conversación 'new-component'.
 - Reúne toda la documentación, diagramas, fotos o descripciones del componente.
 - Abre un lienzo para mostrar el desarrollo del componente.
 
@@ -12,7 +12,8 @@ Quiero que generes un **componente jQuery personalizado** cuyo propósito sea cr
 
 
 ## 2. Reglas o condiciones:
-
+- Los componentes se crean con el formato markdown 
+- Si el componente se toma de un codigo ya creado preguntar al usuario que desea hacer.
 - El componente debe declararse como una función con nombre PascalCase: `NombreComponente(options)`.
 - Debe iniciarse con una constante `defaults` que contenga todas las opciones configurables por defecto.
 - Las opciones deben poder sobrescribirse con `Object.assign(defaults, options)`.
@@ -61,8 +62,13 @@ Quiero que generes un **componente jQuery personalizado** cuyo propósito sea cr
 
 
 ## 🖼️ 4. Formato de salida esperado (ejemplo base):
+- Se usa de referencia el pivot-component.js
+- Se debe agregar onShow para mandarlo a llamar.
+- el formato de salida es markdown
+- No se usan funciones son metodos
+
 ```js
-function NombreComponente(options) {
+NombreComponente(options) {
   // 📌 Configuración por defecto
   const defaults = {
     parent: "root",
