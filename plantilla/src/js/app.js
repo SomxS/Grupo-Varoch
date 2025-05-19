@@ -2,7 +2,7 @@
 // init vars.
 let app, sub;
 
-let api = "https://erp-varoch.com/DEV/gestor-de-actividades/ctrl/ctrl-gestordeactividades-asignados.php";
+let api = "https://huubie.com.mx/alpha/eventos/ctrl/ctrl-payment.php";
 
 
 $(async () => {
@@ -25,7 +25,7 @@ class App extends Templates {
 
     render(options) {
      
-     this.onShowActivity(114);
+        this.onShowDocument(122);
     }
 
     layout() {
@@ -90,175 +90,88 @@ class App extends Templates {
         });
     }
 
-    async showSubEvent() {
+    // Print pdf
+    async onShowDocument(id) {
 
-        let subEvents = await useFetch({
+        let modal = bootbox.dialog({
+
+            title: "Imprimir nota de evento",
+            closeButton: true,
+            size: "xl",
+            message:
+                '<div class="flex justify-content-end  mt-3" id="containerButtons"></div><div class="flex justify-content-center  mt-3" id="containerPDF"></div> ',
+            id: "modalDocument",
+        }); // Crear componente modal.
+
+
+        let data = await useFetch({
             url: this._link,
-            data: {
-                opc: "getSubEvento",
-                id: 115
-            }
+            data: { opc: 'getFormatedEvent', idEvent: id, }
         });
 
-        this.accordingMenu({
-            parent: 'container',
-            data: subEvents.data,
+
+        this.createPDFComponent({
+            parent: "containerPDF",
+            dataEvent: data.Event,
+            dataSubEvent: data.SubEvent,
+            dataPayment: data.Payment,
+
+
         });
 
-    }
+        // // Función para imprimir y cerrar el modal correctamente
+        let printDiv = () => {
 
-    accordingMenu(options) {
-        const defaults = {
-            parent       : "tab-sub-event",
-            id           : "accordionTable",
-            title        : 'Titulo',
-            color_primary: 'bg-[#1F2A37]',
-            data         : [],
-            center : [1,2,5],
-            right:[3,4],
-            onShow     : () => { },          // ✅ por si no lo pasan
+            let divToPrint = document.getElementById("docEvent");
+            let popupWin = window.open("", "_blank");
+
+            popupWin.document.open();
+            popupWin.document.write(`
+                <html>
+                <head>
+                    <link href="https://15-92.com/ERP3/src/plugin/bootstrap-5/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+                    <script src="https://cdn.tailwindcss.com"></script>
+                    <style type="text/css" media="print">
+                        @page { margin: 5px; }
+                        body { margin: 5px; padding: 10px; }
+                    </style>
+                </head>
+                <body>
+                    ${divToPrint.innerHTML}
+                    <script>
+                        window.onload = function() {
+                            setTimeout(() => { 
+                                window.print();
+                                window.close();
+                            }, 500);
+                        };
+                    <\/script>
+                </body>
+                </html>`);
+
+            popupWin.document.close();
+
+            // Cierra el modal inmediatamente después de lanzar la impresión
+            modal.modal('hide');
+
         };
 
-        const opts = Object.assign(defaults, options);
-        const container = $('<div>', {
-            id: opts.id,
-            class: `${opts.color_primary} rounded-lg my-5 border border-gray-700 overflow-hidden`
-        });
+        $('#containerButtons').append(
+            $('<button>', {
+                class: 'btn btn-primary text-white',
 
-        const titleRow = $(`
-            <div class="flex justify-between items-center px-4 py-4 border-b border-gray-800">
-            <h2 class="text-lg font-semibold text-white">${opts.title}</h2>
-            <button id="btn-new-sub-event" class="bg-gray-600 hover:bg-gray-700 text-white text-sm px-4 py-2 rounded
-            flex items-center gap-2">
-            <span class="text-lg">＋</span> Nuevo Sub-evento
-            </button>
-            </div>
-        `);
-
-        titleRow.find("#btn-new-sub-event").on("click", () => {
-            if (typeof opts.onAdd === "function") opts.onAdd();
-        });
-
-        container.append(titleRow);
-
-        const firstItem = opts.data[0] || {};
-        const keys = Object.keys(firstItem).filter(k => k !== 'body' && k !== 'id');
-
-        const headerRow = $('<div>', {
-            class: "flex justify-between items-center px-4 py-2 font-medium text-gray-400 border-b border-gray-700 text-sm"
-        });
-
-        keys.forEach(key => {
-            headerRow.append(`<div class="flex-1 text-center truncate">${key.charAt(0).toUpperCase() + key.slice(1)}</div>`);
-        });
-
-        headerRow.append(`<div class="flex-none text-right">Acciones</div>`);
-        container.append(headerRow);
-
-
-        // 🔁 Render de cada fila
-        opts.data.forEach((opt, index) => {
-            console.log(opt)
-            const row = $('<div>', { class: " border-gray-700" });
-
-            const header = $(`<div class="flex justify-between items-center px-3 py-2 border-y border-gray-700 hover:bg-[#18212F] bg-[#313D4F] cursor-pointer"></div>`);
-            keys.forEach((key, i) => {
-
-                let align = "text-left";
-                if (opts.center.includes(i)) align = "text-center";
-                if (opts.right.includes(i)) align = "text-end";
-
-
-                header.append(`<div class="flex-1 px-3  text-gray-300 truncate ${align}">${opt[key]}</div>`);
-            });
-
-            const actions = $(`
-                <div class="flex-none flex gap-2 mx-2">
-                    <button class="btn-edit bg-gray-700 text-white text-sm px-2 py-1 rounded" title="Editar">✏️</button>
-                    <button class="btn-delete bg-gray-700 text-red-500 text-sm px-2 py-1 rounded" title="Eliminar">🗑️</button>
-                </div>
-            `);
-            header.append(actions);
-
-            // Container collapsed
-            const bodyWrapper = $('<div>', {
-                class: "bg-gray-500 hidden px-4 py-4 text-sm text-gray-300 accordion-body",
-                id: 'containerInfo' + opt.id,
-
-                html: `
-                 ${opt.id}
-                `
-            });
-
-
-            // Logic Components.
-
-            // ✅ Evita colapsar si haces clic en botón
-            header.on("click", function (e) {
-                const target = $(e.target);
-                if (target.closest(".btn-edit").length || target.closest(".btn-delete").length) return;
-
-                $(".accordion-body").slideUp(); // Oculta los demás
-                const isVisible = bodyWrapper.is(":visible");
-                if (!isVisible) {
-                    bodyWrapper.slideDown(200);
-                    if (typeof opts.onShow === 'function') opts.onShow(opt.id);
+                html: '<i class="icon-print"></i> Imprimir ',
+                click: function () {
+                    printDiv();
                 }
-            });
+            }),
 
-            header.find(".btn-edit").on("click", e => {
-                e.stopPropagation();
-                if (typeof opts.onEdit === "function") opts.onEdit(opt, index);
-            });
-
-            header.find(".btn-delete").on("click", e => {
-                e.stopPropagation();
-                if (typeof opts.onDelete === "function") opts.onDelete(opt, index);
-            });
-
-
-            // add interfaces.
-            row.append(header, bodyWrapper);
-            container.append(row);
-
-        });
-
-
-
-        container.append(`
-        <div class="flex justify-end items-center px-4 py-4 mt-3 border-b border-gray-800">
-        <button type="button" class="btn bg-[#374151] hover:bg-[#4b5563] text-[#fff] px-4 py-2 text-sm" onclick="eventos.closeEvent()">Cerrar</button>
-        </div>
-        `);
-
-        $(`#${opts.parent}`).html(container);
-    }
-
-    async onShow(){
-
-        let subEvents = await useFetch({
-            url: this._link,
-
-            data: {
-                opc: "getFormatedEvent",
-                idEvent: 120
-            },
-
-
-        });
-
-
-        this.createPDF({
-            parent: 'containerprimaryLayout',
-            dataEvent: subEvents.Event,
-            dataSubEvent: subEvents.SubEvent
-        })
+        );
 
 
     }
 
-    createPDF(options) {
-        // 📜 Configuración por defecto
+    createPDFComponent(options) {
         const defaults = {
             parent: 'containerprimaryLayout',
             dataPackage: [],
@@ -266,6 +179,7 @@ class App extends Templates {
             dataPayment: [],
             dataSubEvent: [],
             dataEvent: {
+                name: "[name]",
                 email: "[email]",
                 phone: "[phone]",
                 contact: "[contact]",
@@ -286,67 +200,143 @@ class App extends Templates {
             clauses: ["", "", "", ""]
         };
 
-        // 🔵 Fusión de opciones externas
         const opts = Object.assign({}, defaults, options);
 
-        // 📏 Encabezado del documento
         const header = `
-            <div class="flex justify-end mb-4">
-                <p> Tapachula Chiapas, a ${opts.dataEvent.date_creation}</p>
-            </div>
-            <div class="event-header text-sm text-gray-800 mb-4">
-                <p class="font-bold uppercase"> ${opts.dataEvent.name}</p>
-                <p class="uppercase">TIPO: ${opts.dataEvent.type_event}</p>
-                <p>${opts.dataEvent.date_start} ${opts.dataEvent.date_start_hr}</p>
-                <p>${opts.dataEvent.location}</p>
-            </div>
-            <div class="mb-6 text-justify">
-                <p>Agradecemos su preferencia por celebrar su evento con nosotros el día
-                <strong>    ${opts.dataEvent.day} </strong>,
-                <strong>    ${opts.dataEvent.date_start} ${  opts.dataEvent.date_start_hr   } </strong>
-                 a <strong> ${opts.dataEvent.date_end} ${
-                     opts.dataEvent.date_end_hr
-            }</strong>, en el salón
-                <strong>${opts.dataEvent.location}</strong>.</p>
-                <p>Estamos encantados de recibir a <strong>${
-                opts.dataEvent.quantity_people
-                }</strong> invitados y nos aseguraremos de que cada detalle esté a la altura de sus expectativas.</p>
-                <br>
-                ${
-                opts.dataEvent.notes
-                    ? `<p><strong>NOTAS:</strong> ${opts.dataEvent.notes}</p>`
-                    : ""
-                }
-            </div>`;
 
-        // 📦 Sub-eventos (con platillos)
+        <div class="flex justify-end mb-4">
+            <p> Tapachula Chiapas, a ${opts.dataEvent.date_creation}</p>
+        </div>
+
+        <div class="event-header text-sm text-gray-800 mb-4">
+            <p class="font-bold uppercase"> ${opts.dataEvent.name}</p>
+            ${opts.dataEvent.status === 'Cotización' ? `<p class="font-bold uppercase text-red-500"> ${opts.dataEvent.status}</p>` : ''}
+            <p>${opts.dataEvent.date_start} ${opts.dataEvent.date_start_hr}</p>
+            <p>${opts.dataEvent.location}</p>
+        </div>
+
+        <div class="mb-6 text-justify">
+            <p>Agradecemos su preferencia por celebrar su evento con nosotros el día
+            <strong>${opts.dataEvent.day}</strong>,
+            <strong>${opts.dataEvent.date_start} ${opts.dataEvent.date_start_hr}</strong>
+            a <strong>${opts.dataEvent.date_end} ${opts.dataEvent.date_end_hr}</strong>, en el salón
+            <strong>${opts.dataEvent.location}</strong>.</p>
+            <p>Estamos encantados de recibir a <strong>${opts.dataEvent.quantity_people}</strong> invitados y nos aseguraremos de que cada detalle esté a la altura de sus expectativas.</p>
+            <br>
+            ${opts.dataEvent.notes ? `<p><strong>NOTAS:</strong> ${opts.dataEvent.notes}</p>` : ""}
+        </div>`;
+
         let subEvents = '';
-
+      
         opts.dataSubEvent?.forEach(sub => {
-            const dishItems = sub.dishes?.map(d => `<li class="text-gray-700 text-[12px]"> - ${d.dish}</li>`).join("") || "";
+            // - ${ formatPrice(dish.price) }
+            const menuPackages = Object.entries(sub.menu)
+                .filter(([key]) => !isNaN(key)) // solo claves numéricas
+                .map(([key, pkg]) => {
+                    const pkgDishes = (sub.menu.dishes || [])
+                        .filter(dish => dish.package_id === pkg.package_id)
+                        .map(dish => `<li class="text-gray-700 text-[12px] ml-6">- ${dish.name} (${dish.quantity}) </li>`)
+                        .join("");
+
+                    return `
+                    <div class="mt-2">
+                        <p class="font-semibold"> ${pkg.name}</p>
+                        <ul class="list-none">${pkgDishes}</ul>
+                    </div>`;
+                }).join("");
+            // - $${parseFloat(extra.price).toLocaleString('es-MX')
+            const extraItems = sub.extras?.length > 0
+                ? `
+                <div class="mt-3 text-sm">
+                    <p class="font-semibold">Extras</p>
+                    <ul class="list-disc list-inside pl-6">
+                        ${sub.extras.map(extra => `
+                            <li class="text-gray-700 text-[12px]">
+                                ${extra.name} (${extra.quantity}) }
+                            </li>`).join("")}
+                    </ul>
+                </div>  `
+                : "";    
 
             subEvents += `
             <div class="mb-6 text-sm leading-6">
                 <p><strong>${sub.name_subevent} para ${sub.quantity_people} personas</strong> (${sub.time_start} a ${sub.time_end} horas)</p>
                 <p>${sub.location}</p>
-                ${dishItems ? `<ul class="list-none pl-8 mt-1">${dishItems}</ul>` : ''}
+                <p>${menuPackages}</p>
+                <p>${extraItems}</p>
+
+
                 <p class="mt-2"><strong>Costo:</strong> $${parseFloat(sub.total_pay).toLocaleString('es-MX')}</p>
+            </div>`;
+
+        });
+
+        const total = parseFloat(opts.dataEvent.total_pay) || 0;
+        const advance = parseFloat(opts.dataEvent.advance_pay) || 0;
+        const discount = parseFloat(opts.dataEvent.discount || 0);     // nuevo campo opcional
+
+        let totalPagos = 0;
+        let templatePayment = '';
+
+        opts.dataPayment.forEach((item) => {
+            const monto = parseFloat(item.valor) || 0;
+            totalPagos += monto;
+            templatePayment += `
+            <div class="flex justify-between text-sm">
+                <p class="font-semibold">${item.method_pay}</p>
+                <p>${monto.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}</p>
             </div>`;
         });
 
-        // 💰 Total del evento
-        const totalEventCost = `
-        <div class="mb-6 text-sm text-end">
-            <p class="font-bold">Total del evento: $${parseFloat(opts.dataEvent.total_pay).toLocaleString('es-MX')}</p>
-        </div>`;
+        templatePayment += `
 
-        // 📜 Cláusulas
+            <div class="flex justify-between text-sm border-t pt-2 mt-2">
+                <p class="font-bold">Total Pagado</p>
+                <p class="">${totalPagos.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}</p>
+            </div>
+
+            <div class="flex justify-between text-sm mt-3 border-t">
+                <p class="font-bold"> Restante</p>
+                <p class="">${(total - advance - discount - totalPagos).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}</p>
+            </div>`;
+
+        const blockTotals = `
+            <div class="mt-6 mb-2 text-sm  flex justify-end">
+                <div class="w-1/3">
+                    <div class="flex justify-between pt-2">
+                        <p class="font-bold"> Total </p>
+                        <p>${total.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}</p>
+                    </div>
+                    <div class="flex justify-between">
+                        <p class="font-bold"> Anticipo </p>
+                        <p>${advance.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}</p>
+                    </div>
+                    <div class="flex justify-between">
+                        <p class="font-bold"> Descuento </p>
+                        <p>${discount.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}</p>
+                    </div>
+                    <div class="flex justify-between">
+                        <p class="font-bold"> Saldo </p>
+                        <p>${(total - advance - discount).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex text-sm justify-end mt-2">
+                <div class="w-1/3">
+                    <p class="font-bold border-t my-1">Forma de pago</p>
+                    ${templatePayment}
+                </div>
+            </div>`;
+
+
         let templateClauses = `
-        <div class=" mb-4 text-xs">
-            <p class="font-bold">Cláusulas</p>
-            <ul class="list-decimal pl-5">`;
+            <div class="mb-4 mt-3 text-xs">
+                <p class="font-bold">Cláusulas</p>
+                <ul class="list-decimal pl-5">`;
 
         opts.clauses.forEach((clause, index) => {
+
             templateClauses += `<li>${clause}</li>`;
             if ((index + 1) % 5 === 0 && index + 1 < opts.clauses.length) {
                 templateClauses += `</ul><div style="page-break-after: always;"></div><ul class='list-decimal pl-5'>`;
@@ -359,102 +349,26 @@ class App extends Templates {
         <div id="docEvent"
             class="flex flex-col justify-between px-12 py-10 bg-white text-gray-800 shadow-lg rounded-lg"
             style="
-                width              : 816px;
-                min-height         : 1056px;
-                background-image   : url('src/img/background.png');
-                background-repeat  : no-repeat;
-                background-size    : 90% 100%;
+                width: 816px;
+                min-height: 1056px;
+                background-image: url('https://huubie.com.mx/alpha/eventos/src/img/background.png');
+                background-repeat: no-repeat;
+                background-size: 90% 100%;
                 background-position: left top;
             ">
 
-            <!-- 🧠 Contenido principal (header + subeventos) -->
             <div class="w-full pl-[120px] grow">
                 ${header}
                 ${subEvents}
             </div>
 
-            <!-- ✅ Footer fijo al final -->
             <div class="w-full pl-[120px] mt-10">
-                ${totalEventCost}
+                ${blockTotals}
                 ${templateClauses}
             </div>
         </div>`;
 
-        // 🧩 Renderizamos en el contenedor definido
         $('#' + opts.parent).append(docs);
-    }
-
-    async onShowActivity(id) {
-        let tareas = await useFetch({
-            url: this._link,
-            data: { opc: 'getActivity', id: id }
-        });
-        // --
-        let modal = bootbox.dialog({
-            title: "",
-            closeButton: true,
-            size: "xl",
-            message: `<div id="containerActivity"></div>`,
-            id: "modal",
-        }); // Crear componente modal.
-        this.createTaskDetail({
-            parent: 'containerActivity',
-            data: tareas.data
-        });
-    }
-
-    createTaskDetail(options) {
-        const defaults = {
-            parent: 'containerprimaryLayout',
-            data: [],
-            onEdit: (id) => {},
-            onClose: () => {}
-        };
-
-        const opts = Object.assign({}, defaults, options);
-        const list = opts.data;
-
-        const $root = $('<div class="space-y-6"></div>');
-
-        list.forEach(item => {
-            const $card = $(`
-                <div class="bg-white border rounded-lg p-6 space-y-5 text-sm text-gray-700">
-                    
-                    <div class="flex items-center justify-between border-b pb-2">
-                        <h2 class="text-lg font-bold uppercase">${item.title || 'Sin título'}</h2>
-                    </div>
-
-                    <div>
-                        <p class="text-xs font-semibold mb-1 uppercase">Actividad</p>
-                        <div class="bg-gray-100 p-3 rounded text-gray-800">${item.activities || '-'}</div>
-                    </div>
-
-                    <div class="grid grid-cols-1 grid-cols-2 gap-4">
-                        <div><strong>Responsable:</strong> ${item.NOMBRES}</div>
-                        <div><strong>Estado:</strong> ${item.name_status}</div>
-                        <div><strong>Prioridad:</strong> ${item.priority}</div>
-
-                        <div><strong>Fecha Inicio:</strong> ${item.date_start}</div>
-                        <div><strong>Fecha Fin:</strong> ${item.date_end}</div>
-                        <div><strong>Fecha Seguimiento:</strong> ${item.date_follow}</div>
-
-                        <div><strong>Fecha Creación:</strong> ${item.date_creation}</div>
-                        <div><strong>UDN:</strong> ${item.UDN}</div>
-
-                        <div><strong>ID Empleado:</strong> ${item.id_employed}</div>
-                        <div><strong>ID Creador:</strong> ${item.id_user_creator}</div>
-                        <div><strong>ID Estado:</strong> ${item.id_status}</div>
-                        <div><strong>ID Prioridad:</strong> ${item.id_priority}</div>
-                    </div>
-
-                  
-                </div>
-            `);
-
-            $root.append($card);
-        });
-
-        $(`#${opts.parent}`).html($root);
     }
   
 

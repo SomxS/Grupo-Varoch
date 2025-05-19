@@ -226,10 +226,10 @@ class Components extends Complements {
 
 
 
-        if (idFilter) { // se activo la validacion por filtro 
+        if (idFilter) { // se activo la validacion por filtro
 
             const sendData = { tipo: 'text', opc: 'ls', ...options.data };
-            var extendsAjax = null; // extender la funcion ajax 
+            var extendsAjax = null; // extender la funcion ajax
 
 
             $(`#${idFilter}`).validar_contenedor(sendData, (datos) => {
@@ -384,9 +384,9 @@ class Components extends Complements {
                         $element.val(opts.autofill[frm]);
                     }
 
-                  
+
                 } else {
-                   
+
                 }
             }
         }
@@ -456,7 +456,7 @@ class Components extends Complements {
             required     : true,
         };
 
-        let opts = Object.assign(defaults, options); // Union de 
+        let opts = Object.assign(defaults, options); // Union de
 
         // Creamos el contenedor
         var div = $("<div>", { class: opts.class, id: opts.id });
@@ -649,7 +649,7 @@ class Components extends Complements {
 
         // Proceso de autovalidacion
         if (opts.autovalidation) {
-           
+
 
             let options_validation = {
                 tipo: "text",
@@ -675,10 +675,10 @@ class Components extends Complements {
 
 
 
-        } 
+        }
 
 
-        
+
 
 
 
@@ -689,7 +689,7 @@ class Components extends Complements {
     }
 
     createModalForm(options) {
-        // id 
+        // id
         const idFormulario = options.id ? options.id : 'frmModal';
 
         const components = options.components
@@ -719,7 +719,7 @@ class Components extends Complements {
                 text     : "Aceptar",
                 class    : "col-6"
             },
-            
+
             bootbox: {
                 title: 'Modal example',
                 closeButton: true,
@@ -741,7 +741,7 @@ class Components extends Complements {
                     tipo: "text",
                     opc: "save-frm",
                 };
-                
+
                 $("#" + conf.id).validar_contenedor({tipo:'text'}, (ok) => {
                     let formData = new FormData($('#' + conf.id)[0]);
                     const datos = {};
@@ -765,14 +765,14 @@ class Components extends Complements {
             }
 
         }
-        
+
         let CancelForm = () => { modal.modal('hide'); }
-          
+
         conf.json.push(
-                { 
+                {
                 ...conf.btnSuccess
                 },
-            { 
+            {
                 ...conf.btnCancel
             },
         );
@@ -783,10 +783,10 @@ class Components extends Complements {
         $('#' + conf.id).content_json_form({ data: conf.json, type: '' });
 
 
-      
-        
+
+
         /* propiedades de autofill*/
-   
+
         if (conf.autofill) {
             // Init process auto inputs
             for (const frm in conf.autofill) {
@@ -803,9 +803,9 @@ class Components extends Complements {
                         $element.val(conf.autofill[frm]);
                     }
 
-                    console.log('Elemento encontrado y valor asignado:', $element);
+                    // console.log('Elemento encontrado y valor asignado:', $element);
                 } else {
-                    console.log('No se encontró el elemento:', frm);
+                    // console.log('No se encontró el elemento:', frm);
                 }
             }
         }
@@ -813,7 +813,7 @@ class Components extends Complements {
 
 
 
-        
+
 
 
 
@@ -868,7 +868,7 @@ class Components extends Complements {
 
         //         // }).then(response => { }).then(data => {
 
-                     
+
         //         // })
 
 
@@ -948,7 +948,7 @@ class Components extends Complements {
 
         };
 
-        //  Combinar objetos 
+        //  Combinar objetos
         let opts = Object.assign(defaults, options);
         $(`#${opts.parent}`).content_json_form({ data: opts.data, type: '', id: opts.id });
 
@@ -983,10 +983,10 @@ class Components extends Complements {
         });
 
         for (const x of opts.data) {
-            
+
             let active      = "";
             let tab_active  = "";
-            
+
             if (x.active) {
                 active = "active";
                 tab_active = "show active";
@@ -1006,14 +1006,14 @@ class Components extends Complements {
                     text: x.tab
                 })
             );
-            
+
             var div_tab = $("<div>", {
                 class: "tab-pane fade  mt-2 " + tab_active,
                 id: x.id,
             });
 
             if (x.contenedor) {
-         
+
 
                 for (const y of x.contenedor) {
                     var div_cont = $("<div>", {
@@ -1032,7 +1032,7 @@ class Components extends Complements {
 
         div.append(ul);
         div.append(div_content);
-        $(`#${opts.parent}`).append(div); 
+        $(`#${opts.parent}`).append(div);
     }
 
     createLayaout(options = {}) {
@@ -1114,7 +1114,7 @@ class Components extends Complements {
     }
 
     createNavBar(options){
- 
+
         let defaults = {
             logoSrc    : 'https://erp-varoch.com/ERP2/src/img/logos/logo_icon_wh.png',
             logoAlt    : 'Grupo Varoch',
@@ -1185,7 +1185,7 @@ class Components extends Complements {
         $header.append($nav);
           // Append to body or specific parent
         $(opts.parent || 'body').prepend($header);
-        
+
 
     }
 
@@ -1477,7 +1477,7 @@ class Components extends Complements {
                 // add image.
                 var details = $('<div>', { class: 'col-12 div1 pointer' }).append(imagen);
 
-                // add text. 
+                // add text.
                 var description = $('<div>', { class: 'col-12 bg-primary d-flex flex-column pt-1 div2 pointer' });
                 var h6 = $('<label>', { text: element.nombre, class: 'fw-bold col-12' });
                 var sub = $('<sub>', { text: element.costo, class: 'fw-bold py-2' })
@@ -1625,14 +1625,14 @@ class Components extends Complements {
                     costo: element.costo ? element.costo : 0,
                     class: ` ${opts.color} grid-item-${opts.size}  `,
                     ...props
-                    // click: element.onclick ? element.onclick : opts.onClick 
+                    // click: element.onclick ? element.onclick : opts.onClick
                 });
 
                 // add cost.
                 var details = $('<div>', { class: 'col-12 pointer' });
                 var lbl = $('<label>', { text: element.costo ? formatPrice(element.costo) : '', class: 'col-12 fw-semibold py-2 text-muted' });
                 details.append(lbl);
-                // add text. 
+                // add text.
                 var description = $('<div>', { class: 'col-12 fw-bold d-flex flex-column pt-1 div1 pointer' });
                 var label = $('<label>', { text: element.nombre ? element.nombre : element.valor, class: 'fw-bold col-12' });
                 description.append(label);
@@ -2059,7 +2059,7 @@ class Components extends Complements {
         <div class="row p-2">
 
             <div class="col-12 col-md-4 p-3 m-0">
-                
+
             <div class="${opts.classForm}" id="${opts.form.id}" novalidate>
                 <div class="col-12 mb-2 d-flex justify-content-between">
                         <span class="fw-bold fs-5">${opts.title}</span>
@@ -2069,7 +2069,7 @@ class Components extends Complements {
                 </div>
 
             </div>
-            
+
             <div class="col-12 col-md-8" id="layoutTable">
             <div class="">
                 <button type="button" class="btn btn-primary btn-sm d-none" id="addRecetasSub">
@@ -2077,7 +2077,7 @@ class Components extends Complements {
             </div>
 
             <div class="m-0 p-0" id="${opts.table.parent}">
-               
+
             </div>
             </div>
         </div>`;
@@ -2467,7 +2467,7 @@ class Templates extends Components {
             cardform: {
                 className: 'col-5 line',
                 id: 'containerForm'+name,
-               
+
             },
         };
 
@@ -2483,9 +2483,9 @@ class Templates extends Components {
                     type: 'div',
                     id: ui.cardform.id,
                     class: ui.cardform.className,
-                   
+
                 },
-               
+
                 {
                     type: "div",
                     id: ui.cardtable.id,
@@ -2496,7 +2496,7 @@ class Templates extends Components {
                     ]
                 },
 
-               
+
             ],
         };
 
