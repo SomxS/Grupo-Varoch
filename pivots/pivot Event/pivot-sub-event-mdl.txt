@@ -1,0 +1,252 @@
+<?php
+require_once '../../conf/_CRUD.php';
+require_once '../../conf/_Utileria.php';
+
+// 📜 Modelo para la gestión de evt_subevents
+class mdl extends CRUD {
+    protected $util;
+    protected $bd;
+
+    public function __construct()
+    {
+        $this->util = new Utileria;
+        $this->bd = 'fayxzvov_alpha.';
+    }
+
+    // Eventos
+    function createEvent($array){
+        return $this->_Insert([
+            'table' => "evt_events",
+            'values' => $array['values'],
+            'data' => $array['data']
+        ]);
+    }
+
+    function maxEvent(){
+        return $this->_Select([
+            'table'  => "evt_events",
+            'values' => 'MAX(id) AS id',
+        ])[0]['id'];
+    }
+
+    function getEventById($array){
+        $values = "
+        	evt_events.id AS idEvent,
+            name_event,
+            date_creation,
+            date_start,
+            date_end,
+            total_pay,
+            advanced_pay,
+            status_process_id,
+            location,
+            name_client,
+            phone,
+            email,
+            method_pay_id,
+            type_event,
+            quantity_people,
+            status, 
+            method_pay,
+            notes,
+            subsidiaries_id";
+
+        $leftjoin = [
+            "status_process" => "status_process_id = status_process.id",
+            "method_pay" => "method_pay_id = method_pay.id",
+        ];
+        return $this->_Select([
+            'table'     => "evt_events",
+            'values'    => $values,
+            'leftjoin' => $leftjoin,
+            'where'     => 'evt_events.id = ?',
+            'data'      => $array
+        ])[0];
+    }
+
+    function updateEvent($array){
+        return $this->_Update([
+            'table'  => "evt_events",
+            'values' => $array['values'],
+            'where'  => $array['where'],
+            'data'   => $array['data'],
+        ]);
+    }
+
+
+
+    // 📜 Sub eventos
+    public function getSubEventsByEventId($array) {
+        $query = "
+        SELECT
+            sub.id,
+            sub.name_subevent as title,
+            sub.name_subevent,
+            sub.date_start as date,
+            sub.date_start,
+            sub.date_end,
+            sub.time_start,
+            sub.time_end,
+            sub.quantity_people,
+            sub.total_pay,
+            sub.location,
+            sub.notes,
+            sub.type_event,
+            sub.status_process_id,
+            sub.type_event as type,
+            evt.name_event as event
+        FROM {$this->bd}evt_subevents sub
+        INNER JOIN {$this->bd}evt_events evt ON sub.evt_events_id = evt.id
+        WHERE sub.evt_events_id = ?
+        ";
+        return $this->_Read($query, $array);
+    }
+
+    public function getSubEventoByID($array){
+        $query = "
+        SELECT
+            id,
+            evt_events_id,
+            name_subevent,
+            date_creation,
+            date_start,
+            date_end,
+            time_start,
+            time_end,
+            total_pay,
+            notes,
+            status_process_id,
+            location,
+            quantity_people,
+            type_event,
+            evt_menu_id
+        FROM evt_subevents
+        WHERE id = ?
+        ";
+        return $this->_Read($query, $array);
+    }
+
+    // 📜 Crear nuevo subevento
+    public function createSubEvento($array){
+        return $this->_Insert([
+            'table' => "{$this->bd}evt_subevents",
+            'values' => $array['values'],
+            'data' => $array['data'],
+        ]);
+    }
+
+    // 📜 Actualizar subevento
+    public function updateSubEvento($array){
+        return $this->_Update([
+            'table' => "{$this->bd}evt_subevents",
+            'values' => $array['values'],
+            'where' => $array['where'],
+            'data' => $array['data'],
+        ]);
+    }
+
+    public function deleteSubEvento($array){
+
+        return $this->_Delete([
+            'table' => "{$this->bd}evt_subevents",
+            'where' => $array['where'],
+            'data' => $array['data'],
+        ]);
+    }
+
+    // Menú
+    public function getMenuById($array)
+    {
+        // $values = 'id, quantity, package_type, price';
+        // return $this->_Select([
+        //     'table'     => "evt_menu",
+        //     'values'    => $values,
+        //     'where'     => 'id_sub_event = ?',
+        //     'data'      => $array
+        // ],true);
+
+        $query = "
+            SELECT
+            id, quantity, package_type, price
+            FROM evt_menu
+            WHERE id_sub_event = ?
+        ";
+        return $this->_Read($query, $array);
+    }
+
+    public function maxMenu()
+    {
+        return $this->_Select([
+            'table' => "evt_menu",
+            'values' => 'MAX(id) AS id',
+        ])[0]['id'];
+    }
+
+    public function createMenu($array)
+    {
+        return $this->_Insert([
+            'table' => "evt_menu",
+            'values' => $array['values'],
+            'data' => $array['data'],
+        ]);
+    }
+
+    // Dishes
+    public function getDish($array){
+        $values = 'evt_dishes.id AS id, dish, quantity, tiempo, id_menu, id_clasificacion, classification AS clasificacion, id_event';
+        $innerjoin = ["evt_classification" => "evt_classification.id = id_clasificacion"];
+
+        return $this->_Select([
+            'table' => "evt_dishes",
+            'values' => $values,
+            'innerjoin' => $innerjoin,
+            'where' => 'id_menu = ?',
+            'order' => ['ASC' => 'id_clasificacion, dish, tiempo'],
+            'data' => $array,
+        ]);
+    }
+
+    function getDishById($array){
+        $values = 'id, dish, quantity, tiempo, id_menu, id_clasificacion, id_event';
+        
+        return $this->_Select([
+
+            'table'  => "evt_dishes",
+            'values' => $values,
+            'where'  => 'id = ?',
+            'data'   => $array,
+        ])[0];
+    }
+
+
+    public function createDish($array){
+
+        return $this->_Insert([
+            'table' => "evt_dishes",
+            'values' => $array['values'],
+            'data' => $array['data'],
+        ]);
+    }
+
+    function deleteDish($array){
+
+        return $this->_Delete([
+            'table' => "evt_dishes",
+            'where' => $array['where'],
+            'data'  => $array['data'],
+        ]);
+    }
+
+    function updateDish($array){
+
+        return $this->_Update([
+            'table' => "evt_dishes",
+            'values' => $array['values'],
+            'where' => $array['where'],
+            'data' => $array['data'],
+        ]);
+    }
+
+
+
+}

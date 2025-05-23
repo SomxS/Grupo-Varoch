@@ -1,0 +1,453 @@
+<?php
+if (empty($_POST['opc'])) exit(0);
+session_start();
+setlocale(LC_TIME, 'es_ES.UTF-8');
+date_default_timezone_set('America/Mexico_City');
+
+header("Access-Control-Allow-Origin: *"); // Permite solicitudes de cualquier origen
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS"); // Métodos permitidos
+header("Access-Control-Allow-Headers: Content-Type"); // Encabezados permitidos
+
+require_once '../mdl/mdl-sub-eventos.php';
+
+// 📜 Controlador para gestión de SubEventos
+class ctrl extends mdl{
+
+    function init() {
+        return [
+            'eventos' => $this->lsEventos(),
+            'status'  => $this->lsStatus()
+        ];
+    }
+
+    //  Event.
+    
+    function addEvent() {
+
+        // EVENTO
+        $status     = 500;
+        $message    = 'Error al crear el Evento.';
+        $date_start = formatDateTime($_POST['date_start'], $_POST['time_start']);
+
+        unset($_POST['time_start']);
+
+        $_POST['date_start']        = $date_start;
+        $_POST['date_creation']     = date('Y-m-d H:i:s');
+        $_POST['status_process_id'] = 2;                    // status: Pendiente
+        $_POST['subsidiaries_id']   = $_SESSION['SUB'];
+
+       // Si no hay anticipo, se asume cotización
+        if (empty($_POST['advanced_pay']) || $_POST['advanced_pay'] == 0) {
+            $_POST['status_process_id'] = 1;     // status: Cotización
+            $_POST['method_pay_id']     = null;
+        }
+
+        // Insertar evento
+        $create = $this->createEvent($this->util->sql($_POST));
+
+        if ($create == true) {
+            $id_event = $this->maxEvent();
+            $status   = 200;
+            $message  = 'Sigue continuando con sub-evento 🍽️';
+        }
+
+        return [
+            'status'   => $status,
+            'message' => $message,
+            'data'    => [
+                'id' => $id_event
+            ],
+            $_POST
+        ];
+
+
+    }
+
+    function getEvent(){
+        $status = 500;
+        $message = 'Error al obtener los datos';
+        $getEvent = $this->getEventById([$_POST['id']]);
+
+           // Separar fecha y hora de inicio y fin agregando a getEvent time_start y time_end
+        $getEvent['time_start'] = date('H:i', strtotime($getEvent['date_start']));
+        $getEvent['time_end']   = date('H:i', strtotime($getEvent['date_end']));
+        $getEvent['date_start'] = date('Y-m-d', strtotime($getEvent['date_start']));
+        $getEvent['date_end']   = date('Y-m-d', strtotime($getEvent['date_end']));
+
+        if ($getEvent) {
+            $status = 200;
+            $message = 'Datos obtenidos correctamente.';
+        }
+
+        return [
+            'status'  => $status,
+            'message' => $message,
+            'data'    => $getEvent,
+        ];
+    }
+
+    function editEvents(){
+
+        // EVENTO
+        $status              = 500;
+        $message             = 'Error al editar el Evento.';
+        $date_start          = formatDateTime($_POST['date_start'], $_POST['time_start']);
+        $_POST['date_start'] = $date_start;
+
+        unset($_POST['time_start']);
+      
+        // Actualizar evento
+        $update = $this->updateEvent($this->util->sql($_POST, 1));
+
+        if ($update == true) {
+
+            $status  = 200;
+            $message = 'Datos del evento editados correctamente.';
+        }
+
+        return [
+            'status'  => $status,
+            'message' => $message,
+        ];
+
+    }
+
+    function applyDiscount() {
+        $status = 500;
+        $message = 'No se pudo aplicar el descuento';
+
+        // $id       = $_POST['id'];
+        // $monto    = $_POST['monto'];
+        // $motivo   = $_POST['motivo'];
+        // $tipo     = $_POST['tipo']; // "porcentaje" o "monto"
+
+        // // si es porcentaje, calculamos
+        // if ($tipo === 'porcentaje') {
+        //     $evento = $this->getById([$id]);
+        //     if (!$evento) return ['status' => 500, 'message' => 'Evento no encontrado'];
+        //     $total = (float) $evento['total_pay'];
+        //     $monto = ($total * $monto) / 100;
+        // }
+
+        
+        $update = $this->updateEvent($this->util->sql($_POST, 1));
+
+
+        if ($update) {
+            $status  = 200;
+            $message = 'Descuento aplicado correctamente';
+        }
+
+        return [
+            'status'  => $status,
+            'message' => $message
+        ];
+    }
+
+    // Sub Event.
+
+    function listSubEvents() { 
+        $status   = 500;
+        $message  = 'Error al obtener los datos.';
+        $ls       = $this->getSubEventsByEventId([$_POST['id']]);
+        $getEvent = $this->getEventById([$_POST['id']]);
+        $__row    = [];
+
+        foreach ($ls as $key ) {
+             $__row[] = [
+                'id'           => $key['id'],
+                'SubEvento'   => $key['name_subevent'],
+                'No personas'   => $key['quantity_people'],
+                'Fecha evento' => formatSpanishDate($key['date_start'],'normal'),
+                'Hora'         => "({$key['time_start']} - {$key['time_end']})",
+                'Lugar'        => $key['location'],
+                'Total'        => evaluar($key['total_pay']),
+                'Tipo'         => $key['type_event'],
+             ];
+        }
+
+        if ($ls) {
+            $status  = 200;
+            $message = 'Datos obtenidos correctamente.';
+        }
+        
+        return [
+            'status'  => $status,
+            'message' => $message,
+            'data'    => $__row,
+            'ls'      => $ls,
+            'event'   => $getEvent,
+        ];
+    }
+
+     function getSubEvent(){
+        $status = 500;
+        $message = 'Error al obtener los datos';
+        $data = $this->getSubEventoByID([$_POST['id']]);
+
+        if ($data) {
+            $status = 200;
+            $message = 'Datos obtenidos correctamente.';
+        }
+
+        return [
+            'status'  => $status,
+            'data' => $data,
+        ];
+    }
+
+    function addSubEvent() {
+        $status = 500;
+        $message = 'No se pudo insertar correctamente';
+        $_POST['date_creation'] = date('Y-m-d H:i:s');
+        $_POST['status_process_id'] = 1;
+        $create = $this->createSubEvento($this->util->sql($_POST));
+
+        if ($create) {
+            $status  = 200;
+            $message = 'Se agregó correctamente.';
+        }
+
+        return [
+            'status'  => $status,
+            'message' => $message,
+            $create
+        ];
+    }
+
+    function editSubEvent() {
+        $status  = 500;
+        $message = 'Error al editar';
+        $edit    = $this->updateSubEvento($this->util->sql($_POST, 1));
+
+     
+        if ($edit) {
+            $status  = 200;
+            $message = 'Se ha editado correctamente';
+        }
+        return [
+            'status'  => $status,
+            'message' => $message,
+        ];
+    }
+
+    function deleteSubEvent() {
+        $status = 500;
+        $message = 'Error al eliminar';
+        $delete = $this->deleteSubEvento($this->util->sql($_POST, 1));
+        if ($delete) {
+            $status = 200;
+            $message = 'Subevento eliminado correctamente.';
+        }
+        return [
+            'status'  => $status,
+            'message' => $message,
+            $delete
+        ];
+    }
+
+    // Menu 
+    function getMenu(){
+        $status = 500;
+        $message = 'Error al obtener los datos';
+        $getMenu = $this->getMenuById([$_POST['id_sub_event']]);
+
+        if ($getMenu) {
+            $status = 200;
+            $message = 'Datos obtenidos correctamente.';
+        }
+        return [
+            'status'  => $status,
+            'message' => $message,
+            'menu'    => $getMenu[0]
+        ];
+    }
+
+    function addMenu() {
+        $status = 500;
+        $message = 'Error al agregar menu.';
+
+        // Insertar menu
+        $addMenu = $this->createMenu($this->util->sql($_POST));
+        if ($addMenu == true) {
+            $id_menu = $this->maxMenu();
+            $status  = 200;
+            $message = 'Por último, agrega los platillos. 🍜';
+        }
+
+        return [
+            'status'   => $status,
+            'message' => $message,
+            'data'    => [
+                'id' => $id_menu
+            ]
+        ];
+    }
+
+    // Dishes 
+    function lsDishes() {
+
+        $__row   = [];
+        $idSubEvent = $_POST['idSubEvent'];
+        $getDish = $this->getDish([$_POST['id']]);
+       
+        $tiempo = '';
+        foreach ($getDish as $key) {
+            $a = [];
+
+            $a[] = [
+                "onclick" => "sub.editDish({$key['id']},{$_POST['id']},{$idSubEvent})",
+                "class"   => 'btn btn-primary btn-sm me-1 text-white',
+                "html"    => '<i class="icon-pencil"></i>',
+            ];
+
+            $a[] = [
+              "onclick" => "sub.removeDish(" . $key['id'] . ",{$idSubEvent})",
+              "class"   => 'btn btn-danger btn-sm text-white',
+              "html"    => '<i class="icon-trash-empty"></i>',
+            ];
+
+            // Validar tiempo 
+            if ($key['tiempo'] == 1) {
+
+                $tiempo = 'Primer tiempo';
+            } else if ($key['tiempo'] == 2) {
+
+                $tiempo = 'Segundo tiempo';
+
+            } else if ($key['tiempo'] == 3) {
+
+                $tiempo = 'Tercer tiempo';
+            }
+
+            $__row[] = [
+                'id'            => $key['id'],
+                'quantity'      => $key['quantity'],
+                'clasificacion' => $key['clasificacion'],
+                'dish'          => $key['dish'],
+                'tiempo'        => $tiempo,
+                'a'             => $a,
+            ];
+        }
+
+        return [
+            'row'   => $__row,
+            'thead' => [
+                'Cantidad',
+                'Clasificación',
+                'Nombre',
+                'Tiempo',
+                'Acciones'
+            ],
+            $getDish
+        ];
+    }
+
+    function addDish(){
+
+        $status  = 500;
+        $message = 'Error al agregar platillos.';
+
+        unset($_POST['id_sub_event']);
+
+       
+        // Insertar platillos
+        $addDishes = $this -> createDish($this->util->sql($_POST));
+
+        if ($addDishes == true) {
+
+            $status  = 200;
+        }
+
+        return [
+            'status'  => $status,
+            'message' => $message,
+            
+            $_POST
+        ];
+
+
+    }
+
+    function editDish(){
+        $status = 500;
+        $message = 'Error al editar platillo.';
+
+        $dishes = [
+            'quantity'         => $_POST['quantity'],
+            'dish'             => $_POST['dish'],
+            'tiempo'           => $_POST['tiempo'],
+            'id_clasificacion' => $_POST['id_clasificacion'],
+            'id'               => $_POST['id'],
+        ];
+
+        // Actualizar platillos
+        $updatePlatillos = $this->updateDish($this->util->sql($dishes, 1));
+
+        if ($updatePlatillos == true) {
+            $status = 200;
+            $message = 'Platillo editado correctamente. 👌';
+        }
+
+        return [
+            'status' => $status,
+            'message' => $message,
+        ];
+    }
+
+    function removeDish(){
+        $status = 500;
+        $message = 'Error al eliminar platillo.';
+        // Eliminar platillos
+        $deletePlatillos = $this->deleteDish($this->util->sql($_POST, 1));
+        if ($deletePlatillos == true) {
+            $status = 200;
+            $message = 'Platillo eliminado correctamente.';
+        }
+
+        return [
+            'status' => $status,
+            'message' => $message,
+        ];
+    }
+
+    function getByIdDish(){
+
+        $status = 500;
+        $message = 'Error al obtener platillo.';
+        $getDish = $this->getDishById([$_POST['id']]);
+        
+        if (count($getDish) > 0) {
+
+            $status  = 200;
+            $message = 'Platillo obtenido correctamente.';
+
+        }
+
+        return [
+
+            'status'  => $status,
+            'message' => $message,
+            'data'    => $getDish
+        ];
+
+    }
+
+}
+
+// Complements.
+function formatDateTime($date, $time) {
+    if (!empty($date) && !empty($time)) {
+        $datetime = DateTime::createFromFormat('Y-m-d H:i', "$date $time");
+        return $datetime ? $datetime->format('Y-m-d H:i:s') : null;
+    }
+    return null;
+}
+
+
+
+$obj    = new ctrl();
+$fn     = $_POST['opc'];
+$encode = $obj->$fn();
+echo json_encode($encode);
+?>

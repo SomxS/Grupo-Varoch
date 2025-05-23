@@ -109,3 +109,18 @@ NombreComponente(options) {
   $(`#${opts.parent}`).html(container);
 }
 ```
+
+trigger:
+  when_input_type: "code"
+  and_detects:
+    - "fetch("
+    - "useFetch"
+    - "fn_ajax"
+    - "this.createModalForm"
+    - "opc:"
+  then:
+    - activar: new-component
+    - analizar: estructura JSON, eventos (add, edit, delete)
+    - verificar: si requiere ctrl y mdl
+    - aplicar: reglas de new-components.md
+    - preguntar: ¿Deseas generar el backend (ctrl y mdl)?
