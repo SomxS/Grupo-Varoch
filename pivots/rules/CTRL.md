@@ -64,6 +64,38 @@ Formato de salida:
   echo json_encode($encode);
 
 
+  ** funciones auxiliares
+<merge-multiple>
+
+🎯 **Objetivo**  
+Combinar un conjunto de claves fijas con atributos calculados dinámicamente desde una lista, generando una fila homogénea que puede ser usada para inserción, consolidación o visualización.
+Se puede sugerir usar cuando son consultas por grupos o de forma dinamica.
+
+🧩🧩 **Estructura Base**
+
+```php
+
+$base = [
+    'clave_fija_1' => $idReferencia,
+    'clave_fija_2' => $registro['identificador'],
+];
+
+$atributos = [];
+
+foreach ($lista as $item) {
+    $resultado = $this->obtenerDato([$item['id']]);
+    $atributos[$item['clave']] = floatval($resultado['valor']);
+}
+
+$atributos['conteo'] = 1;
+
+$row = array_merge($base, $atributos);
+
+```
+
+</merge-multiple>
+
+
 
 
 
