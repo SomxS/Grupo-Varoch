@@ -46,7 +46,7 @@ Implementar los métodos siguientes dentro de la clase `ctrl`:
    - Ejecuta `update()`.
    - Retorna `status` y `message` de actualización.
 
-6. **cancel() / finalize()** *(según flujo)*
+6. **cancel() / ** *(según flujo)*
    - Cambia estatus de registros con `update()`.
 
 Funciones extra:
