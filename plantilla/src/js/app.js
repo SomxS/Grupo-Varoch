@@ -25,7 +25,7 @@ class App extends Templates {
 
     render(options) {
      
-     this.onShowActivity(114);
+    //  this.onShowActivity(114);
     }
 
     layout() {
