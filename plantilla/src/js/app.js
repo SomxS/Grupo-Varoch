@@ -99,8 +99,11 @@ class App extends Templates {
             theme: "dark", // 'dark' | 'light'
             class: "",
             renderContainer: true,
+            
             json: [
-                { id: "tabulation", tab: "Tabulación", icon: "icon-doc", active: true, onClick: () => { } },
+                { id: "tabulation", tab: "Tabulación", icon: "", active: true, onClick: () => { } },
+                { id: "concentrado", tab: "Concentrado de tabulación", icon: "", onClick: () => { } },
+                { id: "concentrado", tab: "Concentrado de tabulación", icon: "", onClick: () => { } },
                 { id: "concentrado", tab: "Concentrado de tabulación", icon: "", onClick: () => { } },
             ]
         };
@@ -122,7 +125,7 @@ class App extends Templates {
 
         const sizes = {
             large: "rounded-lg flex gap-1 px-1 py-1 w-full text-sm ",
-            short: "rounded-lg flex  p-1 text-sm "
+            short: "rounded-lg flex  gap-1 p-1  px-1 py-1 text-sm "
         };
 
         const container = $("<div>", {
