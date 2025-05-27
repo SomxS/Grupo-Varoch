@@ -4,7 +4,7 @@ class UI extends Templates {
         super(link, div_modulo);
     }
 
-      // Create Tabs.
+    // Create Tabs.
     tabLayout(options) {
         const defaults = {
             parent: "root",
@@ -13,11 +13,11 @@ class UI extends Templates {
             theme: "light", // 'dark' | 'light'
             class: "",
             renderContainer: true,
-            
+
             json: [
                 { id: "TAB1", tab: "TAB1", icon: "", active: true, onClick: () => { } },
                 { id: "TAB2", tab: "TAB2", icon: "", onClick: () => { } },
-                ]
+            ]
         };
 
         const opts = Object.assign({}, defaults, options);
@@ -101,7 +101,154 @@ class UI extends Templates {
         }
     }
 
-    
+    removeDiscount(id, event) {
+        const { name_event, discount, percentage, reason, total } = event;
+
+        this.createModalForm({
+            id: "modalQuitarDescuento",
+            parent: "root",
+            data: { opc: "removeDiscount", id: id },
+            class: "",
+            json: [
+                {
+                    opc: "div",
+                    id: "bloqueDescuentoActual",
+                    class: "col-12",
+                    html: `
+                    <div class="bg-[#334155] text-red-400 p-4 rounded-lg">
+                        <p class="text-sm">Descuento actual:</p>
+                        <p class="text-lg font-bold">-$${discount.toLocaleString('es-MX')} (${percentage}% OFF)</p>
+                        <p class="text-sm text-white">${reason}</p>
+                    </div>
+                `
+                },
+                {
+                    opc: "div",
+                    id: "bloquePrecioSinDescuento",
+                    class: "col-12",
+                    html: `
+                    <div class="bg-[#1E293B] p-4 rounded-lg text-center">
+                        <p class="text-sm text-gray-400">Precio sin descuento</p>
+                        <p class="text-2xl font-bold text-white">$${total.toLocaleString('es-MX')}</p>
+                    </div>
+                `
+                },
+                {
+                    opc: "div",
+                    id: "mensajeConfirmacion",
+                    class: "col-12 text-center",
+                    html: `<p class="text-sm text-gray-400">¿Estás seguro de que deseas quitar el descuento aplicado?</p>`
+                },
+            ],
+            bootbox: {
+                title: `<i class="icon-tag"></i> Quitar Descuento de ${name_event}`,
+                closeButton: true
+            },
+            buttons: {
+                confirm: {
+                    label: 'Confirmar Eliminación',
+                    className: 'bg-red-600 hover:bg-red-700 text-white text-sm px-4 py-2 rounded',
+                    callback: () => {
+                        // lógica de confirmación externa
+                        this.deleteDiscount(id);
+                    }
+                },
+                cancel: {
+                    label: 'Cancelar',
+                    className: 'bg-white text-gray-800 text-sm px-4 py-2 rounded',
+                }
+            }
+        });
+    }
+
+    CoffeeSoftGridTable(options) {
+        const defaults = {
+            parent: "root",
+            id: "coffeeSoftGridTable",
+            title: "Tabla Dinámica",
+            data: { thead: [], row: [] },
+            center: [],
+            right: [],
+            color_th   : "bg-[#1F2A37]",
+            color_row  : "bg-[#334155]",
+            color_group: "bg-[#475569]",
+            class: "w-full table-auto text-sm",
+            onEdit: () => { },
+            onDelete: () => { },
+        };
+
+        const opts = Object.assign({}, defaults, options);
+
+        const container = $("<div>", {
+            id: opts.id,
+            class: "rounded-lg border border-gray-700 overflow-hidden my-5"
+        });
+
+        // Título superior
+        const titleRow = $(`
+            <div class="flex justify-between items-center px-4 py-3 ${opts.color_th} border-b border-gray-800">
+            <h2 class="text-base font-semibold text-white">${opts.title}</h2>
+            </div>
+        `);
+
+        container.append(titleRow);
+
+        // Tabla principal
+        const table = $("<table>", {
+            class: opts.class
+        });
+
+        const thead = $("<thead>");
+        const headerRow = $("<tr>");
+        opts.data.thead.forEach((col, i) => {
+            headerRow.append(`<th class="text-center px-3 py-2 ${opts.color_th} text-white">${col}</th>`);
+        });
+        headerRow.append('<th class="text-right px-3 py-2 ${opts.color_th} text-white">Acciones</th>');
+        thead.append(headerRow);
+        table.append(thead);
+
+        const tbody = $("<tbody>");
+        opts.data.row.forEach((row, idx) => {
+            const tr = $("<tr>", { class: `${opts.color_row} border-t border-gray-700` });
+            opts.data.thead.forEach((key, i) => {
+                const align = opts.center.includes(i) ? 'text-center' : opts.right.includes(i) ? 'text-right' : 'text-left';
+                tr.append(`<td class="px-3 py-2 text-gray-100 truncate ${align}">${row[key] ?? ''}</td>`);
+            });
+
+            // Acciones por fila
+            const actionTd = $("<td>", { class: "px-3 py-2 text-right flex gap-2 justify-end" });
+            const btnEdit = $(`<button class="text-white text-xs px-2 py-1 bg-gray-700 rounded hover:bg-gray-600">✏️</button>`);
+            const btnDelete = $(`<button class="text-red-400 text-xs px-2 py-1 bg-gray-700 rounded hover:bg-gray-600">🗑️</button>`);
+
+            btnEdit.on("click", () => opts.onEdit(row, idx));
+            btnDelete.on("click", () => opts.onDelete(row, idx));
+
+            actionTd.append(btnEdit, btnDelete);
+            tr.append(actionTd);
+
+            tbody.append(tr);
+        });
+
+        table.append(tbody);
+        container.append(table);
+
+        $(`#${opts.parent}`).html(container);
+    }
+
+    // Ejemplo de uso
+    // CoffeeSoftGridTable({
+    //   parent: "root",
+    //   title: "Mi Tabla",
+    //   data: { thead: ["Nombre", "Edad", "Correo"], row: [{ Nombre: "Ana", Edad: 23, Correo: "ana@test.com" }] },
+    //   onEdit: (row, idx) => console.log("Editar", row),
+    //   onDelete: (row, idx) => console.log("Eliminar", row)
+    // });
+
+
+
+
+
+
 
 
 }

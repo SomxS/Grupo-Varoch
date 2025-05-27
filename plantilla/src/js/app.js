@@ -25,6 +25,7 @@ class App extends UI {
 
     render(options) {
 
+
         this.tabLayout({
             parent: "root",
             id: "tabComponent",
@@ -32,6 +33,12 @@ class App extends UI {
                 { id: "recorder", tab: "EnviarRegistros", icon: "", active: true, onClick: () => { } },
                 { id: "concentrado", tab: "Graficos", icon: "", onClick: () => { } },
               ]
+        });
+
+        this.CoffeeSoftGridTable({
+            parent: 'container-recorder',
+            data: { thead: ["Nombre", "Edad", "Correo"], row: [{ id:1, Nombre: "Ana", Edad: 23, Correo: "ana@test.com" }] },
+
         });
     }
 
