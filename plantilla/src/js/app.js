@@ -2,7 +2,7 @@
 // init vars.
 let app, sub;
 
-let api = "https://erp-varoch.com/ERP24/gestor-de-actividades/ctrl/ctrl-gestordeactividades.php";
+let api = "https://erp-varoch.com/DEV/gestor-de-actividades/ctrl/ctrl-concentrado.php";
 
 
 $(async () => {
@@ -42,8 +42,14 @@ class App extends UI {
     async lsCoffeeTable(options) {
         let data = await useFetch({
             url: this._link,
-            data: { opc: 'lsRecordatorios', cbUDNReminder:'atrasados', udn:0 }
+            data: { opc: 'list', filtroUDN: 'all', filtroPeriodo:'mes' }
         });
+
+     
+        this.createCoffeTable2({
+            parent: "container-recorder",
+            data: data
+        })
 
         
     }
@@ -100,7 +106,7 @@ class App extends UI {
         this.createTable({
             parent: "container-recorder",
             idFilterBar: "filterBarEventos",
-            data: { opc: 'lsRecordatorios', cbUDNReminder: 'atrasados', udn: 0 },
+            data: { opc: 'list', filtroUDN: 'all', filtroPeriodo: 'mes' },
             conf: { datatable: false, pag: 15 },
             coffeesoft:true,
             attr: {
@@ -126,7 +132,10 @@ class App extends UI {
             message:
                 '<div class="flex justify-content-end  mt-3" id="containerButtons"></div><div class="flex justify-content-center  mt-3" id="containerPDF"></div> ',
             id: "modalDocument",
-        }); // Crear componente modal.
+        
+        });
+
+         // Crear componente modal.
 
 
         let data = await useFetch({

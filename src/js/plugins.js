@@ -1288,6 +1288,7 @@ $.fn.rpt_json_table2 = function (options) {
 
 
       } else {
+        
           th = $("<tr>");
 
           for (var clave in opts.data.row[0]) {

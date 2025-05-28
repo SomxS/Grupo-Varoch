@@ -163,127 +163,186 @@ class UI extends Templates {
 
     createCoffeTable2(options) {
         const defaults = {
+            theme: 'light',
+            subtitle: null,
+            dark: false,
             parent: "root",
             id: "coffeeSoftGridTable",
             title: null,
             data: { thead: [], row: [] },
             center: [],
             right: [],
-            dark: false,
-            striped: true,
-            class: "w-full table-auto text-sm text-gray-800",
             color_th: "bg-[#003360] text-gray-100",
-            color_row: "bg-white",
-            color_row_alt: "bg-gray-100",
+            color_row: "bg-white hover:bg-gray-50",
             color_group: "bg-gray-200",
-            f_size: 14,
-            extends: true,
+            class: "w-full table-auto text-sm text-gray-800",
             onEdit: () => { },
             onDelete: () => { },
+            extends: true,
+            f_size: 14,
+            includeColumnForA: false // Agregado para controlar si se agrega columna 'a'
         };
 
-        const opts = Object.assign({}, defaults, options);
-
-        if (opts.dark) {
-            opts.color_th = "bg-[#0F172A] text-white";
-            opts.color_row = "bg-[#1E293B] text-white";
-            opts.color_row_alt = "bg-[#334155] text-white";
-            opts.color_group = "bg-[#334155] text-white";
-            opts.class = "w-full table-auto text-sm text-white";
+        if (options.theme === 'dark') {
+            defaults.dark = true;
+            defaults.color_th = "bg-[#0F172A] text-white";
+            defaults.color_row = "bg-[#1E293B] text-white";
+            defaults.color_group = "bg-[#334155] text-white";
+            defaults.class = "w-full table-auto text-sm text-white";
+        } else if (options.theme === 'corporativo') {
+            defaults.color_th = "bg-[#003360] text-white";
+            defaults.color_row = "bg-[#E5EFFF] text-[#003360]";
+            defaults.color_group = "bg-[#D0E3FF] text-[#003360]";
+            defaults.class = "w-full table-auto text-sm text-[#003360] font-semibold";
+        } else {
+            defaults.color_th = "bg-gray-200 text-gray-600";
+            defaults.color_row = "bg-white hover:bg-gray-600";
+            defaults.color_group = "bg-gray-200";
+            defaults.class = "w-full table-auto text-sm text-gray-800";
         }
 
+        const opts = Object.assign({}, defaults, options);
         const container = $("<div>", {
             id: opts.id,
             class: "rounded-md border border-gray-300 shadow-sm overflow-hidden my-5",
         });
 
         if (opts.title) {
-            container.append(`
-        <div class="flex justify-between items-center px-4 py-3 border-b border-gray-300 bg-white">
-          <h2 class="text-base font-semibold text-gray-800">${opts.title}</h2>
-        </div>
-      `);
+            const titleRow = $(`
+            <div class="flex flex-col px-4 py-3 border-b ${opts.dark ? 'border-gray-700 bg-gray-800' : 'border-gray-300 bg-white'}">
+                <h2 class="text-base font-semibold ${opts.dark ? 'text-gray-100' : 'text-gray-800'}">${opts.title}</h2>
+                ${opts.subtitle ? `<p class="text-sm ${opts.dark ? 'text-gray-400' : 'text-gray-600'} mt-1">${opts.subtitle}</p>` : ''}
+            </div>`);
+            container.append(titleRow);
         }
+    
 
-        const table = $("<table>", { class: opts.class });
-        const thead = $("<thead>");
-        const tbody = $("<tbody>");
 
-        if (opts.data.thead.length) {
-            const row = $("<tr>");
-            opts.data.thead.forEach((col) =>
-                row.append(`<th class="text-center px-3 py-2 ${opts.color_th}">${col}</th>`)
-            );
-            thead.append(row);
-        } else {
-            const row = $("<tr>");
-            Object.keys(opts.data.row[0] || {}).forEach((key) => {
-                if (!["opc", "id"].includes(key)) {
-                    row.append(`<th class="text-center px-3 py-2 ${opts.color_th} capitalize">${key}</th>`);
-                }
-            });
-            thead.append(row);
-        }
+    const table = $("<table>", { class: opts.class });
+    const thead = $("<thead>");
 
-        opts.data.row.forEach((data, i) => {
-            const colorBg = opts.striped && i % 2 === 0 ? opts.color_row_alt : opts.color_row;
 
-            const tr = $("<tr>", {
-                class: `${colorBg} border-t border-gray-200`,
-            });
-
-            Object.keys(data).forEach((key, colIndex) => {
-                if (["btn", "a", "dropdown", "id"].includes(key)) return;
-
-                const align =
-                    opts.center.includes(colIndex) ? "text-center" :
-                        opts.right.includes(colIndex) ? "text-right" : "text-left";
-
-                const content = typeof data[key] === "object" && data[key].html ? data[key].html : data[key];
-
-                const td = $("<td>", {
-                    id: `${key}_${data.id}`,
-                    style: `font-size:${opts.f_size}px;`,
-                    class: `${align} px-3 py-2 truncate`,
-                    html: content,
+    // Generación de columnas de encabezado
+    if(opts.data.thead) {
+        if (opts.extends) {
+            const columnHeaders = opts.data.thead;
+            if (Array.isArray(columnHeaders)) {
+                const headerRow = $('<tr>');
+                columnHeaders.forEach(column => {
+                    if (typeof column === 'string') {
+                        headerRow.append(`<th class="text-center px-3 py-2 ${opts.color_th}">${column}</th>`);
+                    } else {
+                        const complexHeaderRow = $('<tr>');
+                        Object.keys(column).forEach(key => {
+                            const cell = (typeof column[key] === 'object')
+                                ? $('<th>', column[key])
+                                : $('<th>', { text: column[key], class: `text-center ${opts.color_th}` });
+                            complexHeaderRow.append(cell);
+                        });
+                        thead.append(complexHeaderRow);
+                    }
                 });
-
-                if (opts.extends && typeof data[key] === "object") {
-                    td.attr(data[key]);
-                }
-
-                tr.append(td);
-            });
-
-            const actions = $("<td>", { class: "px-3 py-2 text-right flex gap-2 justify-end" });
-
-            if (data.dropdown) {
-                const btn = $("<button>", {
-                    class: "icon-dot-3 text-gray-600 hover:text-black",
+                thead.append(headerRow);
+            } else {
+                columnHeaders.forEach(columnGroup => {
+                    const headerGroup = $("<tr>");
+                    Object.keys(columnGroup).forEach(key => {
+                        const cell = (typeof columnGroup[key] === 'object')
+                            ? $('<th>', columnGroup[key])
+                            : $('<th>', { text: key });
+                        headerGroup.append(cell);
+                    });
+                    thead.append(headerGroup);
                 });
-                const menu = $("<ul>", {
-                    class: "absolute right-0 mt-2 w-44 z-10 bg-white border rounded-md shadow-md hidden",
-                });
-
-                data.dropdown.forEach((item) =>
-                    menu.append(`
-            <li><a onclick="${item.onclick}" class="block px-4 py-2 text-sm hover:bg-gray-100 text-gray-800">
-              <i class="${item.icon} mr-2"></i> ${item.text}</a>
-            </li>
-          `)
-                );
-
-                const wrapper = $("<div>").append(btn, menu);
-                actions.append(wrapper);
             }
+        } else {
+            const simpleHeaderRow = $('<tr>');
+            opts.data.thead.forEach(header => {
+                simpleHeaderRow.append(`<th class="text-center px-3 py-2 capitalize ${opts.color_th}">${header}</th>`);
+            });
+            thead.append(simpleHeaderRow);
+        }
+    } else {
+    const autoHeaderRow = $("<tr>");
 
-            tr.append(actions);
-            tbody.append(tr);
+    for (let clave in opts.data.row[0]) {
+        if (clave != "opc" && clave != "id") {
+
+            clave = (clave == 'btn' || clave == 'btn_personalizado' || clave == 'a' || clave == 'dropdown') ? '<i class="icon-gear"> </i>' : clave;
+
+            autoHeaderRow.append($("<th>", {
+                class: `px-3 py-2 ${opts.color_th} capitalize text-center font-semibold`,
+                style: `font-size:${opts.f_size}px;`
+            }).html(clave));
+
+
+        }
+    }
+    thead.append(autoHeaderRow);
+}
+
+table.append(thead);
+const tbody = $("<tbody>");
+
+opts.data.row.forEach((data, i) => {
+    const colorBg = opts.striped && i % 2 === 0 ? opts.color_row_alt : opts.color_row;
+
+    const tr = $("<tr>", {
+        class: `${colorBg} border-t border-gray-200`,
+    });
+
+    Object.keys(data).forEach((key, colIndex) => {
+        if (["btn", "a", "dropdown", "id"].includes(key)) return;
+
+        const align =
+            opts.center.includes(colIndex) ? "text-center" :
+                opts.right.includes(colIndex) ? "text-right" : "text-left";
+
+        // const content = typeof data[key] === "object" && data[key].html ? data[key].html : data[key];
+
+        const td = $("<td>", {
+            id: `${key}_${data.id}`,
+            style: `font-size:${opts.f_size}px;`,
+            class: `${align} px-3 py-2 truncate`,
+            html: data[key],
         });
 
-        table.append(thead).append(tbody);
-        container.append(table);
-        $(`#${opts.parent}`).html(container);
+        // if (opts.extends && typeof data[key] === "object") {
+        //     td.attr(data[key]);
+        // }
+
+        tr.append(td);
+    });
+
+    const actions = $("<td>", { class: "px-3 py-2 text-right flex gap-2 justify-end" });
+
+    if (data.dropdown) {
+        const btn = $("<button>", {
+            class: "icon-dot-3 text-gray-600 hover:text-black",
+        });
+        const menu = $("<ul>", {
+            class: "absolute right-0 mt-2 w-44 z-10 bg-white border rounded-md shadow-md hidden",
+        });
+
+        data.dropdown.forEach((item) =>
+            menu.append(`
+                        <li><a onclick="${item.onclick}" class="block px-4 py-2 text-sm hover:bg-gray-100 text-gray-800">
+                        <i class="${item.icon} mr-2"></i> ${item.text}</a>
+                        </li>
+                    `)
+        );
+
+        const wrapper = $("<div>").append(btn, menu);
+        actions.append(wrapper);
+    }
+
+    tr.append(actions);
+    tbody.append(tr);
+});
+
+table.append(tbody);
+container.append(table);
+$(`#${opts.parent}`).html(container);
     }
 
   
