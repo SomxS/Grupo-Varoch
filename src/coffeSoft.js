@@ -202,6 +202,7 @@ class Components extends Complements {
 
             parent: 'lsTable',
             url: this._link,
+            coffeesoft:false,
 
             conf: {
                 datatable: true,
@@ -220,7 +221,7 @@ class Components extends Complements {
         // configurations.
         const dataConfig = Object.assign(defaults.conf, options.conf);
 
-
+        console.log('hola')
         let opts = Object.assign(defaults, options);
         const idFilter = options.idFilterBar ? options.idFilterBar : '';
 
@@ -230,7 +231,7 @@ class Components extends Complements {
 
             const sendData = { tipo: 'text', opc: 'ls', ...options.data };
             var extendsAjax = null; // extender la funcion ajax 
-
+            console.log('hola')
 
             $(`#${idFilter}`).validar_contenedor(sendData, (datos) => {
 
@@ -256,12 +257,18 @@ class Components extends Complements {
 
                         opts.methods.send(data);
 
+                        console.log(attr_table_filter)
                         if (opts.success)
                             opts.success(data);
 
 
+                        if (opts.coffeesoft){
+                            this.createCoffeTable(attr_table_filter);
 
-                        $('#' + options.parent).rpt_json_table2(attr_table_filter);
+                        }else{
+
+                            $('#' + options.parent).rpt_json_table2(attr_table_filter);
+                        }
 
 
                         if (dataConfig.datatable) {
@@ -818,6 +825,131 @@ class Components extends Complements {
             $("#" + opts.parent).html(div);
         }
 
+    }
+
+    createCoffeTable(options) {
+        const defaults = {
+            parent: "root",
+            id: "coffeeSoftGridTable",
+            title: null,
+            data: { thead: [], row: [] },
+            center: [],
+            right: [],
+            dark: false,
+            striped: true,
+            class: "w-full table-auto text-sm text-gray-800",
+            color_th: "bg-[#003360] text-gray-100",
+            color_row: "bg-white",
+            color_row_alt: "bg-gray-100",
+            color_group: "bg-gray-200",
+            f_size: 14,
+            extends: true,
+            onEdit: () => { },
+            onDelete: () => { },
+        };
+
+        const opts = Object.assign({}, defaults, options);
+
+        if (opts.dark) {
+            opts.color_th = "bg-[#0F172A] text-white";
+            opts.color_row = "bg-[#1E293B] text-white";
+            opts.color_row_alt = "bg-[#334155] text-white";
+            opts.color_group = "bg-[#334155] text-white";
+            opts.class = "w-full table-auto text-sm text-white";
+        }
+
+        const container = $("<div>", {
+            id: opts.id,
+            class: "rounded-md border border-gray-300 shadow-sm overflow-hidden my-5",
+        });
+
+        if (opts.title) {
+            container.append(`
+        <div class="flex justify-between items-center px-4 py-3 border-b border-gray-300 bg-white">
+          <h2 class="text-base font-semibold text-gray-800">${opts.title}</h2>
+        </div>
+      `);
+        }
+
+        const table = $("<table>", { class: opts.class });
+        const thead = $("<thead>");
+        const tbody = $("<tbody>");
+
+        if (opts.data.thead.length) {
+            const row = $("<tr>");
+            opts.data.thead.forEach((col) =>
+                row.append(`<th class="text-center px-3 py-2 ${opts.color_th}">${col}</th>`)
+            );
+            thead.append(row);
+        } else {
+            const row = $("<tr>");
+            Object.keys(opts.data.row[0] || {}).forEach((key) => {
+                if (!["opc", "id"].includes(key)) {
+                    row.append(`<th class="text-center px-3 py-2 ${opts.color_th} capitalize">${key}</th>`);
+                }
+            });
+            thead.append(row);
+        }
+
+        opts.data.row.forEach((data, i) => {
+            const colorBg = opts.striped && i % 2 === 0 ? opts.color_row_alt : opts.color_row;
+
+            const tr = $("<tr>", {
+                class: `${colorBg} border-t border-gray-200`,
+            });
+
+            Object.keys(data).forEach((key, colIndex) => {
+                if (["btn", "a", "dropdown", "id"].includes(key)) return;
+
+                const align =
+                    opts.center.includes(colIndex) ? "text-center" :
+                        opts.right.includes(colIndex) ? "text-right" : "text-left";
+
+                const content = typeof data[key] === "object" && data[key].html ? data[key].html : data[key];
+
+                const td = $("<td>", {
+                    id: `${key}_${data.id}`,
+                    style: `font-size:${opts.f_size}px;`,
+                    class: `${align} px-3 py-2 truncate`,
+                    html: content,
+                });
+
+                if (opts.extends && typeof data[key] === "object") {
+                    td.attr(data[key]);
+                }
+
+                tr.append(td);
+            });
+
+            const actions = $("<td>", { class: "px-3 py-2 text-right flex gap-2 justify-end" });
+
+            if (data.dropdown) {
+                const btn = $("<button>", {
+                    class: "icon-dot-3 text-gray-600 hover:text-black",
+                });
+                const menu = $("<ul>", {
+                    class: "absolute right-0 mt-2 w-44 z-10 bg-white border rounded-md shadow-md hidden",
+                });
+
+                data.dropdown.forEach((item) =>
+                    menu.append(`
+            <li><a onclick="${item.onclick}" class="block px-4 py-2 text-sm hover:bg-gray-100 text-gray-800">
+              <i class="${item.icon} mr-2"></i> ${item.text}</a>
+            </li>
+          `)
+                );
+
+                const wrapper = $("<div>").append(btn, menu);
+                actions.append(wrapper);
+            }
+
+            tr.append(actions);
+            tbody.append(tr);
+        });
+
+        table.append(thead).append(tbody);
+        container.append(table);
+        $(`#${opts.parent}`).html(container);
     }
 
 

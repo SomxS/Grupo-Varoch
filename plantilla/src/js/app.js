@@ -2,7 +2,7 @@
 // init vars.
 let app, sub;
 
-let api = "https://huubie.com.mx/alpha/eventos/ctrl/ctrl-payment.php";
+let api = "https://erp-varoch.com/ERP24/gestor-de-actividades/ctrl/ctrl-gestordeactividades.php";
 
 
 $(async () => {
@@ -35,11 +35,17 @@ class App extends UI {
               ]
         });
 
-        this.CoffeeSoftGridTable({
-            parent: 'container-recorder',
-            data: { thead: ["Nombre", "Edad", "Correo"], row: [{ id:1, Nombre: "Ana", Edad: 23, Correo: "ana@test.com" }] },
+        this.ls();
 
+    }
+
+    async lsCoffeeTable(options) {
+        let data = await useFetch({
+            url: this._link,
+            data: { opc: 'lsRecordatorios', cbUDNReminder:'atrasados', udn:0 }
         });
+
+        
     }
 
     layout() {
@@ -90,15 +96,14 @@ class App extends UI {
     }
 
     ls() {
-        let rangePicker = getDataRangePicker("calendar");
 
         this.createTable({
-            parent: "containerEventos",
+            parent: "container-recorder",
             idFilterBar: "filterBarEventos",
-            data: { opc: "lsEvents", date_init: rangePicker.fi, date_end: rangePicker.ff },
+            data: { opc: 'lsRecordatorios', cbUDNReminder: 'atrasados', udn: 0 },
             conf: { datatable: false, pag: 15 },
+            coffeesoft:true,
             attr: {
-                class_table: "table table-bordered table-sm table-striped text-uppercase",
                 id: "tablaEventos",
                 center: [1, 2, 3, 6, 7],
                 extends: true,
@@ -512,7 +517,98 @@ class App extends UI {
     }
 
 
+     jsonExample(){
+         return {
+             thead: ["Fecha", "Actividad", "Encargado", "Estado",""],
+             row: [
+                 {
+                     id: 1,
+                     Fecha: {
+                         html: "08-abr-2025<br>18-abr-2025",
+                         class: "bg-red-400 text-white text-center rounded-l px-2 py-1"
+                     },
+                     Actividad: "Enviar comprobantes",
+                     Encargado: "Brenda",
+                     Estado: {
+                         html: `<span class="flex w-32 justify-content-center text-xs font-medium bg-yellow-100 text-yellow-800 px-2 py-1 rounded">
+                    ⏳ EN PROCESO
+                 </span>`,
+                         class: "text-center"
+                     },
+                     
+                     dropdown: [
+                         {
+                             text: "Ver",
+                             icon: "icon-eye",
+                             onclick: "console.log('Ver ID 1')"
+                         },
+                         {
+                             text: "Editar",
+                             icon: "icon-pencil",
+                             onclick: "console.log('Editar ID 1')"
+                         }
+                     ]
+                 },
+                 {
+                     id: 1,
+                     Fecha: {
+                         html: "08-abr-2025<br>18-abr-2025",
+                         class: "bg-red-400 text-white text-center rounded-l px-2 py-1"
+                     },
+                     Actividad: "colchas o waffles pagar la cotización que se envió en la requisición",
+                     Encargado: "MALENI SADAI",
+                     Estado: {
+                         html: `<span class="flex w-32 justify-content-center text-xs font-medium bg-yellow-100 text-yellow-800 px-2 py-1 rounded">
+                    ⏳ EN PROCESO
+                 </span>`,
+                         class: "text-center"
+                     },
 
+                     dropdown: [
+                         {
+                             text: "Ver",
+                             icon: "icon-eye",
+                             onclick: "console.log('Ver ID 1')"
+                         },
+                         {
+                             text: "Editar",
+                             icon: "icon-pencil",
+                             onclick: "console.log('Editar ID 1')"
+                         }
+                     ]
+                 },
+                 {
+                     id: 1,
+                     Fecha: {
+                         html: "08-abr-2025<br>18-abr-2025",
+                         class: "bg-red-400 text-white text-center rounded-l px-2 py-1"
+                     },
+                     Actividad: "colchas o waffles pagar la cotización que se envió en la requisición",
+                     Encargado: "MALENI SADAI",
+                     Estado: {
+                         html: `<span class="flex w-32 justify-content-center text-xs font-medium bg-yellow-100 text-yellow-800 px-2 py-1 rounded">
+                    ⏳ EN PROCESO
+                 </span>`,
+                         class: "text-center"
+                     },
+
+                     dropdown: [
+                         {
+                             text: "Ver",
+                             icon: "icon-eye",
+                             onclick: "console.log('Ver ID 1')"
+                         },
+                         {
+                             text: "Editar",
+                             icon: "icon-pencil",
+                             onclick: "console.log('Editar ID 1')"
+                         }
+                     ]
+                 }
+             ]
+         }
+     
+    }
 }
 
 

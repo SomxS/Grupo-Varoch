@@ -3,7 +3,7 @@
 **Compilar información**
 - Se activa con la frase para iniciar una conversación 'new-component'.
 - Reúne toda la documentación, diagramas, fotos o descripciones del componente.
-- Abre un lienzo para mostrar el desarrollo del componente.
+- Abre en formato markdown para mostrar el desarrollo del componente.
 
 
 ## 1. Contexto claro:

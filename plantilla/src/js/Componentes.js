@@ -161,88 +161,132 @@ class UI extends Templates {
         });
     }
 
-    CoffeeSoftGridTable(options) {
+    createCoffeTable2(options) {
         const defaults = {
             parent: "root",
             id: "coffeeSoftGridTable",
-            title: "Tabla Dinámica",
+            title: null,
             data: { thead: [], row: [] },
             center: [],
             right: [],
-            color_th   : "bg-[#1F2A37]",
-            color_row  : "bg-[#334155]",
-            color_group: "bg-[#475569]",
-            class: "w-full table-auto text-sm",
+            dark: false,
+            striped: true,
+            class: "w-full table-auto text-sm text-gray-800",
+            color_th: "bg-[#003360] text-gray-100",
+            color_row: "bg-white",
+            color_row_alt: "bg-gray-100",
+            color_group: "bg-gray-200",
+            f_size: 14,
+            extends: true,
             onEdit: () => { },
             onDelete: () => { },
         };
 
         const opts = Object.assign({}, defaults, options);
 
+        if (opts.dark) {
+            opts.color_th = "bg-[#0F172A] text-white";
+            opts.color_row = "bg-[#1E293B] text-white";
+            opts.color_row_alt = "bg-[#334155] text-white";
+            opts.color_group = "bg-[#334155] text-white";
+            opts.class = "w-full table-auto text-sm text-white";
+        }
+
         const container = $("<div>", {
             id: opts.id,
-            class: "rounded-lg border border-gray-700 overflow-hidden my-5"
+            class: "rounded-md border border-gray-300 shadow-sm overflow-hidden my-5",
         });
 
-        // Título superior
-        const titleRow = $(`
-            <div class="flex justify-between items-center px-4 py-3 ${opts.color_th} border-b border-gray-800">
-            <h2 class="text-base font-semibold text-white">${opts.title}</h2>
-            </div>
-        `);
+        if (opts.title) {
+            container.append(`
+        <div class="flex justify-between items-center px-4 py-3 border-b border-gray-300 bg-white">
+          <h2 class="text-base font-semibold text-gray-800">${opts.title}</h2>
+        </div>
+      `);
+        }
 
-        container.append(titleRow);
-
-        // Tabla principal
-        const table = $("<table>", {
-            class: opts.class
-        });
-
+        const table = $("<table>", { class: opts.class });
         const thead = $("<thead>");
-        const headerRow = $("<tr>");
-        opts.data.thead.forEach((col, i) => {
-            headerRow.append(`<th class="text-center px-3 py-2 ${opts.color_th} text-white">${col}</th>`);
-        });
-        headerRow.append('<th class="text-right px-3 py-2 ${opts.color_th} text-white">Acciones</th>');
-        thead.append(headerRow);
-        table.append(thead);
-
         const tbody = $("<tbody>");
-        opts.data.row.forEach((row, idx) => {
-            const tr = $("<tr>", { class: `${opts.color_row} border-t border-gray-700` });
-            opts.data.thead.forEach((key, i) => {
-                const align = opts.center.includes(i) ? 'text-center' : opts.right.includes(i) ? 'text-right' : 'text-left';
-                tr.append(`<td class="px-3 py-2 text-gray-100 truncate ${align}">${row[key] ?? ''}</td>`);
+
+        if (opts.data.thead.length) {
+            const row = $("<tr>");
+            opts.data.thead.forEach((col) =>
+                row.append(`<th class="text-center px-3 py-2 ${opts.color_th}">${col}</th>`)
+            );
+            thead.append(row);
+        } else {
+            const row = $("<tr>");
+            Object.keys(opts.data.row[0] || {}).forEach((key) => {
+                if (!["opc", "id"].includes(key)) {
+                    row.append(`<th class="text-center px-3 py-2 ${opts.color_th} capitalize">${key}</th>`);
+                }
+            });
+            thead.append(row);
+        }
+
+        opts.data.row.forEach((data, i) => {
+            const colorBg = opts.striped && i % 2 === 0 ? opts.color_row_alt : opts.color_row;
+
+            const tr = $("<tr>", {
+                class: `${colorBg} border-t border-gray-200`,
             });
 
-            // Acciones por fila
-            const actionTd = $("<td>", { class: "px-3 py-2 text-right flex gap-2 justify-end" });
-            const btnEdit = $(`<button class="text-white text-xs px-2 py-1 bg-gray-700 rounded hover:bg-gray-600">✏️</button>`);
-            const btnDelete = $(`<button class="text-red-400 text-xs px-2 py-1 bg-gray-700 rounded hover:bg-gray-600">🗑️</button>`);
+            Object.keys(data).forEach((key, colIndex) => {
+                if (["btn", "a", "dropdown", "id"].includes(key)) return;
 
-            btnEdit.on("click", () => opts.onEdit(row, idx));
-            btnDelete.on("click", () => opts.onDelete(row, idx));
+                const align =
+                    opts.center.includes(colIndex) ? "text-center" :
+                        opts.right.includes(colIndex) ? "text-right" : "text-left";
 
-            actionTd.append(btnEdit, btnDelete);
-            tr.append(actionTd);
+                const content = typeof data[key] === "object" && data[key].html ? data[key].html : data[key];
 
+                const td = $("<td>", {
+                    id: `${key}_${data.id}`,
+                    style: `font-size:${opts.f_size}px;`,
+                    class: `${align} px-3 py-2 truncate`,
+                    html: content,
+                });
+
+                if (opts.extends && typeof data[key] === "object") {
+                    td.attr(data[key]);
+                }
+
+                tr.append(td);
+            });
+
+            const actions = $("<td>", { class: "px-3 py-2 text-right flex gap-2 justify-end" });
+
+            if (data.dropdown) {
+                const btn = $("<button>", {
+                    class: "icon-dot-3 text-gray-600 hover:text-black",
+                });
+                const menu = $("<ul>", {
+                    class: "absolute right-0 mt-2 w-44 z-10 bg-white border rounded-md shadow-md hidden",
+                });
+
+                data.dropdown.forEach((item) =>
+                    menu.append(`
+            <li><a onclick="${item.onclick}" class="block px-4 py-2 text-sm hover:bg-gray-100 text-gray-800">
+              <i class="${item.icon} mr-2"></i> ${item.text}</a>
+            </li>
+          `)
+                );
+
+                const wrapper = $("<div>").append(btn, menu);
+                actions.append(wrapper);
+            }
+
+            tr.append(actions);
             tbody.append(tr);
         });
 
-        table.append(tbody);
+        table.append(thead).append(tbody);
         container.append(table);
-
         $(`#${opts.parent}`).html(container);
     }
 
-    // Ejemplo de uso
-    // CoffeeSoftGridTable({
-    //   parent: "root",
-    //   title: "Mi Tabla",
-    //   data: { thead: ["Nombre", "Edad", "Correo"], row: [{ Nombre: "Ana", Edad: 23, Correo: "ana@test.com" }] },
-    //   onEdit: (row, idx) => console.log("Editar", row),
-    //   onDelete: (row, idx) => console.log("Eliminar", row)
-    // });
+  
 
 
 
