@@ -259,18 +259,13 @@ class Components extends Complements {
 
                         if (opts.success)
                             opts.success(data);
-                        
-
-                        console.log(data)
+                                           
 
                         if (opts.coffeesoft) {
                             data.thead = [];
                             attr_table_filter.parent = opts.parent;
-                            console.log(attr_table_filter)
-                            this.createCoffeTable({
-                                parent:'container-recorder',
-                                data: data
-                            });
+
+                            this.createCoffeTable(attr_table_filter);
 
                         } else {
 
