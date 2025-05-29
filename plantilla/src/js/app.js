@@ -61,7 +61,7 @@ class App extends UI {
         this.createTable({
             parent: "container-recorder",
             idFilterBar: "filterBarEventos",
-            data: { opc: 'lsRecordatorios', cbUDNReminder: 'atrasados', udn: 0 },
+            data: { opc: 'list', filtroUDN: 'all', filtroPeriodo: 'mes' },
             conf: { datatable: false, pag: 15 },
             coffeesoft:true,
             attr: {
