@@ -166,7 +166,7 @@ class UI extends Templates {
             theme: 'light',
             subtitle: null,
             dark: false,
-            theme: 'light',
+            theme: 'dark',
             subtitle: null,
             dark: false,
             parent: "root",
@@ -205,33 +205,12 @@ class UI extends Templates {
             defaults.color_group = "bg-gray-200";
             defaults.class = "w-full table-auto text-sm text-gray-800";
         }
-            extends: true,
-            f_size: 14,
-            includeColumnForA: false // Agregado para controlar si se agrega columna 'a'
-        };
-
-        if (options.theme === 'dark') {
-            defaults.dark = true;
-            defaults.color_th = "bg-[#0F172A] text-white";
-            defaults.color_row = "bg-[#1E293B] text-white";
-            defaults.color_group = "bg-[#334155] text-white";
-            defaults.class = "w-full table-auto text-sm text-white";
-        } else if (options.theme === 'corporativo') {
-            defaults.color_th = "bg-[#003360] text-white";
-            defaults.color_row = "bg-[#E5EFFF] text-[#003360]";
-            defaults.color_group = "bg-[#D0E3FF] text-[#003360]";
-            defaults.class = "w-full table-auto text-sm text-[#003360] font-semibold";
-        } else {
-            defaults.color_th = "bg-gray-200 text-gray-600";
-            defaults.color_row = "bg-white hover:bg-gray-600";
-            defaults.color_group = "bg-gray-200";
-            defaults.class = "w-full table-auto text-sm text-gray-800";
-        }
+          
 
         const opts = Object.assign({}, defaults, options);
         const container = $("<div>", {
-            id: opts.id,
-            class: "rounded-md border border-gray-300 shadow-sm overflow-hidden my-5",
+            
+            class: "rounded-md  overflow-hidden my-5",
         });
 
         if (opts.title) {
@@ -241,17 +220,13 @@ class UI extends Templates {
                 ${opts.subtitle ? `<p class="text-sm ${opts.dark ? 'text-gray-400' : 'text-gray-600'} mt-1">${opts.subtitle}</p>` : ''}
             </div>`);
             container.append(titleRow);
-            const titleRow = $(`
-            <div class="flex flex-col px-4 py-3 border-b ${opts.dark ? 'border-gray-700 bg-gray-800' : 'border-gray-300 bg-white'}">
-                <h2 class="text-base font-semibold ${opts.dark ? 'text-gray-100' : 'text-gray-800'}">${opts.title}</h2>
-                ${opts.subtitle ? `<p class="text-sm ${opts.dark ? 'text-gray-400' : 'text-gray-600'} mt-1">${opts.subtitle}</p>` : ''}
-            </div>`);
-            container.append(titleRow);
+          
+          
         }
 
 
 
-        const table = $("<table>", { class: opts.class });
+        const table = $("<table>", { id: opts.id, class: 'border border-gray-300 w-100 shadow-sm'+opts.class });
         const thead = $("<thead>");
 
 

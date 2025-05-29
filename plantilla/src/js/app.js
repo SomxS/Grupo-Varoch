@@ -46,19 +46,16 @@ class App extends UI {
         });
 
      
-        this.createCoffeTable2({
+        this.createTableComponent({
             parent: "container-recorder",
-            data: data
+            data: data,
+            theme:'corporativo',
+            id:'tbTable'
         });
 
-        
+        simple_data_table('#tbTable');
 
-
-
-
-
-
-        
+       
     }
 
     layout() {
