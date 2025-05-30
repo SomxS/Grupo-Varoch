@@ -246,7 +246,7 @@ class Components extends Complements {
 
 
                     extendsAjax.then((data) => {
-                       
+
                         let attr_table_filter = {
                             data: data,
                             f_size: '14',
@@ -259,10 +259,10 @@ class Components extends Complements {
 
                         if (opts.success)
                             opts.success(data);
-                                           
+
 
                         if (opts.coffeesoft) {
-                           
+
                             attr_table_filter.parent = opts.parent;
 
                             this.createCoffeTable(attr_table_filter);
@@ -447,21 +447,21 @@ class Components extends Complements {
         var defaults = {
             json: [],
 
-            class  : "row",
-            parent : "",
+            class: "row",
+            parent: "",
             Element: "div",
 
-            id     : "containerForm",
+            id: "containerForm",
             prefijo: "",
-            icon   : "icon-dollar",
+            icon: "icon-dollar",
 
-            color        : "primary",
-            color_btn    : "outline-primary",
+            color: "primary",
+            color_btn: "outline-primary",
             color_default: "primary",
-            text_btn     : "Aceptar",
-            fn           : "EnviarDatos()",
-            id_btn       : "btnAceptar",
-            required     : true,
+            text_btn: "Aceptar",
+            fn: "EnviarDatos()",
+            id_btn: "btnAceptar",
+            required: true,
         };
 
         let opts = Object.assign(defaults, options); // Union de
@@ -609,7 +609,7 @@ class Components extends Complements {
     }
 
 
-    ModalForm(options){
+    ModalForm(options) {
 
         // Configuración para formularios.
         const idFormulario = options.id ? options.id : 'modalForm';
@@ -622,10 +622,10 @@ class Components extends Complements {
             id: idFormulario,
             autofill: false,
             bootbox: {
-                title      : 'Modal example',
+                title: 'Modal example',
                 closeButton: true,
-                message    : components,
-                id         : 'modal'
+                message: components,
+                id: 'modal'
             },
             json: [
                 {
@@ -707,9 +707,9 @@ class Components extends Complements {
 
         let defaults = {
             id: idFormulario,
-            autofill:false,
+            autofill: false,
             closeModal: true,
-            btnCancel:{
+            btnCancel: {
                 opc: "button",
                 id: 'btnExit',
                 inert: true,
@@ -719,13 +719,13 @@ class Components extends Complements {
                 color_btn: "outline-danger",
                 class: "col-6"
             },
-            btnSuccess:{
-                opc      : "button",
-                id       : 'btnSuccess',
+            btnSuccess: {
+                opc: "button",
+                id: 'btnSuccess',
                 className: "w-full",
-                onClick  : () => SuccessForm(),
-                text     : "Aceptar",
-                class    : "col-6"
+                onClick: () => SuccessForm(),
+                text: "Aceptar",
+                class: "col-6"
             },
 
             bootbox: {
@@ -733,7 +733,7 @@ class Components extends Complements {
                 closeButton: true,
                 message: components,
             },
-            json: [ {opc: 'label', text: 'Agrega tu formulario',class:'col-12' } ],
+            json: [{ opc: 'label', text: 'Agrega tu formulario', class: 'col-12' }],
             autovalidation: true,
             data: { opc: 'sendForm' }
         };
@@ -750,7 +750,7 @@ class Components extends Complements {
                     opc: "save-frm",
                 };
 
-                $("#" + conf.id).validar_contenedor({tipo:'text'}, (ok) => {
+                $("#" + conf.id).validar_contenedor({ tipo: 'text' }, (ok) => {
                     let formData = new FormData($('#' + conf.id)[0]);
                     const datos = {};
                     formData.forEach((value, key) => (datos[key] = value));
@@ -777,9 +777,9 @@ class Components extends Complements {
         let CancelForm = () => { modal.modal('hide'); }
 
         conf.json.push(
-                {
+            {
                 ...conf.btnSuccess
-                },
+            },
             {
                 ...conf.btnCancel
             },
@@ -896,7 +896,7 @@ class Components extends Complements {
 
     }
 
-   
+
 
     createModal(options) {
 
@@ -904,11 +904,11 @@ class Components extends Complements {
 
 
         let defaults = {
-            id     : '',
+            id: '',
             bootbox: {
-                title      : 'Modal example',
+                title: 'Modal example',
                 closeButton: true,
-                message    : ' ',
+                message: ' ',
             },
 
             extends: false,
@@ -994,8 +994,8 @@ class Components extends Complements {
 
         for (const x of opts.data) {
 
-            let active      = "";
-            let tab_active  = "";
+            let active = "";
+            let tab_active = "";
 
             if (x.active) {
                 active = "active";
@@ -1123,24 +1123,24 @@ class Components extends Complements {
 
     }
 
-    createNavBar(options){
+    createNavBar(options) {
 
         let defaults = {
-            logoSrc    : 'https://erp-varoch.com/ERP2/src/img/logos/logo_icon_wh.png',
-            logoAlt    : 'Grupo Varoch',
+            logoSrc: 'https://erp-varoch.com/ERP2/src/img/logos/logo_icon_wh.png',
+            logoAlt: 'Grupo Varoch',
             onLogoClick: 'location.reload()',
             onMenuClick: '',
-            themeClass : 'bg-dia',
-            menuItems  : [
+            themeClass: 'bg-dia',
+            menuItems: [
                 { icon: 'icon-sun-inv-1', visible: false },
                 { icon: 'icon-bell', visible: false },
                 {
-                    icon   : 'icon-mail',
+                    icon: 'icon-mail',
                     visible: false,
                     submenu: '<div id="mensage"><li>Hola</li></div>'
                 },
                 {
-                    id     : 'li_user',
+                    id: 'li_user',
                     visible: true,
                     submenu: '<li onClick="redireccion(\'perfil/perfil.php\');"></li>'
                 }
@@ -1148,15 +1148,15 @@ class Components extends Complements {
         };
 
         let opts = $.extend({}, defaults, options);
-          // Create header element
+        // Create header element
         let $header = $('<header>', { class: opts.themeClass });
-          // Create section for logo and menu button
+        // Create section for logo and menu button
         let $section = $('<section>')
             .append(
                 $('<span>', {
-                    type : 'button',
-                    id   : 'btnSidebar',
-                    html : $('<i>', { class: 'icon-menu' }),
+                    type: 'button',
+                    id: 'btnSidebar',
+                    html: $('<i>', { class: 'icon-menu' }),
                     click: function () {
                         if (opts.onMenuClick && typeof opts.onMenuClick === 'function') {
                             opts.onMenuClick();
@@ -1167,8 +1167,8 @@ class Components extends Complements {
             .append(
                 $('<img>', {
                     class: 'd-block d-sm-none',
-                    src  : opts.logoSrc,
-                    alt  : opts.logoAlt,
+                    src: opts.logoSrc,
+                    alt: opts.logoAlt,
                     click: function () {
                         if (opts.onLogoClick) {
                             eval(opts.onLogoClick);
@@ -1177,10 +1177,10 @@ class Components extends Complements {
                 })
             );
         $header.append($section);
-          // Create nav element
+        // Create nav element
         let $nav = $('<nav>');
-        let $ul  = $('<ul>', { class: 'theme', id: 'navbar' });
-          // Create menu items
+        let $ul = $('<ul>', { class: 'theme', id: 'navbar' });
+        // Create menu items
         opts.menuItems.forEach((item, index) => {
             if (!item.visible) return;  // Skip hidden items
             let $li = $('<li>', { id: item.id || null })
@@ -1193,7 +1193,7 @@ class Components extends Complements {
         });
         $nav.append($ul);
         $header.append($nav);
-          // Append to body or specific parent
+        // Append to body or specific parent
         $(opts.parent || 'body').prepend($header);
 
 
@@ -2111,7 +2111,7 @@ class Components extends Complements {
     createItemCard(options) {
         let defaults = {
             parent: 'cardGridContainer',
-            color:' bg-[#333D4C]',
+            color: ' bg-[#333D4C]',
             json: [
                 {
                     titulo: "Evento",
@@ -2204,49 +2204,57 @@ class Components extends Complements {
             onDelete: () => { },
             extends: true,
             f_size: 14,
-            includeColumnForA: false // Agregado para controlar si se agrega columna 'a'
+            includeColumnForA: false,
+            border_table: "border border-gray-300",
+            border_row: "border-t border-gray-200",
+            color_row_alt: "bg-gray-100",
+            striped: false
         };
 
         if (options.theme === 'dark') {
-            defaults.dark = true;
-            defaults.color_th = "bg-[#0F172A] text-white";
-            defaults.color_row = "bg-[#1E293B] text-white";
-            defaults.color_group = "bg-[#334155] text-white";
-            defaults.class = "w-full table-auto text-sm text-white";
+            defaults.dark          = true;
+            defaults.color_th      = "bg-[#0F172A] text-white";
+            defaults.color_row     = "bg-[#1E293B] text-white";
+            defaults.color_group   = "bg-[#334155] text-white";
+            defaults.class         = "w-full table-auto text-sm text-white";
+            defaults.border_table  = "border border-gray-600";
+            defaults.border_row    = "border-t border-gray-700";
+            defaults.color_row_alt = "bg-[#111827]";
         } else if (options.theme === 'corporativo') {
-            defaults.color_th = "bg-[#003360] text-white";
-            defaults.color_row = "bg-[#E5EFFF] text-[#003360]";
-            defaults.color_group = "bg-[#D0E3FF] text-[#003360]";
-            defaults.class = "w-full table-auto text-sm text-[#003360] font-semibold";
+            defaults.color_th      = "bg-[#003360] text-white";
+            defaults.color_row     = "bg-white ";
+            defaults.color_group   = "bg-[#D0E3FF] ";
+            defaults.class         = "w-full table-auto text-sm ";
+            defaults.border_table  = "border border-gray-300";
+            defaults.border_row    = "border-t border-gray-300";
+            defaults.color_row_alt = "bg-gray-200";
         } else {
-            defaults.color_th = "bg-gray-200 text-gray-600";
-            defaults.color_row = "bg-white hover:bg-gray-600";
-            defaults.color_group = "bg-gray-200";
-            defaults.class = "w-full table-auto text-sm text-gray-800";
+            defaults.color_th      = "bg-gray-100 text-gray-600";
+            defaults.color_row     = "bg-white hover:bg-gray-600";
+            defaults.color_group   = "bg-gray-200";
+            defaults.class         = "w-full table-auto text-sm text-gray-800";
+            defaults.border_table = "border border-gray-300";
+            defaults.border_row    = "border-t border-gray-200";
+            defaults.color_row_alt = "bg-gray-100";
         }
 
         const opts = Object.assign({}, defaults, options);
         const container = $("<div>", {
-            id: opts.id,
-            class: "rounded-md border border-gray-300 shadow-sm overflow-hidden my-5",
+            class: "rounded-lg overflow-hidden my-5",
         });
 
         if (opts.title) {
             const titleRow = $(`
-            <div class="flex flex-col px-4 py-3 border-b ${opts.dark ? 'border-gray-700 bg-gray-800' : 'border-gray-300 bg-white'}">
+            <div class="flex flex-col px-4 py-3  border-b ${opts.dark ? 'border-gray-700 bg-gray-800' : 'border-gray-300 bg-white'}">
                 <h2 class="text-base font-semibold ${opts.dark ? 'text-gray-100' : 'text-gray-800'}">${opts.title}</h2>
                 ${opts.subtitle ? `<p class="text-sm ${opts.dark ? 'text-gray-400' : 'text-gray-600'} mt-1">${opts.subtitle}</p>` : ''}
             </div>`);
             container.append(titleRow);
         }
 
-
-
-        const table = $("<table>", { class: opts.class });
+        const table = $("<table>", { id: opts.id, class: `  ${opts.border_table} ${opts.class}` });
         const thead = $("<thead>");
 
-
-        // Generación de columnas de encabezado
         if (opts.data.thead) {
             if (opts.extends) {
                 const columnHeaders = opts.data.thead;
@@ -2288,18 +2296,13 @@ class Components extends Complements {
             }
         } else {
             const autoHeaderRow = $("<tr>");
-
             for (let clave in opts.data.row[0]) {
                 if (clave != "opc" && clave != "id") {
-
                     clave = (clave == 'btn' || clave == 'btn_personalizado' || clave == 'a' || clave == 'dropdown') ? '<i class="icon-gear"> </i>' : clave;
-
                     autoHeaderRow.append($("<th>", {
                         class: `px-3 py-2 ${opts.color_th} capitalize text-center font-semibold`,
                         style: `font-size:${opts.f_size}px;`
                     }).html(clave));
-
-
                 }
             }
             thead.append(autoHeaderRow);
@@ -2310,9 +2313,8 @@ class Components extends Complements {
 
         opts.data.row.forEach((data, i) => {
             const colorBg = opts.striped && i % 2 === 0 ? opts.color_row_alt : opts.color_row;
-
             const tr = $("<tr>", {
-                class: `${colorBg} border-t border-gray-200`,
+                class: ``,
             });
 
             Object.keys(data).forEach((key, colIndex) => {
@@ -2322,52 +2324,59 @@ class Components extends Complements {
                     opts.center.includes(colIndex) ? "text-center" :
                         opts.right.includes(colIndex) ? "text-right" : "text-left";
 
-                // const content = typeof data[key] === "object" && data[key].html ? data[key].html : data[key];
+
 
                 const td = $("<td>", {
                     id: `${key}_${data.id}`,
                     style: `font-size:${opts.f_size}px;`,
-                    class: `${align} px-3 py-2 truncate`,
+                    class: `${align} px-3 py-2 truncate  ${colorBg} ${opts.border_row}`,
                     html: data[key],
                 });
-
-                // if (opts.extends && typeof data[key] === "object") {
-                //     td.attr(data[key]);
-                // }
 
                 tr.append(td);
             });
 
-            const actions = $("<td>", { class: "px-3 py-2 text-right flex gap-2 justify-end" });
+            const actions = $("<td>", { class: `px-3 py-2 flex gap-2 justify-end items-center ${colorBg} ${opts.border_row}` });
+
+            if (data.a?.length) {
+                data.a.forEach(atributos => {
+
+                    const button_a = $("<a>", atributos);
+                    actions.append(button_a);
+                });
+                tr.append(actions);
+            }
 
             if (data.dropdown) {
-                const btn = $("<button>", {
-                    class: "icon-dot-3 text-gray-600 hover:text-black",
+                const wrapper = $("<div>", {
+                    class: "relative"
                 });
+
+                const btn = $("<button>", {
+                    class: "icon-dot-3 text-gray-600 hover:text-blue-600",
+                    click: function (e) {
+                        e.stopPropagation();
+                        $(this).next("ul").toggle();
+                    }
+                });
+
                 const menu = $("<ul>", {
                     class: "absolute right-0 mt-2 w-44 z-10 bg-white border rounded-md shadow-md hidden",
                 });
 
                 data.dropdown.forEach((item) =>
                     menu.append(`
-                        <li><a onclick="${item.onclick}" class="block px-4 py-2 text-sm hover:bg-gray-100 text-gray-800">
-                        <i class="${item.icon} mr-2"></i> ${item.text}</a>
-                        </li>
-                    `)
+                    <li><a onclick="${item.onclick}"text-left class="block px-4 py-2 text-sm hover:bg-gray-100 text-gray-800">
+                    <i class="${item.icon} "></i> ${item.text}</a></li>`)
                 );
 
-                const wrapper = $("<div>").append(btn, menu);
-                actions.append(wrapper);
-            }
+               
 
-            if (data.a?.length) {
-             
-                data.a.forEach(link => {
-                    actions.append($("<a>", Object.assign({
-                        class: "inline-flex items-center px-2 py-1 text-sm text-white bg-blue-600 hover:bg-blue-700 rounded"
-                    }, link)));
-                });
-                tr.append(actions);
+
+
+                wrapper.append(btn, menu);
+                actions.append(wrapper);
+                $(document).on("click", () => menu.hide());
             }
 
             tr.append(actions);
@@ -2378,9 +2387,6 @@ class Components extends Complements {
         container.append(table);
         $(`#${opts.parent}`).html(container);
     }
-
-
-
 
 
 
@@ -2579,8 +2585,8 @@ class Templates extends Components {
             parent: this._div_modulo,
             // class: "d-flex mx-2 my-2 h-full",
             class: "flex flex-col p-2 h-full",
-            json:[],
-            data:[],
+            json: [],
+            data: [],
             card: {
                 name: "containerLayout",
                 class: "flex flex-col gap-3 h-full",
@@ -2664,13 +2670,13 @@ class Templates extends Components {
             className: 'flex p-2 ',
             cardtable: {
                 className: 'col-7 line',
-                id: 'containerTable'+name,
+                id: 'containerTable' + name,
                 filterBar: { id: 'filterTable', className: 'col-12 mb-2 line' },
                 container: { id: 'listTable', className: 'col-12 line' },
             },
             cardform: {
                 className: 'col-5 line',
-                id: 'containerForm'+name,
+                id: 'containerForm' + name,
 
             },
         };
@@ -2728,7 +2734,7 @@ class Templates extends Components {
 
         let opts = Object.assign(defaults, components);
         $(`#${opts.parent}`).simple_json_tab({
-            data   : opts.json,
+            data: opts.json,
             // class  : opts.class,
             // id     : opts.id,
             // options: opts.options

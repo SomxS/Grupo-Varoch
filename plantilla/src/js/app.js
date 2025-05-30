@@ -250,12 +250,13 @@ class App extends UI {
             parent: "container-recorder",
             idFilterBar: "filterBarEventos",
             data: { opc: 'list', id:11},
-            conf: { datatable: true, pag: 15 },
-            coffeesoft:true,
+            conf: { datatable: false, pag: 15 },
+            coffeesoft:true, // activar new style
             attr: {
-                id: "tablaEventos",
+                id: "tableComponent",
                 center: [1, 2, 3, 6, 7],
                 extends: true,
+                theme:'light'
             },
         });
     }
