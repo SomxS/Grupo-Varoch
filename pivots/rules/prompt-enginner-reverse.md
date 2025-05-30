@@ -17,10 +17,10 @@
 Se recibe un archivo PHP que representa un módulo de nóminas utilizado internamente. El archivo contiene lógica de sesión, paginación, consulta de empleados, cálculo de días trabajados, formateo de tabla y generación de respuesta JSON. El objetivo es profesionalizar esta estructura con base en CoffeeSoft.
 
 **Resultado esperado:**
-- Documento con los pasos seguidos para analizar, separar y reconstruir el módulo (`nominas`).
+- Documento con los pasos seguidos para analizar, separar y reconstruir el módulo.
 - Diagrama funcional del proceso original.
 - Archivos generados:
-  - `ctrl-nominas.php` con métodos `init()` y `list()`.
-  - `mdl-nominas.php` con `getIncidencias($filtros)`.
-  - `nominas.js` con estructura CoffeeSoft.
+  - `ctrl-[name_project].php` con métodos `init()` y `list()`.
+  - `mdl-[name_project].php` con `getIncidencias($filtros)`.
+  - `[name_project].js` con estructura CoffeeSoft.
 - Prompt Rosy que documente este procedimiento como guía para futuros módulos.
