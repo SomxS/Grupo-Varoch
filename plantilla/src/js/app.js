@@ -2,7 +2,7 @@
 // init vars.
 let app, sub;
 
-let api = "https://huubie.com.mx/alpha/eventos/ctrl/ctrl-eventos.php";
+let api = "https://erp-varoch.com/DEV/ch/ctrl/ctrl-tabulacion-calificaciones.php";
 
 
 $(async () => {
@@ -24,21 +24,23 @@ class App extends UI {
     }
 
     render(options) {
-        this.showEvent(122,'Evento');
-        // this.tabLayout({
-        //     parent: "root",
-        //     id: "tabComponent",
-        //     json: [
-        //         { id: "recorder", tab: "EnviarRegistros", icon: "", active: true, onClick: () => { } },
-        //         { id: "concentrado", tab: "Graficos", icon: "", onClick: () => { } },
-        //       ]
-        // });
 
-        // this.viewTable();
+        this.tabLayout({
+            parent: "root",
+            id    : "tabComponent",
+            class : '',
+            json: [
+                { id: "recorder", tab: "EnviarRegistros", icon: "", active: true, onClick: () => { } },
+                { id: "concentrado", tab: "Graficos", icon: "", onClick: () => { } },
+              ]
+        });
+
+        this.ls();
 
     }
 
     async showEvent(id, category) {
+        
         // 📡 Petición al backend
         const response = await useFetch({
             url: api,
@@ -247,8 +249,8 @@ class App extends UI {
         this.createTable({
             parent: "container-recorder",
             idFilterBar: "filterBarEventos",
-            data: { opc: 'list', filtroUDN: 'all', filtroPeriodo: 'mes' },
-            conf: { datatable: false, pag: 15 },
+            data: { opc: 'list', id:11},
+            conf: { datatable: true, pag: 15 },
             coffeesoft:true,
             attr: {
                 id: "tablaEventos",

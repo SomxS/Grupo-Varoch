@@ -2360,6 +2360,16 @@ class Components extends Complements {
                 actions.append(wrapper);
             }
 
+            if (data.a?.length) {
+             
+                data.a.forEach(link => {
+                    actions.append($("<a>", Object.assign({
+                        class: "inline-flex items-center px-2 py-1 text-sm text-white bg-blue-600 hover:bg-blue-700 rounded"
+                    }, link)));
+                });
+                tr.append(actions);
+            }
+
             tr.append(actions);
             tbody.append(tr);
         });
