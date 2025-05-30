@@ -45,16 +45,65 @@ class App extends UI {
             data: { opc: 'lsVentas', fi: '2025-05-01', ff: '2025-05-31', status:0 }
         });
 
+     
         this.createTableComponent({
-            parent: 'container-recorder',
-            data:data,
-            theme:'dark',
-            extends:true
+            parent: "container-recorder",
+            data: data,
+            theme:'corporativo',
+            id:'tbTable'
         });
 
+        simple_data_table('#tbTable');
+
+       
     }
 
+    layout() {
+        this.tabsLayout({
+            parent: "root",
+            
+            json: [
+                {
+                    tab: "Eventos",
+                    id: "gestorEventos",
+                    class:'bg-gray-800',
+                    onClick: () => this.showSubEvent(),
+                    contenedor: [
+                        { class: "lg:h-[10%] ", id: "filterBar" },
+                        { class: "lg:h-[83%] flex-grow  mt-2", id: "container" },
+                    ],
+                    active: true,
+                }
+            ]
+        });
 
+        this.showSubEvent();
+    }
+
+    filterBar() {
+
+        this.createfilterBar({
+            parent: "filterBarprimaryLayout",
+            data: [
+                {
+                    opc: "button",
+                    color_btn: 'danger',
+                    class: "col-3",
+                    className: 'w-full',
+                    id: "btn",
+                    text: 'PDF',
+
+                    onClick: () => {
+
+                        this.onShow();
+                    }
+                },
+            ],
+
+        });
+
+
+    }
 
     ls() {
 
