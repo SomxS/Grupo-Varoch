@@ -15,6 +15,9 @@ Crear un componente visual y funcional basado en un código fuente o imagen de r
 
 - Utilizar exclusivamente **TailwindCSS** para los estilos.
 - Abre en formato markdown para mostrar el desarrollo del componente.
+- No modificar el código que se pega inicialmente.
+- No ejecutar transformaciones ni refactorizaciones automáticas.
+- Solo devolver análisis, resumen de funcionalidades y estructura del código recibido.
 - Los componentes son metodos de una clase, no crees una funcion 
 - El componente debe ser **modular**, **reutilizable**, **desacoplado** y aceptar `options` como estructura base.
 - El modo mod-component también incluye la generación o modificación de los archivos mdl-[nombre].php y ctrl-[nombre].php, según sea necesario.

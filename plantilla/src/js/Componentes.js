@@ -36,7 +36,7 @@ class UI extends Templates {
         };
 
         const sizes = {
-            large: "rounded-lg flex gap-1 px-1 py-1 w-full text-sm ",
+            large: "rounded-lg flex  gap-1 px-1 py-1 w-full text-sm ",
             short: "rounded-lg flex  gap-1 p-1  px-1 py-1 text-sm "
         };
 
@@ -80,15 +80,16 @@ class UI extends Templates {
         if (opts.renderContainer) {
             const contentContainer = $("<div>", {
                 id: `content-${opts.id}`,
-                class: "mt-2"
+                class: "mt-2 h-[calc(100vh-160px)] overflow-hidden"
             });
 
             opts.json.forEach(tab => {
                 const contentView = $("<div>", {
                     id: `container-${tab.id}`,
-                    class: `hidden border p-3 h-full rounded-lg`,
+                    class: `hidden border p-3  h-full overflow-auto rounded-lg`,
                     html: tab.content || ""
                 });
+
                 contentContainer.append(contentView);
             });
 
