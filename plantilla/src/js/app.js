@@ -2,7 +2,7 @@
 // init vars.
 let app, sub;
 
-let api = "https://erp-varoch.com/DEV/ch/ctrl/ctrl-tabulacion-calificaciones.php";
+let api = "https://www.huubie.com.mx/alpha/eventos/ctrl/ctrl-payment.php";
 
 
 $(async () => {
@@ -20,7 +20,7 @@ class App extends UI {
     }
 
     init() {
-        this.render();
+        this.historyPay(123);
     }
 
     render(options) {
@@ -29,14 +29,159 @@ class App extends UI {
             parent: "root",
             id    : "tabComponent",
             class : '',
+            theme : 'dark',
+
             json: [
-                { id: "recorder", tab: "EnviarRegistros", icon: "", active: true, onClick: () => { } },
-                { id: "concentrado", tab: "Graficos", icon: "", onClick: () => { } },
-              ]
+                { id: "timeline",    tab: "Bitacora", icon: "", onClick: () => { } },
+                { id: "concentrado",  active: true, tab: "Graficos", icon: "", onClick: () => { } ,},
+            ]
+
         });
 
-        this.ls();
+       
+    }
 
+    async historyPay(id) {
+
+        let data = await useFetch({ url: this._link, data: { opc: 'getHistory', id: id } });
+
+        let modalAdvance = bootbox.dialog({
+
+            title      : `<h4 class="text-uppercase"> Historial de pago </h4>`,
+            size       : "large",
+            id         : 'modalAdvance',
+            closeButton: true,
+            message    : `<div id="containerChat"></div>`,
+
+        });
+
+
+
+        this.tabLayout({
+            parent: "containerChat",
+            id    : "tabComponent",
+            theme : 'dark',
+            json: [
+                { id: "timeline", tab: "Bitácora de pagos", icon: "", onClick: () => { } },
+                { id: "list", tab: "Lista de pagos", icon: "", active: true, onClick: () => { } },
+            ]
+        });
+
+        this.createTimeLine2({
+            parent : 'container-timeline',
+            data   : data.history,
+            success: () => {
+                this.addHistory(id);
+            }
+        });
+
+        this.lsPay(123);
+
+
+    }
+
+    lsPay(idEvent){
+        
+        this.createTable({
+            parent     : 'container' + this.PROJECT_NAME,
+            idFilterBar: 'filterBar' + this.PROJECT_NAME,
+            data       : { opc: "listSubEvents", id: idEvent },
+            conf       : { datatable: true, pag: 10 },
+            attr       : {
+                id    : "tbSubEvent",
+                center: [1, 2, 3],
+                right : [4, 5],
+                theme : "light"
+            },
+            success: (data) => { }
+        });
+    }
+
+    createTimeLine2(options) {
+        let defaults = {
+            parent: "",
+            id: "historial",
+            data: [],
+            success: () => { console.log('addLine') },
+            input_id: "iptHistorial",
+            class: "p-3 bg-gray-900 text-white rounded-lg h-80 overflow-y-auto",
+            user_photo: "https://w7.pngwing.com/pngs/81/570/png-transparent-profile-logo-computer-icons-user-user-blue-heroes-logo-thumbnail.png",
+            icons: {
+                payment: "💵",
+                comment: "💬",
+                event: "📅",
+                default: "🔹"
+            }
+        };
+
+        let opts = Object.assign(defaults, options);
+
+        $('#' + opts.parent).empty();
+
+        let historialContainer = $('<div>', { class: opts.class + " flex flex-col h-full", id: opts.id });
+
+        // 📜 **Contenedor de línea de tiempo**
+        let timeline = $('<div>', { class: "relative flex flex-col gap-4 flex-grow overflow-y-auto p-3" });
+
+        // 📜 **Generar los elementos del historial**
+        opts.data.forEach((item, index) => {
+            let entry = $('<div>', { class: "flex items-start gap-3 relative" });
+
+            // 🔵 **Seleccionar el icono basado en el `type`**
+            let iconType = opts.icons[item.type] || opts.icons.default;
+
+            // 🔵 **Columna de iconos y líneas**
+            let iconContainer = $('<div>', { class: "flex flex-col items-center relative" }).append(
+                // Icono del evento
+                $('<div>', {
+                    class: "w-8 h-8 flex items-center justify-center bg-gray-700 text-white rounded-full",
+                    html: iconType
+                }),
+                // 📏 Línea de tiempo (solo si no es el último elemento)
+                index !== opts.data.length - 1
+                    ? $('<div>', { class: "w-[2px] min-h-[28px] bg-gray-600 flex-1 mt-2" })
+                    : ""
+            );
+
+            // 📝 **Fila con título y fecha alineados**
+            let titleRow = $('<div>', { class: "flex justify-between items-center w-full" }).append(
+                $('<span>', { class: "font-semibold text-gray-200", text: item.valor }), // Título
+                $('<small>', { class: "text-gray-400 text-xs", text: item.date }) // Fecha
+            );
+
+            // 💬 **Mensaje o descripción del evento**
+            let details = $('<div>', { class: "text-sm bg-gray-800 p-2 rounded-md shadow-md w-full" }).append(titleRow);
+
+            if (item.message) {
+                let messageBox = $('<div>', { class: " text-gray-300 text-xs p-2 rounded-md mt-1", text: item.message });
+                details.append(messageBox);
+            }
+
+            entry.append(iconContainer, details);
+            timeline.append(entry);
+        });
+
+        historialContainer.append(timeline);
+
+        // 📝 **Barra de entrada de mensaje (oscura)**
+        let messageBar = $('<div>', { class: "bg-gray-800 rounded-lg flex items-center p-2 border-t border-gray-700 mt-auto" }).append(
+            $('<input>', {
+                id: opts.input_id,
+                class: "w-full px-3 py-2 border-none outline-none bg-gray-700 text-white placeholder-gray-400 text-sm",
+                placeholder: "Escribe aquí..."
+            }),
+            $('<button>', {
+                class: "bg-blue-700 hover:bg-blue-600 text-white p-2 rounded-sm ml-2 flex items-center justify-center transition",
+                click: opts.success
+            }).append(
+                $('<i>', { class: "icon-direction-outline" }) // Icono de envío
+            )
+        );
+
+        historialContainer.append(messageBar);
+
+        // Renderizar el componente
+        $('#' + opts.parent).empty().append(historialContainer);
     }
 
     async showEvent(id, category) {
@@ -52,21 +197,21 @@ class App extends UI {
         const dishList = response.data.dishes || [];
 
         // 📦 Datos del evento
-        const titulo = event.name_event || "N/A";
-        const locacion = event.location || "N/A";
-        const status = this.eventStatus(event.status);
-        const fechaCreacion = event.date_creation ? formatSpanishDate(event.date_creation) : "N/A";
-        const fechaInicio = event.date_start ? formatSpanishDate(event.date_start) : "N/A";
-        const horaInicio = event.time_start || "";
-        const fechaFin = event.date_end ? formatSpanishDate(event.date_end) : "N/A";
-        const horaFin = event.time_end || "";
-        const cliente = event.name_client || "N/A";
-        const telefono = event.phone || "N/A";
-        const correo = event.email || "N/A";
-        const tipoEvento = event.type_event || "N/A";
+        const titulo           = event.name_event || "N/A";
+        const locacion         = event.location || "N/A";
+        const status           = this.eventStatus(event.status);
+        const fechaCreacion    = event.date_creation ? formatSpanishDate(event.date_creation) : "N/A";
+        const fechaInicio      = event.date_start ? formatSpanishDate(event.date_start) : "N/A";
+        const horaInicio       = event.time_start || "";
+        const fechaFin         = event.date_end ? formatSpanishDate(event.date_end) : "N/A";
+        const horaFin          = event.time_end || "";
+        const cliente          = event.name_client || "N/A";
+        const telefono         = event.phone || "N/A";
+        const correo           = event.email || "N/A";
+        const tipoEvento       = event.type_event || "N/A";
         const cantidadPersonas = event.quantity_people || "N/A";
-        const metodoPago = event.method_pay || "N/A";
-        const notes = event.notes || "";
+        const metodoPago       = event.method_pay || "N/A";
+        const notes            = event.notes || "";
 
         // 🎯 Ícono por categoría
         let icon = "📆";
@@ -144,7 +289,6 @@ class App extends UI {
         `
         }).on("shown.bs.modal", function () { });
     }
-
 
     eventStatus(statusEvent) {
         console.log("statusEvent", statusEvent);
