@@ -40,6 +40,12 @@ Implementar los métodos siguientes dentro de la clase `ctrl`:
    - Recibe datos por POST.
    - Ejecuta `create()`.
    - Retorna `status` y `message` de inserción.
+   - Puede existir el caso en que debas validar si un registro ya existe en la base de datos antes de crearlo. Esta validación es obligatoria cuando el campo tiene unicidad lógica
+      1. Obtener los datos del `$_POST` usando `$this->util->sql($_POST)` o forma estructurada.
+      2. Ejecutar un `_Select` para validar existencia previa.
+      3. Si existe, retornar `status: 400` con mensaje explicativo.
+      4. Si no existe, proceder con `_Insert`.
+      5. Dev5. Devolver respuesta estandarizada `status: 200` o `500`.
 
 5. **edit()**
    - Recibe datos por POST.
