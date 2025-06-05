@@ -360,8 +360,6 @@ class App extends UI {
         });
     }
 
-
-
     renderResumen(id, sub) {
         const contenedorResumen = $(`#${id} .contentResumen`);
         const menu = sub.menusSeleccionados;
@@ -451,7 +449,7 @@ class App extends UI {
 
                     <!-- Total -->
                     <div class="col-span-2 flex justify-end">
-                        <span class="text-[#3FC189] font-bold block">${formatPrice(total)}</span>
+                        <span id="totalExtra${index}" class="text-[#3FC189] font-bold block">${formatPrice(total)}</span>
                     </div>
 
                     <!-- Eliminar -->
@@ -476,7 +474,7 @@ class App extends UI {
                 $(`#cantExtra${index}`).text(item.cantidad);
                 $(`#totalExtra${index}`).text(formatPrice(item.precio * item.cantidad));
                 this.renderResumen(id, sub);
-                this.updateExtraQuantity(id, item.idEvtExtra, item.cantidad);
+                this.updatePackageQuantity(id, item.idEvt, item.cantidad);
             });
 
             // Evento decrementar cantidad
@@ -487,7 +485,7 @@ class App extends UI {
                     $(`#cantExtra${index}`).text(item.cantidad);
                     $(`#totalExtra${index}`).text(formatPrice(item.precio * item.cantidad));
                     this.renderResumen(id, sub);
-                    this.updateExtraQuantity(id, item.idEvtExtra, item.cantidad);
+                    this.updatePackageQuantity(id, item.idEvt, item.cantidad);
                 }
             });
 
