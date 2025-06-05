@@ -61,9 +61,7 @@ class App extends UI {
             }
         });
 
-        console.log(subEvents);
-
-
+    
         if (subEvents.status == 200) {
             this.accordingMenu({
                 parent: "container-companies",
@@ -285,7 +283,6 @@ class App extends UI {
     renderPackages(id, sub) {
         const contenedor = $(`#${id} .contentPaquetes`);
 
-
         contenedor.empty();
 
         if (sub.menusSeleccionados.length === 0) {
@@ -321,8 +318,7 @@ class App extends UI {
                 <button class="btn-eliminar text-red-400 hover:text-red-600"><i class="icon-trash"></i></button>
                 </div>
             </div>
-            </div>
-        `);
+            </div>`);
 
 
 
@@ -343,12 +339,14 @@ class App extends UI {
         const menu = sub.menusSeleccionados;
         const extras = sub.extrasSeleccionados;
 
+        console.log(menu)
+
         contenedorResumen.empty();
 
-        if (menu.length === 0 && extras.length === 0) {
-            contenedorResumen.html(`<p class="text-sm text-gray-400">Seleccione al menos un menú o un extra para ver el resumen</p>`);
-            return;
-        }
+        // if (menu.length === 0 && extras.length === 0) {
+        //     contenedorResumen.html(`<p class="text-sm text-gray-400">Seleccione al menos un menú o un extra para ver el resumen</p>`);
+        //     return;
+        // }
 
         let montoTotal = 0;
 
@@ -365,23 +363,24 @@ class App extends UI {
             }).join("")
             : "";
 
-        const containerExtra = extras.length > 0
-            ? `<h4 class="text-sm font-semibold text-white mt-4 mb-2">Extras:</h4>` +
-            extras.map((extra) => {
-                let subtotal = extra.precio * extra.cantidad;
-                montoTotal += subtotal;
-                return `<div class="flex justify-between text-xs text-white mb-1">
-                          <span class="w-1/2 truncate">(${extra.cantidad}) ${extra.nombre}</span>
-                          <span class="w-1/4 text-right">${formatPrice(extra.precio)}</span>
-                          <span class="w-1/4 text-right">${formatPrice(subtotal)}</span>
-                      </div>`;
-            }).join("")
-            : "";
+        // const containerExtra = extras.length > 0
+        //     ? `<h4 class="text-sm font-semibold text-white mt-4 mb-2">Extras:</h4>` +
+        //     extras.map((extra) => {
+        //         let subtotal = extra.precio * extra.cantidad;
+        //         montoTotal += subtotal;
+        //         return `<div class="flex justify-between text-xs text-white mb-1">
+        //                   <span class="w-1/2 truncate">(${extra.cantidad}) ${extra.nombre}</span>
+        //                   <span class="w-1/4 text-right">${formatPrice(extra.precio)}</span>
+        //                   <span class="w-1/4 text-right">${formatPrice(subtotal)}</span>
+        //               </div>`;
+        //     }).join("")
+        //     : "";
 
+        //  ${ containerExtra }
         contenedorResumen.html(`
             <div class="text-left">
                 ${containerMenu}
-                ${containerExtra}
+               
             </div>
             <hr class="border-gray-600 my-3" />
             <div class="flex justify-between font-bold text-white text-lg">
@@ -394,14 +393,14 @@ class App extends UI {
 
     async addPackage(id){
 
-        const form = $(`#formMenu${id}`);
-        const idMenu = form.find(".selectMenu").val();
+        const form     = $(`#formMenu${id}`);
+        const idMenu   = form.find(".selectMenu").val();
         const cantidad = parseInt(form.find(".cantidadPersonas").val());
-
+    
         const response = await useFetch({
             url: api,
             data: {
-                opc: "addPackage",
+                opc        : "addPackage",
                 package_id : idMenu,
                 quantity   : cantidad,
                 subevent_id: id
@@ -409,16 +408,15 @@ class App extends UI {
         });
 
         if (response.status === 200) {
-            console.log(response.sub)
 
             this.renderPackages(id, response.sub);
             this.renderResumen(id, response.sub);
+
         } else {
             alert(response.message);
         }
 
     }
-
 
     async eliminarMenu(index, sub, targetId, menuId){
 
@@ -426,27 +424,21 @@ class App extends UI {
 
         const response = await useFetch({
             url: api,
-            data: {
-                opc: "deletePackage",
-                id: menuId
-            },
+            data: { opc: "deletePackage",  id: menuId  },
         });
 
         if (response.status === 200) {
+            
+            this.renderResumen(menuId, response.sub);
 
-            this.renderPackages(targetId, sub);
+            // this.renderPackages(targetId, sub);
+
+
         } else {
             alert(response.message);
         }
 
     }
-
-
-
-
-
-
-
 
     async layoutMenu(id, isEdit) {
         // $('#containerInfo' + id).empty();
