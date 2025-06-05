@@ -328,7 +328,8 @@ class App extends UI {
 
             card.find(".btn-eliminar").on("click", (e) => {
                 e.stopPropagation();
-                app.eliminarMenu(index, sub, id,item.menu.id); // Pasa correctamente el ID del componente
+                console.log(item.menu.idEvt)
+                app.eliminarMenu(index, sub, id,item.menu.idEvt); // Pasa correctamente el ID del componente
             });
 
             contenedor.append(card);
