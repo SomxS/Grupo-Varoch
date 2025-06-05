@@ -12,11 +12,7 @@ $(async () => {
     app = new App(api, 'root');
     app.init();
 
-    // vars.
-    this.menusSeleccionados = [];
-    this.menuSeleccionadoParaVer = null;
-    this.extrasSeleccionados = [];
-    this.clasificaciones = [];
+   
 
 });
 
@@ -143,10 +139,9 @@ class App extends UI {
 
             // eventos:
             onAddPackage: () => { this.addPackage(id) },
+            onAddExtra: () => { this.addExtra(id) },
 
         });
-
-
 
     }
 
@@ -237,42 +232,47 @@ class App extends UI {
                 <h3 class="text-xl font-bold">Agregar Extras</h3>
                 <p class="text-sm text-gray-400">Personalice su menú con opciones adicionales</p>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <h4 class="font-semibold mb-2">Extras predefinidos</h4>
-                    <div class="flex gap-2 mb-4">
-                    <select class="selectExtra w-full rounded-md bg-gray-800 text-white border border-gray-600 p-2">
-                        <option value="">Seleccione un extra</option>
-                        ${opts.extras.map(e => `<option value="${e.id}">${e.nombre}</option>`).join('')}
-                    </select>
-                    <input type="number" min="1" value="1" class="extraCantidad w-20 rounded-md bg-gray-800 text-white border border-gray-600 p-2" placeholder="Cantidad">
-                    <button class="btnAgregarExtra w-50 px-4 py-2 text-white rounded bg-[#1A56DB] hover:bg-[#274DCD]">
-                        <i class="icon-plus-circle"></i>Agregar
-                    </button>
+                <form id="formExtra${opts.id}" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-semibold mb-2">Extras predefinidos</h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 items-end">
+                        <select class="selectExtra col-span-1 rounded-md bg-gray-800 text-white border border-gray-600 p-2 text-sm">
+                            <option value="">Seleccione un extra</option>
+                            ${opts.extras.map(e => `<option value="${e.id}">${e.nombre}</option>`).join('')}
+                        </select>
+                        <input type="number" min="1" value="1" class="extraCantidad col-span-1 rounded-md bg-gray-800 text-white border border-gray-600 p-2 text-sm" placeholder="Cantidad">
+                        <button type="button" class="btnAgregarExtra col-span-1 px-3 py-2 text-sm text-white rounded bg-[#1A56DB] hover:bg-[#274DCD]">
+                            <i class="icon-plus-circle"></i> Agregar
+                        </button>
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <h4 class="font-semibold mb-2">Extras agregados</h4>
-                    <div class="contentExtras bg-gray-900 text-gray-400 p-4 rounded-md min-h-[300px] overflow-auto text-center">
-                    No hay extras agregados
+                    <div>
+                        <h4 class="font-semibold mb-2">Extras agregados</h4>
+                        <div class="contentExtras bg-gray-900 text-gray-400 p-4 rounded-md min-h-[300px] overflow-auto text-center text-sm">
+                        No hay extras agregados
+                        </div>
                     </div>
-                </div>
-                </div>
-                <div class="mt-6 text-right">
-                <button class="saveMenuEvent px-6 py-2 font-semibold rounded-md bg-[#1A56DB] hover:bg-[#274DCD]">Guardar</button>
-                </div>
+                  
+                </form>
+
+
             </div>
             </div>`;
 
-        const layout = `<div id="${opts.id}" class="grid grid-cols-1 md:grid-cols-3 gap-6 ${opts.class}">${paquetes}${resumen}${extras}</div>`;
+        const layout = `
+        <div id="${opts.id}" 
+        class="grid grid-cols-1 md:grid-cols-3 gap-6 ${opts.class}">${paquetes}${resumen}${extras}</div>`;
 
         $(`#${opts.parent}`).append(layout);
 
 
-        if (opts.sub?.menusSeleccionados?.length) {
+        // if (opts.sub?.menusSeleccionados?.length) {
+
             this.renderPackages(opts.id, opts.sub);
             this.renderResumen(opts.id, opts.sub);
-        }
+            this.renderExtras(opts.id, opts.sub);
+
+        // }
 
         // Eventos
         $(`#${opts.id} .btnAgregarMenu`).on("click", () => opts.onAddPackage());
@@ -280,9 +280,9 @@ class App extends UI {
         $(`#${opts.id} .saveMenuEvent`).on("click", () => opts.onSubmit());
     }
 
+
     renderPackages(id, sub) {
         const contenedor = $(`#${id} .contentPaquetes`);
-
         contenedor.empty();
 
         if (sub.menusSeleccionados.length === 0) {
@@ -291,62 +291,90 @@ class App extends UI {
         }
 
         sub.menusSeleccionados.forEach((item, index) => {
-            const total = item.menu.precioPorPersona * item.cantidadPersonas;
             const cardId = `menu-card-${index}`;
+            const total = item.menu.precioPorPersona * item.cantidadPersonas;
 
             const card = $(`
-            <div id="${cardId}" class="border border-gray-700 p-3 rounded-lg bg-gray-800 mb-3">
+        <div id="${cardId}" class="border border-gray-700 p-3 rounded-lg bg-gray-800 mb-3">
             <div class="grid grid-cols-12 items-center gap-4">
                 <div class="col-span-6 flex flex-col justify-start text-left">
-                <div class="flex items-center gap-2">
-                    <h4 class="font-semibold text-white truncate">${item.menu.nombre}</h4>
-                    <button class="btn-ver-detalles text-sm px-2 py-1 bg-[#333D4C] text-blue-300 hover:text-blue-100 hover:bg-[#3f4b5c] border border-gray-600 rounded-md transition-colors duration-200" title="Ver detalles">Ver detalles</button>
+                    <div class="flex items-center gap-2">
+                        <h4 class="font-semibold text-white truncate">${item.menu.nombre}</h4>
+                        <button class="btn-ver-detalles text-sm px-2 py-1 bg-[#333D4C] text-blue-300 hover:text-blue-100 hover:bg-[#3f4b5c] border border-gray-600 rounded-md transition-colors duration-200" title="Ver detalles">Ver detalles</button>
+                    </div>
+                    <p class="text-gray-400 text-sm truncate">${item.menu.descripcion}</p>
                 </div>
-                <p class="text-gray-400 text-sm truncate">${item.menu.descripcion}</p>
-                </div>
+
                 <div class="col-span-3 flex justify-end items-center">
-                <div class="inline-flex items-center border border-gray-600 rounded-md overflow-hidden bg-gray-700 h-9">
-                    <button class="btn-decrement px-2 text-white hover:bg-gray-600 h-full">−</button>
-                    <span id="cantidadIndex${index}" class="px-4 text-white text-center font-medium min-w-[30px] h-full flex items-center justify-center">${item.cantidadPersonas}</span>
-                    <button class="btn-increment px-2 text-white hover:bg-gray-600 h-full">+</button>
+                    <div class="inline-flex items-center border border-gray-600 rounded-md overflow-hidden bg-gray-700 h-9">
+                        <button class="btn-decrement px-2 text-white hover:bg-gray-600 h-full">−</button>
+                        <span id="cantIndex${index}" class="px-4 text-white text-center font-medium min-w-[30px] h-full flex items-center justify-center">${item.cantidadPersonas}</span>
+                        <button class="btn-increment px-2 text-white hover:bg-gray-600 h-full">+</button>
+                    </div>
                 </div>
-                </div>
+
                 <div class="col-span-2 flex justify-end">
-                <span class="text-[#3FC189] font-bold block">${formatPrice(total)}</span>
+                    <span id="totalPrecio${index}" class="text-[#3FC189] font-bold block">${formatPrice(total)}</span>
                 </div>
+
                 <div class="col-span-1 flex justify-end">
-                <button class="btn-eliminar text-red-400 hover:text-red-600"><i class="icon-trash"></i></button>
+                    <button class="btn-eliminar text-red-400 hover:text-red-600"><i class="icon-trash"></i></button>
                 </div>
             </div>
-            </div>`);
+        </div>`);
 
-
-
+            // Evento eliminar
             card.find(".btn-eliminar").on("click", (e) => {
                 e.stopPropagation();
-                console.log(item.menu.idEvt)
-                app.eliminarMenu(index, sub, id,item.menu.idEvt); // Pasa correctamente el ID del componente
+                app.deletePackage(id, item.menu.idEvt);
+            });
+
+            // Evento incrementar cantidad
+            card.find(".btn-increment").on("click", (e) => {
+                e.stopPropagation();
+                item.cantidadPersonas += 1;
+                $(`#cantIndex${index}`).text(item.cantidadPersonas);
+                const nuevoTotal = item.menu.precioPorPersona * item.cantidadPersonas;
+
+                $(`#totalPrecio${index}`).text(formatPrice(nuevoTotal));
+                this.renderResumen(id, sub);
+                this.updatePackageQuantity(id, item.menu.idEvt, item.cantidadPersonas)
+            });
+
+            // Evento decrementar cantidad
+            card.find(".btn-decrement").on("click", (e) => {
+                e.stopPropagation();
+                if (item.cantidadPersonas > 1) {
+                    item.cantidadPersonas -= 1;
+                    $(`#cantIndex${index}`).text(item.cantidadPersonas);
+                    const nuevoTotal = item.menu.precioPorPersona * item.cantidadPersonas;
+                    
+                    $(`#totalPrecio${index}`).text(formatPrice(nuevoTotal));
+                    this.renderResumen(id, sub);
+                    this.updatePackageQuantity(id, item.menu.idEvt, item.cantidadPersonas)
+
+                }
             });
 
             contenedor.append(card);
         });
-
-
     }
+
+
 
     renderResumen(id, sub) {
         const contenedorResumen = $(`#${id} .contentResumen`);
         const menu = sub.menusSeleccionados;
         const extras = sub.extrasSeleccionados;
 
-        console.log(menu)
+        console.log('resumen',menu, extras);
 
         contenedorResumen.empty();
 
-        // if (menu.length === 0 && extras.length === 0) {
-        //     contenedorResumen.html(`<p class="text-sm text-gray-400">Seleccione al menos un menú o un extra para ver el resumen</p>`);
-        //     return;
-        // }
+        if (menu.length === 0 && extras.length === 0) {
+            contenedorResumen.html(`<p class="text-sm text-gray-400">Seleccione al menos un menú o un extra para ver el resumen</p>`);
+            return;
+        }
 
         let montoTotal = 0;
 
@@ -363,23 +391,23 @@ class App extends UI {
             }).join("")
             : "";
 
-        // const containerExtra = extras.length > 0
-        //     ? `<h4 class="text-sm font-semibold text-white mt-4 mb-2">Extras:</h4>` +
-        //     extras.map((extra) => {
-        //         let subtotal = extra.precio * extra.cantidad;
-        //         montoTotal += subtotal;
-        //         return `<div class="flex justify-between text-xs text-white mb-1">
-        //                   <span class="w-1/2 truncate">(${extra.cantidad}) ${extra.nombre}</span>
-        //                   <span class="w-1/4 text-right">${formatPrice(extra.precio)}</span>
-        //                   <span class="w-1/4 text-right">${formatPrice(subtotal)}</span>
-        //               </div>`;
-        //     }).join("")
-        //     : "";
+        const containerExtra = extras.length > 0
+            ? `<h4 class="text-sm font-semibold text-white mt-4 mb-2">Extras:</h4>` +
+            extras.map((extra) => {
+                let subtotal = extra.precio * extra.cantidad;
+                montoTotal += subtotal;
+                return `<div class="flex justify-between text-xs text-white mb-1">
+                          <span class="w-1/2 truncate">(${extra.cantidad}) ${extra.nombre}</span>
+                          <span class="w-1/4 text-right">${formatPrice(extra.precio)}</span>
+                          <span class="w-1/4 text-right">${formatPrice(subtotal)}</span>
+                      </div>`;
+            }).join("")
+            : "";
 
-        //  ${ containerExtra }
-        contenedorResumen.html(`
-            <div class="text-left">
+            contenedorResumen.html(`
+                <div class="text-left">
                 ${containerMenu}
+                ${ containerExtra }
                
             </div>
             <hr class="border-gray-600 my-3" />
@@ -390,13 +418,94 @@ class App extends UI {
         `);
     }
 
+    renderExtras(id, sub) {
+        const contenedor = $(`#${id} .contentExtras`);
+        contenedor.empty();
+
+        if (!sub.extrasSeleccionados || sub.extrasSeleccionados.length === 0) {
+            contenedor.html(`<p>No hay extras agregados</p>`);
+            return;
+        }
+
+        sub.extrasSeleccionados.forEach((item, index) => {
+            const total = item.precio * item.cantidad;
+            const cardId = `extra-card-${index}`;
+
+            const card = $(`
+            <div id="${cardId}" class="border border-gray-700 p-3 rounded-lg bg-gray-800 mb-3">
+                <div class="grid grid-cols-12 items-center gap-4">
+                    <!-- Nombre y clasificación -->
+                    <div class="col-span-6 flex flex-col justify-start text-left">
+                        <h4 class="font-semibold text-white truncate">${item.nombre}</h4>
+                        <p class="text-gray-400 text-sm truncate">${item.clasificacion || 'Sin clasificación'}</p>
+                    </div>
+
+                    <!-- Contador -->
+                    <div class="col-span-3 flex justify-end items-center">
+                        <div class="inline-flex items-center border border-gray-600 rounded-md overflow-hidden bg-gray-700 h-9">
+                            <button type="button" class="btn-decrement px-2 text-white hover:bg-gray-600 h-full">−</button>
+                            <span id="cantExtra${index}" class="px-4 text-white text-center font-medium min-w-[30px] h-full flex items-center justify-center">${item.cantidad}</span>
+                            <button type="button" class="btn-increment px-2 text-white hover:bg-gray-600 h-full">+</button>
+                        </div>
+                    </div>
+
+                    <!-- Total -->
+                    <div class="col-span-2 flex justify-end">
+                        <span class="text-[#3FC189] font-bold block">${formatPrice(total)}</span>
+                    </div>
+
+                    <!-- Eliminar -->
+                    <div class="col-span-1 flex justify-end">
+                        <button type="button" class="btn-eliminar text-red-400 hover:text-red-600">
+                            <i class="icon-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>`);
+
+            card.find(".btn-eliminar").on("click", (e) => {
+                e.stopPropagation();
+
+                app.deleteExtra(id, item.idEvt);
+            });
+
+            // Evento incrementar cantidad
+            card.find(".btn-increment").on("click", (e) => {
+                e.stopPropagation();
+                item.cantidad += 1;
+                $(`#cantExtra${index}`).text(item.cantidad);
+                $(`#totalExtra${index}`).text(formatPrice(item.precio * item.cantidad));
+                this.renderResumen(id, sub);
+                this.updateExtraQuantity(id, item.idEvtExtra, item.cantidad);
+            });
+
+            // Evento decrementar cantidad
+            card.find(".btn-decrement").on("click", (e) => {
+                e.stopPropagation();
+                if (item.cantidad > 1) {
+                    item.cantidad -= 1;
+                    $(`#cantExtra${index}`).text(item.cantidad);
+                    $(`#totalExtra${index}`).text(formatPrice(item.precio * item.cantidad));
+                    this.renderResumen(id, sub);
+                    this.updateExtraQuantity(id, item.idEvtExtra, item.cantidad);
+                }
+            });
+
+            contenedor.append(card);
+        });
+    }
+
 
     async addPackage(id){
-
         const form     = $(`#formMenu${id}`);
         const idMenu   = form.find(".selectMenu").val();
         const cantidad = parseInt(form.find(".cantidadPersonas").val());
-    
+
+        if (!idMenu || cantidad <= 0) {
+            alert({ icon: "warning", text: "Debe seleccionar un paquete y una cantidad válida." });
+            return;
+        }
+
         const response = await useFetch({
             url: api,
             data: {
@@ -408,37 +517,97 @@ class App extends UI {
         });
 
         if (response.status === 200) {
-
             this.renderPackages(id, response.sub);
             this.renderResumen(id, response.sub);
-
         } else {
             alert(response.message);
         }
-
     }
 
-    async eliminarMenu(index, sub, targetId, menuId){
-
-        sub.menusSeleccionados.splice(index, 1);
+    async deletePackage(targetId, menuId){
 
         const response = await useFetch({
             url: api,
-            data: { opc: "deletePackage",  id: menuId  },
+            data: { opc: "deletePackage", subevent_id:targetId, id: menuId  },
         });
 
         if (response.status === 200) {
-            
-            this.renderResumen(menuId, response.sub);
 
-            // this.renderPackages(targetId, sub);
-
+            this.renderResumen(targetId, response.sub);
+            this.renderPackages(targetId, response.sub);
 
         } else {
             alert(response.message);
         }
 
     }
+
+    async updatePackageQuantity(targetId, menuId, newQuantity) {
+        const response = await useFetch({
+            url: api,
+            data: {
+                opc: "updatePackageQuantity",
+                subevent_id: targetId,
+                id: menuId,
+                quantity: newQuantity
+            },
+        });
+
+        if (response.status === 200) {
+            this.renderResumen(targetId, response.sub);
+        } else {
+            alert(response.message);
+        }
+    }
+
+    async addExtra(id) {
+        const form = $(`#formExtra${id}`);
+        const idExtra = form.find(".selectExtra").val();
+        const cantidad = parseInt(form.find(".extraCantidad").val());
+
+        if (!idExtra || cantidad <= 0) {
+            alert({ icon: "warning", text: "Debe seleccionar un extra y una cantidad válida." });
+            return;
+        }
+
+        const response = await useFetch({
+            url: api,
+            data: {
+                opc        : "addExtra",
+                product_id : idExtra,
+                quantity   : cantidad,
+                subevent_id: id
+            },
+        });
+
+        if (response.status === 200) {
+            console.log('add extra ',response)
+            this.renderExtras(id, response.sub);
+            this.renderResumen(id, response.sub);
+        } else {
+            alert(response.message);
+        }
+    }
+
+    async deleteExtra(targetId, menuId) {
+        console.log(targetId, menuId);
+        const response = await useFetch({
+            url: api,
+            data: {
+                opc: "deleteExtra",
+                subevent_id: targetId,
+                id: menuId,
+            },
+        });
+
+        if (response.status === 200) {
+            this.renderResumen(targetId, response.sub);
+            this.renderExtras(targetId, response.sub);
+        } else {
+            alert(response.message);
+        }
+    }
+
 
     async layoutMenu(id, isEdit) {
         // $('#containerInfo' + id).empty();
