@@ -52,18 +52,19 @@ class App extends UI {
             data: [
                 {
                     opc: "input-calendar",
-                    class: "col-sm-4",
+                    class: "col-sm-3",
                     id: "calendar" + this.PROJECT_NAME,
                     lbl: "Rango de fechas",
                 },
                 {
                     opc: "button",
-                    class: "col-sm-3",
+                    class: "col-sm-2",
+                    className:'w-100',
                     color_btn: "primary",
                     id: "btnNuevoDestajo",
-                    text: "Agregar",
+                    text: "Consultar",
                     onClick: () => {
-                        this.add();
+                        this.ls();
                     },
                 },
             ],
@@ -78,6 +79,7 @@ class App extends UI {
                 endDate: moment().endOf("month"),
                 showDropdowns: true,
             },
+
             onSelect: (start, end) => {
                 this.ls();
             },
@@ -100,9 +102,12 @@ class App extends UI {
             attr: {
                 id: "tb" + this.PROJECT_NAME,
                 extends: true,
+                title:'Listado de destajos',
+                subtitle: "Pagos de destajo realizados correspondientes al mes",
                 theme:'corporativo',
-                right: [2,3,4,5,6,7,8],
-                center: [9],
+                right: [3,4,5,6,7,8,9],
+                center: [2,10],
+                f_size: 12,
                 striped:false
             },
         });
