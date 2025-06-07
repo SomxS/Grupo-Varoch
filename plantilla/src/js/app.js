@@ -90,15 +90,20 @@ class App extends UI {
         this.createTable({
             parent: "container" + this.PROJECT_NAME,
             idFilterBar: "filterBar" + this.PROJECT_NAME,
+            coffeesoft:true,
             data: {
                 opc: "listDestajo",
                 fi: range.fi,
                 ff: range.ff,
             },
-            conf: { datatable: true, pag: 10 },
+            conf: { datatable: false, pag: 10 },
             attr: {
                 id: "tb" + this.PROJECT_NAME,
                 extends: true,
+                theme:'corporativo',
+                right: [2,3,4,5,6,7,8],
+                center: [9],
+                striped:false
             },
         });
     }
