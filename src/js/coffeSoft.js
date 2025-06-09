@@ -2313,21 +2313,21 @@ class Components extends Complements {
         const tbody = $("<tbody>");
 
         opts.data.row.forEach((data, i) => {
-            let bg_grupo = "";    
+            let bg_grupo = "";
 
             if (data.opc) {
                 if (data.opc == 1) {
                     bg_grupo = opts.color_group + " font-bold";
                 } else if (data.opc == 2) {
                     bg_grupo = opts.color_group + " text-primary fw-bold ";
-                }    
+                }
             }
 
 
 
             const colorBg = bg_grupo || (opts.striped && i % 2 === 0 ? opts.color_row_alt : opts.color_row);
-            
-            
+
+
             delete data.opc;
 
             const tr = $("<tr>", {
@@ -2362,8 +2362,8 @@ class Components extends Complements {
                 tr.append($("<td>", cellAttributes));
             });
 
-            const actions = '';
-            
+            let actions = '';
+
             if (data.a?.length) {
                 actions = $("<td>", { class: `px-2 py-2 flex justify-center items-center ${colorBg} ${opts.border_row}` });
                 data.a.forEach(atributos => {

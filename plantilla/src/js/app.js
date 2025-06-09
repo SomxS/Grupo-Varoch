@@ -2,7 +2,7 @@
 // init vars.
 let app, sub;
 
-let api = "https://erp-varoch.com/ERP24/produccion/control-fogaza/ctrl/ctrl-destajo-formato.php";
+let api = "https://www.erp-varoch.com/DEV/ch/ctrl/ctrl-tabulacion.php";
 
 
 
@@ -73,13 +73,17 @@ class App extends UI {
         // Init del rango de fechas
         dataPicker({
             parent: "calendar" + this.PROJECT_NAME,
-            type:'simple',
             rangepicker: {
-                startDate: moment().startOf("month"),
+                startDate: moment().subtract(2, "month").startOf("month"),
                 endDate: moment().endOf("month"),
                 showDropdowns: true,
+                ranges: {
+                    "Mes actual": [moment().startOf("month"), moment().endOf("month")],
+                    "Mes anterior": [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")],
+                    "Primeros 6 meses": [moment().startOf("year"), moment().month(5).endOf("month")],
+                    "Últimos 6 meses": [moment().month(6).startOf("month"), moment().endOf("year")]
+                }
             },
-
             onSelect: (start, end) => {
                 this.ls();
             },
@@ -94,16 +98,18 @@ class App extends UI {
             idFilterBar: "filterBar" + this.PROJECT_NAME,
             coffeesoft:true,
             data: {
-                opc: "listDestajo",
+                opc: "list",
                 fi: range.fi,
                 ff: range.ff,
+                udn: 0,
+                status:0
             },
             conf: { datatable: false, pag: 10 },
             attr: {
                 id: "tb" + this.PROJECT_NAME,
                 extends: true,
-                title:'Listado de destajos',
-                subtitle: "Pagos de destajo realizados correspondientes al mes",
+                title:'Reporte de pagos por destajo',
+                subtitle: `Correspondiente del ${this.formatDateText(range.fi)} a ${this.formatDateText(range.ff)}`,
                 theme:'corporativo',
                 right: [3,4,5,6,7,8,9],
                 center: [2,10],
@@ -113,9 +119,15 @@ class App extends UI {
         });
     }
 
-    
-
-
+    formatDateText(fechaStr) {
+        const [dia, mes, año] = fechaStr.split('-');
+        const meses = [
+            "enero", "febrero", "marzo", "abril", "mayo", "junio",
+            "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
+        ];
+        const nombreMes = meses[parseInt(mes, 10) - 1];
+        return `${año}/${nombreMes}/${dia}`;
+    }
 
 
 
@@ -129,7 +141,7 @@ class App extends UI {
             }
         });
 
-    
+
         if (subEvents.status == 200) {
             this.accordingMenu({
                 parent: "container-companies",
