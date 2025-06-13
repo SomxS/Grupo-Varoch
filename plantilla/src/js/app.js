@@ -2,7 +2,7 @@
 // init vars.
 let app, sub;
 
-let api = "https://erp-varoch.com/ERP24/produccion/control-fogaza/ctrl/ctrl-destajo-formato.php";
+let api = "https://huubie.com.mx/alpha/eventos/ctrl/ctrl-sub-eventos.php";
 
 
 
@@ -113,82 +113,23 @@ class App extends UI {
         });
     }
 
-    
-
-
-
-
-
     async showSubEvent() {
 
         let subEvents = await useFetch({
-            url: api,
+            url: this._link,
             data: {
                 opc: "listSubEvents",
-                id: 123
+                id: idEvent
             }
         });
 
-    
-        if (subEvents.status == 200) {
-            this.accordingMenu({
-                parent: "container-companies",
-                title: "Evento  : " + subEvents.event.name_event,
-                subtitle: subEvents.event.status,
-                data: subEvents.data,
 
-                center: [1, 2, 3, 6],
-                right: [5],
-
-                onAdd: () => {
-                    this.addSubEvent();
-                },
-
-                onEdit: (item, index) => {
-                    this.editSubEvent(item);
-                },
-                onDelete: (item, index) => {
-                    this.cancelSubEvent(item);
-                },
-
-                onPrint: (item) => {
-                    payment.onShowDocument(idEvent);
-                },
-
-                onShow: (id) => {
-
-
-                    this.addMenu(id);
-                },
-            });
-
-        } else {
-            const emptySubEvent = $(`
-                    <div class="flex flex-col items-center justify-content-start py-12 text-center h-full  bg-[#1F2A37] rounded-lg">
-                    <i class="icon-calendar-1 text-[52px] text-gray-100"></i>
-                    <h3 class="text-xl font-medium text-gray-100 mb-2">No hay sub-eventos</h3>
-                    <p class="text-gray-400 mb-4">Comienza agregando tu primer sub-evento</p>
-                    <button  id="btnAddSubEvent" class=" bg-gray-600 hover:bg-gray-700  px-4 py-2 rounded text-white ">
-                    <span class="icon-plus-1"></span>
-                    Nuevo Sub-evento
-                    </button>
-                </div> `);
-
-            emptySubEvent.find("#btnAddSubEvent").on("click", () => {
-                this.addSubEvent();
-            });
-
-
-            // 📌 Render
-            $(`#tab-new-subevent`).html(emptySubEvent);
-
-
-        }
+        this.accordingMenu({
+            parent: 'container'
+        })
 
     }
 
-
-    // Components.
     accordingMenu(options) {
         const defaults = {
             parent: "tab-sub-event",
@@ -199,13 +140,11 @@ class App extends UI {
             data: [],
             center: [1, 2, 5],
             right: [3, 4],
-            onShow: () => { },          // ✅ por si no lo pasan
+            onShow: () => { },
+            onDetail: () => { }, // ✅ Nuevo hook
         };
 
         const opts = Object.assign(defaults, options);
-
-
-
         const container = $('<div>', {
             id: opts.id,
             class: `${opts.color_primary} rounded-lg my-5 border border-gray-700 overflow-hidden`
@@ -214,37 +153,23 @@ class App extends UI {
         const titleRow = $(`
         <div class="flex justify-between items-center px-4 py-4 border-b border-gray-800">
             <div>
-            <h2 class="text-lg font-semibold text-white">${opts.title}</h2>
-            ${opts.subtitle ? `<span class="inline-block mt-1 text-xs font-medium text-gray-300 bg-gray-700 px-2 py-1 rounded-full">${opts.subtitle}</span>` : ''}
+                <h2 class="text-lg font-semibold text-white">${opts.title}</h2>
+                ${opts.subtitle ? `<span class="inline-block mt-1 text-xs font-medium text-gray-300 bg-gray-700 px-2 py-1 rounded-full">${opts.subtitle}</span>` : ''}
             </div>
-
             <div class="flex items-center gap-2">
-            <button id="btn-new-sub-event" class="bg-gray-600 hover:bg-gray-700 text-white text-sm px-4 py-2 rounded w-40 flex items-center justify-center gap-2">
-                <span class="text-lg">＋</span> Nuevo
-            </button>
-            <button id="btn-print-sub-event" class="bg-blue-600 hover:bg-blue-700 text-white text-sm px-4 py-2 rounded w-40 flex items-center justify-center gap-2">
-                <span class="text-lg">🖨️</span> Imprimir
-            </button>
+                <button id="btn-new-sub-event" class="bg-gray-600 hover:bg-gray-700 text-white text-sm px-4 py-2 rounded w-40 flex items-center justify-center gap-2">
+                    <span class="text-lg">＋</span> Nuevo
+                </button>
+                <button id="btn-print-sub-event" class="bg-blue-600 hover:bg-blue-700 text-white text-sm px-4 py-2 rounded w-40 flex items-center justify-center gap-2">
+                    <span class="text-lg">🖨️</span> Imprimir
+                </button>
             </div>
         </div>
-        `);
+    `);
 
-        titleRow.find("#btn-new-sub-event").on("click", () => {
-            if (typeof opts.onAdd === "function") opts.onAdd();
-        });
-
-        titleRow.find("#btn-print-sub-event").on("click", () => {
-            if (typeof opts.onAdd === "function") opts.onPrint();
-        });
-
-
+        titleRow.find("#btn-new-sub-event").on("click", () => opts.onAdd?.());
+        titleRow.find("#btn-print-sub-event").on("click", () => opts.onPrint?.());
         container.append(titleRow);
-
-        // 📜 Mostrar nota del evento si existe (gris claro)
-        if (opts.data.length > 0 && opts.data[0].note) {
-            const noteRow = $(`<div class="px-4 text-sm text-gray-400 mb-2">${opts.data[0].note}</div>`);
-            container.append(noteRow);
-        }
 
         const firstItem = opts.data[0] || {};
         const keys = Object.keys(firstItem).filter(k => k !== 'body' && k !== 'id');
@@ -260,184 +185,86 @@ class App extends UI {
         headerRow.append(`<div class="flex-none text-right">Acciones</div>`);
         container.append(headerRow);
 
+        let currentActive = null;
 
-        // 🔁 Render de cada fila
         opts.data.forEach((opt, index) => {
-
-            const row = $('<div>', { class: " border-gray-700" });
-
+            const row = $('<div>', { class: "border-gray-700" });
             const header = $(`<div class="flex justify-between items-center px-3 py-2 border-y border-gray-700 hover:bg-[#18212F] bg-[#313D4F] cursor-pointer"></div>`);
 
             keys.forEach((key, i) => {
-
                 let align = "text-left";
                 if (opts.center.includes(i)) align = "text-center";
                 if (opts.right.includes(i)) align = "text-end";
-
-
-                header.append(`<div class="flex-1 px-3  text-gray-300 truncate ${align}">${opt[key]}</div>`);
+                header.append(`<div class="flex-1 px-3 text-gray-300 truncate ${align}">${opt[key]}</div>`);
             });
 
             const actions = $(`
-                <div class="flex-none flex gap-2 mx-2">
-                    <button class="btn-edit bg-gray-700 text-white text-sm px-2 py-1 rounded" title="Editar">✏️</button>
-                    <button class="btn-delete bg-gray-700 text-red-500 text-sm px-2 py-1 rounded" title="Eliminar">🗑️</button>
-                </div>`);
+            <div class="flex-none flex gap-2 mx-2">
+                <button class="btn-detail bg-yellow-600 text-white text-sm px-2 py-1 rounded" title="Ver detalles">👁️</button>
+                <button class="btn-edit bg-gray-700 text-white text-sm px-2 py-1 rounded" title="Editar">✏️</button>
+                <button class="btn-delete bg-gray-700 text-red-500 text-sm px-2 py-1 rounded" title="Eliminar">🗑️</button>
+            </div>`);
 
             header.append(actions);
 
-            // Container collapsed
-            let bodyWrapper = $('<div>', {
+            const bodyWrapper = $('<div>', {
                 class: "bg-[#1F2A37] hidden px-4 py-4 text-sm text-gray-300 accordion-body",
                 id: 'containerInfo' + opt.id,
-
-                html: `
-
-                `
+                html: ``
             });
 
-
-            // Logic Components.
-
-            // ✅ Evita colapsar si haces clic en botón
             header.on("click", function (e) {
-                let target = $(e.target);
-                if (target.closest(".btn-edit").length || target.closest(".btn-delete").length) return;
-
-                $(".accordion-body").slideUp(); // Oculta los demás
-                let isVisible = bodyWrapper.is(":visible");
+                const target = $(e.target);
+                if (target.closest(".btn-edit, .btn-delete, .btn-detail").length) return;
+                $(".accordion-body").slideUp();
+                const isVisible = bodyWrapper.is(":visible");
                 if (!isVisible) {
                     bodyWrapper.slideDown(200);
-                    if (typeof opts.onShow === 'function') opts.onShow(opt.id);
+                    opts.onShow?.(opt.id);
                 }
             });
 
             header.find(".btn-edit").on("click", e => {
                 e.stopPropagation();
-                if (typeof opts.onEdit === "function") opts.onEdit(opt, index);
+                opts.onEdit?.(opt, index);
             });
 
             header.find(".btn-delete").on("click", e => {
                 e.stopPropagation();
-                if (typeof opts.onDelete === "function") opts.onDelete(opt, index);
+                opts.onDelete?.(opt, index);
             });
 
+            header.find(".btn-detail").on("click", e => {
+                e.stopPropagation();
+                $(".active-sub-event").removeClass("border border-green-400 active-sub-event");
+                row.addClass("border border-green-400 active-sub-event");
+                opts.onDetail?.(opt, index);
+            });
 
-
-
-            // add interfaces.
             row.append(header, bodyWrapper);
             container.append(row);
-
         });
 
-
-        // 📌 Calcular total general
         let totalGral = opts.data.reduce((sum, el) => {
-            let clean = (el.Total || '0')
-                .toString()
-                .replace(/[^0-9.-]+/g, ''); // Elimina $ , y cualquier otro símbolo
-
+            let clean = (el.Total || '0').toString().replace(/[^0-9.-]+/g, '');
             return sum + (parseFloat(clean) || 0);
         }, 0);
 
-
         container.append(`
-            <div class="flex justify-between items-center  px-4 py-4 space-y-2 mt-3 border-t border-gray-800 text-white text-sm">
-                <div class="font-semibold text-green-400 text-lg">
-                    TOTAL GRAL: <span>$${totalGral.toLocaleString(undefined, {
-            minimumFractionDigits: 2,
-        })}</span>
-                </div>
-                <button type="button" class="flex  bg-[#374151] hover:bg-[#4b5563] text-white items-center justify-center px-4 py-2 mt-3 text-sm w-40 rounded" onclick="eventos.closeEvent()">Cerrar</button>
+        <div class="flex justify-between items-center px-4 py-4 mt-3 border-t border-gray-800 text-white text-sm">
+            <div class="font-semibold text-green-400 text-lg">
+                TOTAL GRAL: <span>$${totalGral.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
             </div>
-        `);
+            <button type="button" class="flex bg-[#374151] hover:bg-[#4b5563] text-white items-center justify-center px-4 py-2 mt-3 text-sm w-40 rounded" onclick="eventos.closeEvent()">Cerrar</button>
+        </div>
+    `);
 
         $(`#${opts.parent}`).html(container);
     }
 
-    async layoutCompanies() {
 
-        let data = await useFetch({
-            url: api,
-            data: { opc: 'init' }
-        });
+    
 
-        let companie = data.companies;
-
-        console.log(data.companies);
-
-        $("#container-companies").html(`
-
-            <div class="my-3 p-6 rounded-lg border">
-            <h2 class="text-xl font-semibold text-gray-800 mb-1 flex items-center">
-                <i class="icon-edit text-yellow-600 mr-2"></i> Editar: <span class="ml-1 font-bold">${companie.social_name || "Empresa"}</span>
-            </h2>
-            <p class="text-sm text-gray-500 mb-3">Modifica la información de la compañía </p>
-            </div>
-
-            <div class="flex gap-3">
-                <div class="w-25 rounded-lg border p-6"></div>
-                <div class="w-75 rounded-lg border p-6" id="container-info-companies"></div>
-            </div>
-        `);
-
-
-        this.createForm({
-            parent: "container-info-companies",
-            id: "formPerfilUsuario",
-            autofill: companie,
-            json: [
-                {
-                    opc: "input",
-                    lbl: '<i class="icon-building mr-2"></i> Nombre de la compañía',
-                    id: "social_name",
-                    class: "col-6 mb-3",
-                    disabled: true,
-                },
-                {
-                    opc: "input",
-                    lbl: '<i class="icon-location mr-2"></i> Ubicación sucursal',
-                    id: "rute",
-                    class: "col-6 mb-3",
-                },
-                {
-                    opc: "input",
-                    lbl: '<i class="icon-location mr-2"></i> Dirección compañia',
-                    id: "address",
-                    class: "col-6 mb-3",
-                    disabled: true,
-                },
-                {
-                    opc: "input",
-                    lbl: '<i class="icon-user mr-2"></i> RFC ',
-                    id: "rfc",
-                    class: "col-6 mb-3",
-                },
-
-                {
-                    opc: "input",
-                    lbl: '<i class="icon-phone mr-2"></i> Teléfono',
-                    id: "phone",
-                    class: "col-6 mb-3",
-                },
-
-                {
-                    opc: "btn-submit",
-                    id: "btnGuardarPerfil",
-                    text: "Actualizar datos",
-                    class: "col-sm-4 offset-8",
-                },
-            ],
-            data: this.data,
-            success: (res) => {
-                alert({
-                    icon: res.status === 200 ? "success" : "error",
-                    text: res.message,
-                });
-            },
-        });
-    }
 
 }
 
