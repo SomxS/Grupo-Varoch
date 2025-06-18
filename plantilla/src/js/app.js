@@ -2,11 +2,7 @@
 // init vars.
 let app, sub;
 
-<<<<<<< HEAD
 let api = "https://huubie.com.mx/alpha/eventos/ctrl/ctrl-sub-eventos.php";
-=======
-let api = "https://www.erp-varoch.com/DEV/ch/ctrl/ctrl-tabulacion.php";
->>>>>>> d728fa824ca0f7e6742bde990e82fedd9f225e3e
 
 
 

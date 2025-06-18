@@ -1968,3 +1968,54 @@ function formatPrice(amount, locale = 'es-MX', currency = 'MXN') {
     currency: currency
   }).format(amount);
 }
+
+function formatSpanishDate(fecha = null, type = "normal") {
+  let date;
+
+  if (!fecha) {
+    // Si no se pasa nada, usamos la fecha actual
+    date = new Date();
+  } else {
+    // Dividimos fecha y hora si existe
+    // ejemplo: "2025-03-08 09:14" => ["2025-03-08", "09:14"]
+    const [fechaPart, horaPart] = fecha.split(" ");
+
+    // Descomponer "YYYY-MM-DD"
+    const [year, month, day] = fechaPart.split("-").map(Number);
+
+    if (horaPart) {
+      // Si hay hora, por ejemplo "09:14"
+      const [hours, minutes] = horaPart.split(":").map(Number);
+      // Crear Date con hora local
+      date = new Date(year, month - 1, day, hours, minutes);
+    } else {
+      // Solo fecha
+      date = new Date(year, month - 1, day);
+    }
+  }
+
+  // Extraer partes de la fecha
+  const dia = date.getDate();
+  const anio = date.getFullYear();
+
+  // Obtenemos el mes en español (México).
+  // Nota: El mes corto en español a veces incluye punto (ej: "mar."). Lo eliminamos:
+  const mesCorto = date
+    .toLocaleString("es-MX", { month: "short" })
+    .replace(".", "");
+  const mesLargo = date.toLocaleString("es-MX", { month: "long" });
+
+  // Asegurar que el día tenga 2 dígitos
+  const diaPadded = String(dia).padStart(2, "0");
+
+  // Formatos deseados
+  const formatos = {
+    short: `${diaPadded}/${mesCorto}/${anio}`, // p.ej. "08/mar/2025"
+    normal: `${diaPadded} de ${mesLargo} del ${anio}`, // p.ej. "08 de marzo del 2025"
+  };
+
+  // Devolvemos el formato según type
+  return formatos[type] || formatos.short;
+}
+
+
