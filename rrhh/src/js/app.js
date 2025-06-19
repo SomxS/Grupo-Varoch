@@ -2,14 +2,14 @@
 // init vars.
 let app, sub;
 
-let api = "https://huubie.com.mx/alpha/eventos/ctrl/ctrl-sub-eventos.php";
+let api = "https://erp-varoch.com/DEV/capital-humano/ctrl/ctrl-rotacion-de-personal.php";
 
 
 
 $(async () => {
     // instancias.
     app = new App(api, 'root');
-    app.render();
+    app.init();
 });
 
 
@@ -19,20 +19,23 @@ class App extends Templates {
         this.PROJECT_NAME = "Rotacion";
     }
 
-     render() {
-        this.period = $('#periodo').val() || "Junio 2025";
-        this.udn = $('#udn').val() || "Corporativo";
+    async init() {
+        const initData = await useFetch({ url: api, data: { opc: "init" } });
+        this.UDNs = initData.udn || [];
+        this.PERIODOS = initData.periodo || [];
+        this.render();
+    }
 
+    render() {
         this.layout();
-        // this.createFilterBar();
     }
 
     layout() {
         this.tabLayout({
-            parent: "root" ,
+            parent: "root",
             json: [
-                { id: "rotacion", tab: "% de Rotación", icon: "", active: true, onClick: () => this.initRotacion() },
-                { id: "plantilla", tab: "% de Plantilla", icon: "", onClick: () => this.initPlantilla() },
+                { id: "rotacion", tab: "Porcentaje de Rotación", icon: "", active: true, onClick: () => this.initRotacion() },
+                { id: "plantilla", tab: "Porcentaje de Plantilla", icon: "", onClick: () => this.initPlantilla() },
                 { id: "bajas", tab: "Concentrado de Bajas", icon: "", onClick: () => this.initBajas() },
             ]
         });
@@ -52,10 +55,10 @@ class App extends Templates {
         });
 
         this.createFilterBar();
-        // this.layoutTabs();
+        this.ls();
     }
 
- 
+
     createFilterBar() {
         this.createfilterBar({
             parent: "filterBar" + this.PROJECT_NAME,
@@ -72,16 +75,14 @@ class App extends Templates {
                         { id: "Abril 2025", valor: "Abril 2025" },
                         { id: "Mayo 2025", valor: "Mayo 2025" },
                         { id: "Junio 2025", valor: "Junio 2025" },
-                    ]
+                    ],
                 },
                 {
                     opc: "select",
                     id: "udn",
                     lbl: "Seleccionar UDN",
                     class: "col-12 col-md-3",
-                    data: [
-                        { id: "Corporativo", valor: "Corporativo" }
-                    ]
+                    data: this.UDNs,
                 },
                 {
                     opc: "select",
@@ -90,21 +91,22 @@ class App extends Templates {
                     class: "col-12 col-md-3",
                     data: [
                         { id: "General", valor: "General" },
-                        { id: "Detallado", valor: "Detallado" }
-                    ]
+                        { id: "Detallado", valor: "Detallado" },
+                    ],
+                    onchange:'app.ls()'
                 },
                 {
                     opc: "button",
                     id: "btnNuevaRotacion",
                     text: "+ Nueva rotación mensual",
                     class: "col-12 col-md-3",
-                    className:'w-100',
-                    onClick: () => this.addNewRotacion()
-                }
-            ]
+                    className: "w-100",
+                    onClick: () => this.addNewRotacion(),
+                },
+            ],
         });
 
-       
+
     }
 
     addNewRotacion() {
@@ -130,59 +132,185 @@ class App extends Templates {
             },
             methods: {
                 request: (data) => {
-                 
+
                 }
             }
         });
     }
 
-    // Módulo: Registro de Salidas
-    initSalidas() {
-        $("#tab-salidas").html(`<form id="formSalida" class="row p-3"></form>`);
-        this.createForm({
-            parent: "formSalida",
-            id: "frmSalida",
-            data: { opc: "addSalida" },
-            json: [
-                { opc: "input", id: "nombre_empleado", lbl: "Nombre", class: "col-12 col-md-6", required: true },
-                { opc: "input", id: "fecha_salida", lbl: "Fecha de Salida", type: "date", class: "col-12 col-md-6", required: true },
-                { opc: "btn-submit", id: "btnGuardarSalida", text: "Guardar Salida", class: "col-12 mt-3" },
-            ],
-        });
-    }
+    ls() {
 
-    // Módulo: Control de Regresos
-    initRegresos() {
-        $("#tab-regresos").html(`<form id="formRegreso" class="row p-3"></form>`);
-        this.createForm({
-            parent: "formRegreso",
-            id: "frmRegreso",
-            data: { opc: "registrarRegreso" },
-            json: [
-                { opc: "input", id: "id_empleado", lbl: "ID Empleado", class: "col-12 col-md-6", required: true },
-                { opc: "input", id: "fecha_regreso", lbl: "Fecha de Regreso", type: "date", class: "col-12 col-md-6", required: true },
-                { opc: "btn-submit", id: "btnGuardarRegreso", text: "Registrar Regreso", class: "col-12 mt-3" },
-            ],
-        });
-    }
-
-    // Módulo: Listado de Rotaciones
-    initListado() {
-        $("#tab-listado").html(`<div id="tablaListado"></div>`);
+        // Llama a la API, recibe el tipo correcto de tabla
         this.createTable({
-            parent: "tablaListado",
-            idFilterBar: "filterBarRotacion",
-            data: { opc: "listarRotaciones" },
-            conf: { datatable: true, pag: 10 },
+            parent: "container" + this.PROJECT_NAME,
+            idFilterBar: "filterBar" + this.PROJECT_NAME,
+            data: {
+                opc: "list",
+
+            },
+            coffesoft:true,
+            conf: {
+                datatable: false,
+                pag: 10,
+            },
             attr: {
-                id: "tbRotacion",
-                center: [1, 2],
-                right: [3],
+                id: "tb" + this.PROJECT_NAME,
                 extends: true,
             },
+
         });
     }
+
+
+
+
+
 }
+
+
+class Plantilla extends Templates {
+    constructor(link, divModulo) {
+        super(link, divModulo);
+        this.PROJECT_NAME = "Plantilla";
+    }
+
+    init(){
+        this.layoutPlantilla();
+    }
+
+    layoutPlantilla() {
+        this.primaryLayout({
+            parent: "container-rotacion",
+            id: this.PROJECT_NAME,
+            class: "mx-2 my-2",
+            card: {
+                filterBar: { class: "w-full line", id: "filterBar" + this.PROJECT_NAME },
+                container: { class: "w-full line", id: "container" + this.PROJECT_NAME },
+            },
+        });
+
+        this.createFilterBar();
+        this.ls();
+    }
+
+
+    createFilterBar() {
+        this.createfilterBar({
+            parent: "filterBar" + this.PROJECT_NAME,
+            data: [
+                {
+                    opc: "select",
+                    id: "periodo",
+                    lbl: "Seleccionar periodo",
+                    class: "col-12 col-md-3",
+                    data: [
+                        { id: "Enero 2025", valor: "Enero 2025" },
+                        { id: "Febrero 2025", valor: "Febrero 2025" },
+                        { id: "Marzo 2025", valor: "Marzo 2025" },
+                        { id: "Abril 2025", valor: "Abril 2025" },
+                        { id: "Mayo 2025", valor: "Mayo 2025" },
+                        { id: "Junio 2025", valor: "Junio 2025" },
+                    ],
+                },
+                {
+                    opc: "select",
+                    id: "udn",
+                    lbl: "Seleccionar UDN",
+                    class: "col-12 col-md-3",
+                    data: this.UDNs,
+                },
+                {
+                    opc: "select",
+                    id: "concentrado",
+                    lbl: "Concentrado",
+                    class: "col-12 col-md-3",
+                    data: [
+                        { id: "General", valor: "General" },
+                        { id: "Detallado", valor: "Detallado" },
+                    ],
+                    onchange: 'app.ls()'
+                },
+
+            ],
+        });
+
+
+    }
+
+
+}
+
+class Bajas extends Templates {
+    constructor(link, divModulo) {
+        super(link, divModulo);
+        this.PROJECT_NAME = "Bajas";
+    }
+
+    init() {
+        this.layoutPlantilla();
+    }
+
+    layoutPlantilla() {
+        this.primaryLayout({
+            parent: "container-rotacion",
+            id: this.PROJECT_NAME,
+            class: "mx-2 my-2",
+            card: {
+                filterBar: { class: "w-full line", id: "filterBar" + this.PROJECT_NAME },
+                container: { class: "w-full line", id: "container" + this.PROJECT_NAME },
+            },
+        });
+
+        this.createFilterBar();
+        this.ls();
+    }
+
+
+    createFilterBar() {
+        this.createfilterBar({
+            parent: "filterBar" + this.PROJECT_NAME,
+            data: [
+                {
+                    opc: "select",
+                    id: "periodo",
+                    lbl: "Seleccionar periodo",
+                    class: "col-12 col-md-3",
+                    data: [
+                        { id: "Enero 2025", valor: "Enero 2025" },
+                        { id: "Febrero 2025", valor: "Febrero 2025" },
+                        { id: "Marzo 2025", valor: "Marzo 2025" },
+                        { id: "Abril 2025", valor: "Abril 2025" },
+                        { id: "Mayo 2025", valor: "Mayo 2025" },
+                        { id: "Junio 2025", valor: "Junio 2025" },
+                    ],
+                },
+                {
+                    opc: "select",
+                    id: "udn",
+                    lbl: "Seleccionar UDN",
+                    class: "col-12 col-md-3",
+                    data: this.UDNs,
+                },
+                {
+                    opc: "select",
+                    id: "concentrado",
+                    lbl: "Concentrado",
+                    class: "col-12 col-md-3",
+                    data: [
+                        { id: "General", valor: "General" },
+                        { id: "Detallado", valor: "Detallado" },
+                    ],
+                    onchange: 'app.ls()'
+                },
+
+            ],
+        });
+
+
+    }
+}
+
+
 
 
 
