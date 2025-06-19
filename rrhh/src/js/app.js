@@ -1,15 +1,29 @@
 
 // init vars.
-let app, sub;
+let app, template,baja,rotation;
+
+let udn,periodo;
 
 let api = "https://erp-varoch.com/DEV/capital-humano/ctrl/ctrl-rotacion-de-personal.php";
 
 
 
 $(async () => {
+
+    const init = await useFetch({ url: api, data: { opc: "init" } });
+    udn = init.udn || [];
+    periodo = init.periodo || [];
+
     // instancias.
-    app = new App(api, 'root');
+    app      = new App(api, 'root');
+    rotation = new Rotacion(api, 'root');
+    template = new Plantilla(api, 'root');
+    baja     = new Bajas(api, 'root');
+
     app.init();
+    template.init();
+    baja.init();
+   
 });
 
 
@@ -19,24 +33,23 @@ class App extends Templates {
         this.PROJECT_NAME = "Rotacion";
     }
 
-    async init() {
-        const initData = await useFetch({ url: api, data: { opc: "init" } });
-        this.UDNs = initData.udn || [];
-        this.PERIODOS = initData.periodo || [];
+     init() {
+     
         this.render();
     }
 
     render() {
         this.layout();
+       
     }
 
     layout() {
         this.tabLayout({
             parent: "root",
             json: [
-                { id: "rotacion", tab: "Porcentaje de Rotación", icon: "", active: true, onClick: () => this.initRotacion() },
-                { id: "plantilla", tab: "Porcentaje de Plantilla", icon: "", onClick: () => this.initPlantilla() },
-                { id: "bajas", tab: "Concentrado de Bajas", icon: "", onClick: () => this.initBajas() },
+                { id: "rotacion", tab: "Porcentaje de Rotación", icon: "", active: true , onClick: () => this.initRotacion() },
+                { id: "plantilla", tab: "Porcentaje de Plantilla", icon: "",},
+                { id: "bajas", tab: "Concentrado de Bajas", icon: "" },
             ]
         });
 
@@ -50,12 +63,12 @@ class App extends Templates {
             class: "mx-2 my-2",
             card: {
                 filterBar: { class: "w-full line", id: "filterBar" + this.PROJECT_NAME },
-                container: { class: "w-full line", id: "container" + this.PROJECT_NAME },
+                container: { class: "w-full ", id: "container" + this.PROJECT_NAME },
             },
         });
 
         this.createFilterBar();
-        this.ls();
+        rotation.ls();
     }
 
 
@@ -82,7 +95,7 @@ class App extends Templates {
                     id: "udn",
                     lbl: "Seleccionar UDN",
                     class: "col-12 col-md-3",
-                    data: this.UDNs,
+                    data: udn,
                 },
                 {
                     opc: "select",
@@ -138,6 +151,21 @@ class App extends Templates {
         });
     }
 
+  
+
+
+
+
+
+}
+
+class Rotacion extends App {
+
+    constructor(link, divModulo) {
+        super(link, divModulo);
+        this.PROJECT_NAME = "Rotacion";
+    }
+
     ls() {
 
         // Llama a la API, recibe el tipo correcto de tabla
@@ -148,7 +176,7 @@ class App extends Templates {
                 opc: "list",
 
             },
-            coffesoft:true,
+            coffeesoft: true,
             conf: {
                 datatable: false,
                 pag: 10,
@@ -160,18 +188,14 @@ class App extends Templates {
 
         });
     }
-
-
-
-
-
+    
+    
 }
-
 
 class Plantilla extends Templates {
     constructor(link, divModulo) {
         super(link, divModulo);
-        this.PROJECT_NAME = "Plantilla";
+        this.PROJECT_NAME = "Templates";
     }
 
     init(){
@@ -179,18 +203,18 @@ class Plantilla extends Templates {
     }
 
     layoutPlantilla() {
+
         this.primaryLayout({
-            parent: "container-rotacion",
-            id: this.PROJECT_NAME,
+            parent: "container-plantilla",
+            id: '_'+this.PROJECT_NAME,
             class: "mx-2 my-2",
             card: {
                 filterBar: { class: "w-full line", id: "filterBar" + this.PROJECT_NAME },
-                container: { class: "w-full line", id: "container" + this.PROJECT_NAME },
+                container: { class: "w-full ", id: "container" + this.PROJECT_NAME },
             },
         });
 
         this.createFilterBar();
-        this.ls();
     }
 
 
@@ -217,7 +241,7 @@ class Plantilla extends Templates {
                     id: "udn",
                     lbl: "Seleccionar UDN",
                     class: "col-12 col-md-3",
-                    data: this.UDNs,
+                    data: udn,
                 },
                 {
                     opc: "select",
@@ -247,12 +271,12 @@ class Bajas extends Templates {
     }
 
     init() {
-        this.layoutPlantilla();
+        this.layoutBajas();
     }
 
-    layoutPlantilla() {
+    layoutBajas() {
         this.primaryLayout({
-            parent: "container-rotacion",
+            parent: "container-bajas",
             id: this.PROJECT_NAME,
             class: "mx-2 my-2",
             card: {
@@ -262,9 +286,8 @@ class Bajas extends Templates {
         });
 
         this.createFilterBar();
-        this.ls();
+        
     }
-
 
     createFilterBar() {
         this.createfilterBar({
@@ -289,7 +312,7 @@ class Bajas extends Templates {
                     id: "udn",
                     lbl: "Seleccionar UDN",
                     class: "col-12 col-md-3",
-                    data: this.UDNs,
+                    data: udn,
                 },
                 {
                     opc: "select",
