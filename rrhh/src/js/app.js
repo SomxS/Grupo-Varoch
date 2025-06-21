@@ -39,7 +39,9 @@ class App extends Templates {
     }
 
     render() {
-        this.layout();
+
+        // this.layout();
+        this.layoutNewRotation()
        
     }
 
@@ -145,19 +147,87 @@ class App extends Templates {
             },
             methods: {
                 request: (data) => {
-
+                    this.layoutNewRotation();
                 }
             }
         });
     }
 
+    layoutNewRotation() {
+
+        $("#root").html(`
+            <div class="flex justify-between items-center mb-4">
+                <button id="btnRegresar" class="btn btn-outline-primary" >
+                    <i class="icon-left"></i> Regresar
+                </button>
+                <div class="text-xl font-semibold">NUEVA ROTACIÓN</div>
+                <div class="text-base font-medium"></div>
+            </div>
+            <div id="rotacionModulo" class="mb-2 p-3 border rounded-lg"></div>
+            <div id="plantillaRotacion" class="mb-2 p-3 border rounded-lg "></div>
+            <div id="plantillaBaja" class=" p-3 border rounded-lg "></div>
+        `);
+
+        // Evento click para el botón regresar
+        $("#btnRegresar").on("click", function () {
+            app.layout(); 
+        });
+
+        this.newRotation();
+      
+        
+    }
+
+    async newRotation() {
+
+        const request = await useFetch({
+            url: api,
+            data: {
+                opc: "addNewRotacion",
+            }
+        });
+
+        console.log(request.data.editRotation)
+
+        // Crea la tabla de rotación
+        this.createCoffeTable({
+            parent: "rotacionModulo",
+            title: "Rotación Mensual",
+            data: request.data.editRotation,
+            conf: {
+                datatable: false,
+                pag: 10
+            },
+            attr: {
+                class: "table-auto w-full",
+                id: "tabla-rotacion-mensual",
+                extends: true
+            }
+        })
+
+        // Crea la tabla de rotación
+        this.createCoffeTable({
+            parent: "plantillaRotacion",
+            title: "Plantilla Rotación",
+            data: request.data.editRotation,
+            conf: {
+                datatable: false,
+                pag: 10
+            },
+            attr: {
+                class: "table-auto w-full",
+                id: "tabla-rotacion-mensual",
+                extends: true
+            }
+        })
+
+    
+    }
+
   
-
-
-
-
-
 }
+
+
 
 class Rotacion extends App {
 
