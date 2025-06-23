@@ -187,7 +187,6 @@ class App extends Templates {
             }
         });
 
-        console.log(request.data.editRotation)
 
         // Crea la tabla de rotación
         this.createCoffeTable({
@@ -198,6 +197,9 @@ class App extends Templates {
                 datatable: false,
                 pag: 10
             },
+            
+            right: [2, 3, 4, 5, 6],
+
             attr: {
                 class: "table-auto w-full",
                 id: "tabla-rotacion-mensual",
@@ -209,6 +211,23 @@ class App extends Templates {
         this.createCoffeTable({
             parent: "plantillaRotacion",
             title: "Plantilla Rotación",
+            data: request.data.editTemplate,
+            conf: {
+                datatable: false,
+                pag: 10
+            },
+            attr: {
+                class: "table-auto w-full",
+                id: "tabla-rotacion-mensual",
+                right:[2,3,4,5,6],
+                extends: true
+            }
+        })
+
+        // Crea la tabla de rotación
+        this.createCoffeTable({
+            parent: "plantillaBaja",
+            title: "Plantilla Rotación",
             data: request.data.editRotation,
             conf: {
                 datatable: false,
@@ -217,12 +236,41 @@ class App extends Templates {
             attr: {
                 class: "table-auto w-full",
                 id: "tabla-rotacion-mensual",
+                right: [2, 3, 4, 5, 6],
                 extends: true
             }
         })
 
     
     }
+
+    async onEditRotation(input) {
+        const id = input.dataset.id;
+        const field = input.dataset.field;
+        const value = input.value;
+
+        if (!id || !field) {
+            alert({ icon: "error", text: "Identificador o campo inválido." });
+            return;
+        }
+
+        input.disabled = true;
+        input.classList.remove("border-green-500", "border-red-500");
+
+        let request = await useFetch({
+          url: api,
+          data: {
+            opc: "editRotationField",
+            id: id,
+            field: field,
+            value: value,
+          },
+        });
+
+    }
+
+
+
 
   
 }
