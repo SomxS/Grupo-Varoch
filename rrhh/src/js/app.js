@@ -180,12 +180,7 @@ class App extends Templates {
 
     async newRotation() {
 
-        const request = await useFetch({
-            url: api,
-            data: {
-                opc: "addNewRotacion",
-            }
-        });
+        const request = await useFetch({ url: api,  data: { opc: "addNewRotacion" } });
 
 
         // Crea la tabla de rotación
@@ -227,7 +222,7 @@ class App extends Templates {
         // Crea la tabla de rotación
         this.createCoffeTable({
             parent: "plantillaBaja",
-            title: "Plantilla Rotación",
+            title: "Plantilla Baja",
             data: request.data.editRotation,
             conf: {
                 datatable: false,
@@ -245,7 +240,10 @@ class App extends Templates {
     }
 
     async onEditRotation(input) {
-        const id = input.dataset.id;
+
+       
+
+        const id    = input.dataset.id;
         const field = input.dataset.field;
         const value = input.value;
 
@@ -254,18 +252,19 @@ class App extends Templates {
             return;
         }
 
-        input.disabled = true;
-        input.classList.remove("border-green-500", "border-red-500");
+        // input.disabled = true;
+        // input.classList.remove("border-green-500", "border-red-500");
 
         let request = await useFetch({
           url: api,
           data: {
             opc: "editRotationField",
+            [field]: value,
             id: id,
-            field: field,
-            value: value,
           },
         });
+
+
 
     }
 
