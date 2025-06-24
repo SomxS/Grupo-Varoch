@@ -40,8 +40,8 @@ class App extends Templates {
 
     render() {
 
-        // this.layout();
-        this.layoutNewRotation()
+        this.layout();
+        // this.layoutNewRotation()
        
     }
 
@@ -80,29 +80,16 @@ class App extends Templates {
             data: [
                 {
                     opc: "select",
-                    id: "periodo",
+                    id: "id",
                     lbl: "Seleccionar periodo",
                     class: "col-12 col-md-3",
-                    data: [
-                        { id: "Enero 2025", valor: "Enero 2025" },
-                        { id: "Febrero 2025", valor: "Febrero 2025" },
-                        { id: "Marzo 2025", valor: "Marzo 2025" },
-                        { id: "Abril 2025", valor: "Abril 2025" },
-                        { id: "Mayo 2025", valor: "Mayo 2025" },
-                        { id: "Junio 2025", valor: "Junio 2025" },
-                    ],
+                    data: periodo,
                 },
-                {
-                    opc: "select",
-                    id: "udn",
-                    lbl: "Seleccionar UDN",
-                    class: "col-12 col-md-3",
-                    data: udn,
-                },
+               
                 {
                     opc: "select",
                     id: "concentrado",
-                    lbl: "Concentrado",
+                    lbl: "Tipo de reporte",
                     class: "col-12 col-md-3",
                     data: [
                         { id: "General", valor: "General" },
@@ -268,6 +255,36 @@ class App extends Templates {
 
     }
 
+    ls() {
+
+        // Obtén el texto seleccionado del select
+        const udnText = $("#filterBarRotacion #id option:selected").text();
+
+
+        this.createTable({
+          parent: "container" + this.PROJECT_NAME,
+          idFilterBar: "filterBar" + this.PROJECT_NAME,
+          data: {
+            opc: "list",
+          },
+          coffeesoft: true,
+          conf: {
+            datatable: false,
+            pag: 10,
+          },
+          attr: {
+            id: "tb" + this.PROJECT_NAME,
+            theme: "corporativo",
+            title: `Rotación de Personal${udnText ? " - " + udnText : ""}`,
+            subtitle:'',
+
+            extends: true,
+            striped: false,
+            center: [2, 3, 4, 5, 6],
+          },
+        });
+    }
+
 
 
 
@@ -283,28 +300,7 @@ class Rotacion extends App {
         this.PROJECT_NAME = "Rotacion";
     }
 
-    ls() {
-
-        // Llama a la API, recibe el tipo correcto de tabla
-        this.createTable({
-            parent: "container" + this.PROJECT_NAME,
-            idFilterBar: "filterBar" + this.PROJECT_NAME,
-            data: {
-                opc: "list",
-
-            },
-            coffeesoft: true,
-            conf: {
-                datatable: false,
-                pag: 10,
-            },
-            attr: {
-                id: "tb" + this.PROJECT_NAME,
-                extends: true,
-            },
-
-        });
-    }
+  
     
     
 }
