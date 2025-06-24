@@ -40,8 +40,8 @@ class App extends Templates {
 
     render() {
 
-        this.layout();
-        // this.layoutNewRotation()
+        // this.layout();
+        this.layoutNewRotation()
        
     }
 
