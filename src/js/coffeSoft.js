@@ -896,8 +896,6 @@ class Components extends Complements {
 
     }
 
-
-
     createModal(options) {
 
         let components = $('<div>');
@@ -2441,6 +2439,8 @@ class Components extends Complements {
 
         const opts = Object.assign({}, defaults, options);
 
+       
+
         const themes = {
             dark: {
                 base: "bg-gray-800 text-white",
@@ -2495,6 +2495,8 @@ class Components extends Complements {
         });
 
         $(`#${opts.parent}`).html(container);
+
+     
 
         if (opts.renderContainer) {
             const contentContainer = $("<div>", {
